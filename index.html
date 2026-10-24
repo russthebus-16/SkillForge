@@ -3,191 +3,547 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SkillForge | Train Smarter</title>
 <style>
-:root{--bg:#f3f6fb;--panel:#fff;--text:#17243a;--muted:#65738a;--accent:#1769ff;--line:#dce4ef;--green:#16845b}
+:root{--blue:#1458d4;--deep:#0b1e3b;--bg:#f3f6fb;--card:#fff;--text:#17243b;--muted:#68768c;--border:#e1e8f2}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-button,input,select{font:inherit}button{cursor:pointer}
-header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.header{max-width:1150px;margin:auto;padding:16px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:23px;font-weight:900}.brand span{color:var(--accent)}
-.xp{background:#e8f0ff;color:#1755c4;padding:8px 13px;border-radius:20px;font-weight:bold}
-main{max-width:1150px;margin:auto;padding:18px 14px 60px}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 14px}
-.tab,button{border:0}
-.tab{background:#e5ebf5;color:#35445b;border-radius:9px;padding:11px 15px;white-space:nowrap;font-weight:bold}
-.tab.active{background:var(--accent);color:white}
-.view{display:none}.view.active{display:block}
-.hero{background:#143c7d;color:white;border-radius:17px;padding:27px;margin:10px 0 20px}
-.hero p{color:#e0eaff}
-.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:bold;color:#a9ccff}
-h1{font-size:clamp(30px,5vw,45px);margin:10px 0;line-height:1.1}
-h2{margin:8px 0;font-size:23px}h3{margin:8px 0}
-p{line-height:1.5;color:var(--muted)}
-.btn{padding:10px 14px;border-radius:9px;background:#e5ebf5;color:#263750;font-weight:bold}
-.btn.primary{background:var(--accent);color:white}
-.hero .btn.primary{background:white;color:#143c7d}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px;min-width:0}
-.stat{font-size:28px;font-weight:900}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:23px 0 12px}
-.field{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--text)}
-.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin:12px 0}
-.small{font-size:12px;color:var(--muted)}
-.pill{display:inline-block;border-radius:20px;background:#edf2fa;padding:4px 9px;font-size:11px}
-.drill-card{display:flex;flex-direction:column;gap:9px}
-.drill-card.done{border-color:var(--green)}
-.drill-name{text-align:left;background:transparent;color:var(--text);font-weight:bold;padding:4px 0}
-.drill-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
-.progressbar{height:8px;background:#e4eaf3;border-radius:20px;overflow:hidden;margin:8px 0}
-.fill{height:100%;background:var(--accent)}
-.line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.empty{text-align:center;padding:24px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
-.modal{position:fixed;inset:0;background:#0009;z-index:50;display:grid;place-items:center;padding:15px}
-.modalbox{background:white;border-radius:16px;padding:22px;max-width:600px;width:100%;max-height:88vh;overflow:auto}
-.modalbox li{padding:5px 0;line-height:1.5}
-.modalbox h3{color:var(--accent);margin-top:20px}
-.close{float:right}
-footer{text-align:center;padding:30px 10px;color:var(--muted);font-size:12px}
-[hidden]{display:none!important}
-@media(max-width:750px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.grid,.filters{grid-template-columns:1fr}.hero{padding:21px}.header{padding:12px}}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);transition:.2s}
+body.dark{--bg:#101827;--card:#1b293d;--text:#f1f5ff;--muted:#b2bfd3;--border:#34445b;--deep:#091222}
+header{background:var(--deep);color:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:900;letter-spacing:-1px}.logo span{color:#65a1ff}
+button,select,input{font:inherit}
+button{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:700}
+.primary{background:var(--blue);color:white}.secondary{background:var(--border);color:var(--text)}
+header button{background:#fff;color:#12315b}
+main{max-width:1150px;margin:auto;padding:24px 16px}
+h1{font-size:clamp(27px,5vw,42px);margin:5px 0 10px}
+h2{margin:0 0 14px}h3{margin:5px 0 10px}
+p{line-height:1.5}.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:22px 0}
+.stat{background:var(--card);padding:17px;border:1px solid var(--border);border-radius:14px}
+.stat strong{display:block;font-size:26px;margin-bottom:5px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:8px 0 18px}
+nav button{white-space:nowrap;background:var(--card);color:var(--text);border:1px solid var(--border)}
+nav button.active{background:var(--blue);color:white}
+.sport,.drill{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.sport{cursor:pointer}.sport:hover,.drill:hover{border-color:var(--blue)}
+.emoji{font-size:30px}.tag{font-size:12px;background:#e8f0ff;color:#164cb4;border-radius:20px;padding:5px 9px;display:inline-block;margin:3px 0}
+body.dark .tag{background:#233e68;color:#bcd4ff}
+.progress{height:9px;background:var(--border);border-radius:10px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:var(--blue);width:0}
+input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);margin:6px 0 13px}
+label{display:block;font-weight:700;font-size:14px;margin-top:7px}
+.checkrow{display:flex;align-items:center;gap:9px;margin:8px 0}
+.checkrow input{width:auto;margin:0}
+.hidden{display:none!important}
+.notice{padding:12px;border-radius:10px;background:var(--border);margin:10px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+footer{text-align:center;padding:30px;color:var(--muted)}
+.small{font-size:13px}.drill{margin-bottom:10px}.drill h3{font-size:17px}
+#message{white-space:pre-wrap}
+@media(max-width:500px){header{padding:14px}.card{padding:15px}main{padding:16px 12px}.logo{font-size:21px}}
 </style>
 </head>
 <body>
-<header><div class="header">
-<div class="brand">⚡ Skill<span>Forge</span></div>
-<div class="xp" id="headerxp">0 XP</div>
-</div></header>
+<header>
+  <div class="logo">SKILL<span>FORGE</span></div>
+  <div class="actions">
+    <span id="userLabel" class="small"></span>
+    <button onclick="showTab('settings')">⚙ Settings</button>
+    <button id="logoutBtn" class="hidden" onclick="logout()">Log out</button>
+  </div>
+</header>
+
 <main>
-<nav class="tabs">
-<button class="tab active" data-view="training">🏋️ Training</button>
-<button class="tab" data-view="scores">📊 Scores</button>
-<button class="tab" data-view="progress">📈 Progress</button>
-<button class="tab" data-view="profile">👤 Profile</button>
-</nav>
+  <section id="welcome">
+    <div class="card">
+      <span class="tag">YOUR TRAINING STARTS HERE</span>
+      <h1>Train smarter.<br>Play stronger.</h1>
+      <p class="muted">Build skills, complete drills, earn XP, and track your progress across your favorite sports.</p>
+      <div class="stats">
+        <div class="stat"><strong>7</strong><span class="muted">Sports</span></div>
+        <div class="stat"><strong>280</strong><span class="muted">Drill slots</span></div>
+        <div class="stat"><strong>∞</strong><span class="muted">Ways to improve</span></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>Create account</h2>
+        <p class="muted small">Create an account to save your progress across devices.</p>
+        <label for="signupName">Your name</label>
+        <input id="signupName" placeholder="Your name" autocomplete="name">
+        <label for="signupEmail">Email</label>
+        <input id="signupEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        <label for="signupPassword">Password</label>
+        <input id="signupPassword" type="password" placeholder="At least 6 characters" autocomplete="new-password">
+        <button class="primary" style="width:100%" onclick="signup()">Create account</button>
+      </div>
+      <div class="card">
+        <h2>Welcome back</h2>
+        <p class="muted small">Already have a SkillForge account? Log in here.</p>
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password">
+        <button class="primary" style="width:100%" onclick="login()">Log in</button>
+      </div>
+    </div>
+    <div id="authMessage" class="notice hidden"></div>
+  </section>
 
-<section class="view active" id="training">
-<div class="hero">
-<div class="eyebrow">Your next level starts here</div>
-<h1>Build your game.</h1>
-<p>Choose your sport, learn new skills, and earn XP with every completed drill.</p>
-<button class="btn primary" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">Explore drills ↓</button>
-</div>
-<div class="grid" id="quickstats"></div>
-<div class="section-head" id="library"><div><div class="eyebrow" style="color:#1769ff">Training library</div><h2>Choose your sport</h2></div><span class="pill">280 drills</span></div>
-<nav class="tabs" id="sporttabs"></nav>
-<div class="filters">
-<input class="field" id="search" placeholder="Search drills...">
-<select class="field" id="difficulty"><option value="all">All difficulties</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
-<select class="field" id="completion"><option value="all">All drills</option><option value="incomplete">Not completed</option><option value="completed">Completed</option></select>
-</div>
-<div class="section-head"><h2 id="sportheading"></h2><span class="small" id="count"></span></div>
-<div class="grid" id="drillgrid"></div><div id="noresults" class="empty" hidden>No drills match those filters.</div>
-</section>
+  <section id="app" class="hidden">
+    <div class="card">
+      <span class="tag">YOUR ATHLETE DASHBOARD</span>
+      <h1 id="greeting">Let's get to work.</h1>
+      <p class="muted">Small improvements every day add up. Pick a sport and get started.</p>
+    </div>
+    <nav>
+      <button class="active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
+      <button data-tab="sports" onclick="showTab('sports')">My Sports</button>
+      <button data-tab="drills" onclick="showTab('drills')">Drills</button>
+      <button data-tab="scores" onclick="showTab('scores')">Scores</button>
+      <button data-tab="progress" onclick="showTab('progress')">Progress</button>
+      <button data-tab="settings" onclick="showTab('settings')">Settings</button>
+    </nav>
 
-<section class="view" id="scores">
-<div class="hero"><div class="eyebrow">Game day</div><h1>Follow the scores.</h1><p>Check professional and college sports scoreboards.</p></div>
-<h2>Professional leagues</h2><nav class="tabs" id="protabs"></nav>
-<h2>College sports</h2><nav class="tabs" id="collegetabs"></nav>
-<div class="card">
-<div class="section-head"><div><h2 id="scoretitle">MLB Scores</h2><p id="scorestatus">Select a league to load scores.</p></div><button class="btn primary" onclick="loadScores()">↻ Refresh</button></div>
-<div id="scoreboard" class="empty">Choose a league.</div>
-</div>
-<p class="small">Scores depend on the availability of ESPN's public scoreboard feeds.</p>
-</section>
+    <section id="tab-dashboard">
+      <div class="stats">
+        <div class="stat"><strong id="xpStat">0</strong><span class="muted">Total XP</span></div>
+        <div class="stat"><strong id="levelStat">1</strong><span class="muted">Level</span></div>
+        <div class="stat"><strong id="completedStat">0</strong><span class="muted">Drills done</span></div>
+        <div class="stat"><strong id="streakStat">0</strong><span class="muted">Practice days</span></div>
+      </div>
+      <div class="card">
+        <h2>Overall progress</h2>
+        <div class="progress"><div id="overallBar"></div></div>
+        <p id="overallText" class="muted">Choose sports to personalize your training.</p>
+      </div>
+      <h2>Your sports</h2>
+      <div id="dashboardSports" class="grid"></div>
+      <div class="card">
+        <h2>Quick start</h2>
+        <p class="muted">Choose a sport to view drills and their instructions.</p>
+        <button class="primary" onclick="showTab('drills')">Browse my drills →</button>
+      </div>
+    </section>
 
-<section class="view" id="progress">
-<div class="hero"><div class="eyebrow">Your development</div><h1>Progress is earned.</h1><p>Every completed drill brings you closer to your next level.</p></div>
-<div class="grid" id="progressstats"></div>
-<div class="section-head"><h2>Progress by sport</h2></div>
-<div class="grid" id="sportprogress"></div>
-<div class="section-head"><h2>XP levels</h2></div><div class="card" id="levels"></div>
-<div class="section-head"><h2>Completed drills</h2></div><div class="card" id="completedlist"></div>
-</section>
+    <section id="tab-sports" class="hidden">
+      <div class="card">
+        <h2>Choose your sports</h2>
+        <p class="muted">Select the sports you play. You can change these whenever you want.</p>
+        <div id="sportChoices" class="grid"></div>
+        <button class="primary" onclick="saveSports()">Save my sports</button>
+      </div>
+    </section>
 
-<section class="view" id="profile">
-<div class="hero"><div class="eyebrow">Athlete dashboard</div><h1>Your profile.</h1><p>Your training, your goals, your journey.</p></div>
-<div class="card"><h2>Athlete information</h2>
-<form id="profileform">
-<label for="athletename">Athlete name</label><input class="field" id="athletename" maxlength="40" placeholder="Enter your name">
-<label for="favoritesport">Favorite sport</label><select class="field" id="favoritesport"></select>
-<p><button class="btn primary">Save profile</button></p>
-</form>
-<p class="small">Your profile and training progress are saved in this browser.</p>
-</div>
-<div class="card" style="margin-top:14px"><h2 id="profilename">Your athlete profile</h2><p id="profiledetail"></p><button class="btn" onclick="resetProgress()">Reset training progress</button></div>
-</section>
-<footer>SKILLFORGE • Train consistently. Compete confidently.<br>Practice safely with appropriate equipment and supervision.</footer>
+    <section id="tab-drills" class="hidden">
+      <div class="card">
+        <h2>Training drills</h2>
+        <label for="sportSelect">Choose a sport</label>
+        <select id="sportSelect" onchange="renderDrills()"></select>
+        <label for="difficultySelect">Difficulty</label>
+        <select id="difficultySelect" onchange="renderDrills()">
+          <option value="All">All difficulties</option>
+          <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
+        </select>
+        <p id="drillSummary" class="muted"></p>
+      </div>
+      <div id="drillList"></div>
+    </section>
+
+    <section id="tab-scores" class="hidden">
+      <div class="card">
+        <h2>Live sports scores</h2>
+        <p class="muted">Scoreboards are provided by ESPN. Availability varies by sport and season.</p>
+        <label for="leagueSelect">League</label>
+        <select id="leagueSelect" onchange="loadScores()">
+          <option value="baseball/mlb">MLB</option>
+          <option value="football/nfl">NFL</option>
+          <option value="basketball/nba">NBA</option>
+          <option value="hockey/nhl">NHL</option>
+          <option value="soccer/usa.1">MLS</option>
+          <option value="soccer/eng.1">Premier League</option>
+          <option value="football/college-football">College Football</option>
+          <option value="basketball/mens-college-basketball">College Basketball</option>
+          <option value="baseball/college-baseball">College Baseball</option>
+          <option value="softball/college-softball">College Softball</option>
+          <option value="hockey/mens-college-hockey">College Hockey</option>
+          <option value="volleyball/womens-college-volleyball">College Volleyball</option>
+        </select>
+        <button class="primary" onclick="loadScores()">Refresh scores</button>
+      </div>
+      <div id="scoresList"></div>
+    </section>
+
+    <section id="tab-progress" class="hidden">
+      <div class="card">
+        <h2>Your progress</h2>
+        <p id="progressIntro" class="muted"></p>
+        <div id="progressSports"></div>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="hidden">
+      <div class="card">
+        <h2>Appearance</h2>
+        <label for="themeSetting">Theme</label>
+        <select id="themeSetting" onchange="updateSetting('theme',this.value)">
+          <option value="light">Light</option><option value="dark">Dark</option><option value="system">System default</option>
+        </select>
+        <label for="textSetting">Text size</label>
+        <select id="textSetting" onchange="updateSetting('textSize',this.value)">
+          <option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option>
+        </select>
+        <label class="checkrow"><input id="contrastSetting" type="checkbox" onchange="updateSetting('highContrast',this.checked)"> Higher contrast</label>
+        <label class="checkrow"><input id="motionSetting" type="checkbox" onchange="updateSetting('reduceMotion',this.checked)"> Reduce animations</label>
+      </div>
+      <div class="card">
+        <h2>Practice reminders</h2>
+        <p class="muted">Choose any time and the days you want to practice.</p>
+        <label class="checkrow"><input id="reminderEnabled" type="checkbox" onchange="updateSetting('reminders',this.checked)"> Enable reminders while the site is open</label>
+        <label for="reminderTime">Reminder time</label>
+        <input id="reminderTime" type="time" value="18:00" onchange="updateSetting('reminderTime',this.value)">
+        <label for="reminderType">Reminder type</label>
+        <select id="reminderType" onchange="updateSetting('reminderType',this.value)">
+          <option value="practice">Practice reminder</option><option value="streak">Streak reminder</option><option value="both">Both</option>
+        </select>
+        <p><strong>Choose days:</strong></p>
+        <div id="reminderDays">
+          <label class="checkrow"><input type="checkbox" value="1"> Monday</label>
+          <label class="checkrow"><input type="checkbox" value="2"> Tuesday</label>
+          <label class="checkrow"><input type="checkbox" value="3"> Wednesday</label>
+          <label class="checkrow"><input type="checkbox" value="4"> Thursday</label>
+          <label class="checkrow"><input type="checkbox" value="5"> Friday</label>
+          <label class="checkrow"><input type="checkbox" value="6"> Saturday</label>
+          <label class="checkrow"><input type="checkbox" value="0"> Sunday</label>
+        </div>
+        <button class="primary" onclick="saveReminderDays()">Save reminder days</button>
+        <button class="secondary" onclick="requestNotifications()">Enable browser notifications</button>
+        <p class="muted small">Reminder notifications work only when this website is open. Browser notification permission may be required.</p>
+      </div>
+      <div class="card">
+        <h2>Account</h2>
+        <p id="accountEmail" class="muted"></p>
+        <button class="secondary" onclick="logout()">Log out</button>
+      </div>
+    </section>
+  </section>
+  <div id="message" class="notice hidden"></div>
 </main>
+<footer>SKILLFORGE · Train smarter. Play stronger.</footer>
 
-<div class="modal" id="drillmodal" hidden>
-<div class="modalbox">
-<button class="btn close" onclick="closeDrill()">✕ Close</button>
-<div class="eyebrow" id="detailsport" style="color:#1769ff"></div>
-<h2 id="detailtitle"></h2><p id="detailmeta"></p>
-<h3>How to do it</h3><ol id="detailsteps"></ol>
-<h3>Coaching tips</h3><p id="detailtips"></p>
-<h3>Your goal</h3><p id="detailgoal"></p>
-<button class="btn primary" id="completebutton" onclick="completeCurrent()">✓ Mark completed</button>
-</div></div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SPORTS={
-Baseball:{icon:"⚾",names:["Batting Tee Fundamentals","Ready Position","Two-Handed Catching","Short-Hop Fielding","Throwing Mechanics","Grip and Release","Footwork Around the Bag","Ground Ball Approach","Soft Toss Timing","Accuracy Throwing","Inside Pitch Recognition","Outside Pitch Approach","Opposite-Field Hitting","Line-Drive Contact","Bunting Fundamentals","Double-Play Footwork","Backhand Ground Balls","Forehand Ground Balls","Pop Fly Communication","Outfield Drop Step","Breaking-Ball Recognition","Situational Hitting","Hit-and-Run Awareness","Two-Strike Approach","Gap-to-Gap Hitting","Outfield Routes","Charging Slow Rollers","Quick Transfer","Relay Throw Accuracy","First-and-Third Defense","Advanced Pitch Recognition","Count-Based At-Bats","Power-Hitting Mechanics","Pitch Location Adjustments","High-Pressure Fielding","Long-Toss Progression","Advanced Double Plays","Outfield Wall Awareness","Base-Running Reads","Full Defensive Situations"]},
-Softball:{icon:"🥎",names:["Tee Hitting Basics","Batting Stance","Catching Fundamentals","Ground Ball Fielding","Throwing Accuracy","Softball Grip","Footwork at First Base","Underhand Toss Practice","Soft Toss Hitting","Target Throws","Inside Pitch Hitting","Outside Pitch Hitting","Bunting Technique","Slap-Hit Footwork","Line-Drive Hitting","Double-Play Turns","Backhand Fielding","Forehand Fielding","Pop Fly Calls","Outfield First Step","Pitch Recognition","Situational Hitting","Base-Running Starts","Two-Strike Approach","Gap Hitting","Outfield Routes","Charging Slow Rollers","Quick Release","Relay Throws","Tag Play Footwork","Advanced Pitch Recognition","Count-Based Hitting","Power-Hitting Form","Location Adjustments","Pressure Fielding","Long Throw Progression","Advanced Double Plays","Fence Awareness","Steal Decisions","Full Defensive Situations"]},
-Basketball:{icon:"🏀",names:["Right-Hand Dribbling","Left-Hand Dribbling","Chest Pass","Bounce Pass","Close-Range Form Shooting","Right Layup Footwork","Left Layup Footwork","Defensive Stance","Jump Stop","Pivot Footwork","Two-Ball Control","Crossover Dribble","Between-the-Legs Dribble","Behind-the-Back Control","Moving Layups","Catch-and-Shoot Footwork","Free-Throw Routine","Passing on the Move","Closeout Footwork","Rebounding Position","Change-of-Pace Dribble","Pull-Up Jump Shot","Controlled Finishing","Weak-Hand Finishing","Give-and-Go Timing","Off-Ball Cutting","Transition Defense","Box-Out Technique","Pass-Fake Decisions","Midrange Shooting","Combo Dribble","Step-Back Footwork","Read-and-React Finishing","Shooting Off Screens","Advanced Weak-Hand Control","Pick-and-Roll Defense","Help-Side Rotation","Full-Court Decisions","Late-Clock Choices","Game-Speed Skill Circuit"]},
-Football:{icon:"🏈",names:["Ready Stance","Short-Pass Accuracy","Catching Basics","Secure the Football","Basic Route Stems","Three-Step Drop","Center Exchange","Backpedal Basics","Lateral Shuffle","Hand-Eye Tracking","Slant Route","Out Route Breaks","Curl Route","Catch Away From Body","Quarterback Target Progression","Pocket Footwork","Running-Back Ball Security","Receiver Release","Defensive Back Hip Turns","Safe Tackling Form With Coach","Dig Route","Comeback Route","Deep-Ball Tracking","Catch and Turn","Read Option Walkthrough","Pass-Rush Footwork","Linebacker Drop","Zone Coverage Spacing","Route Recognition","Special-Teams Lane Discipline","Full Route Tree","Coverage Recognition","Pressure Decisions","Pocket Movement","Ball-Security Circuit","Contested-Catch Positioning","Defensive Break on Ball","Two-Minute Walkthrough","Red-Zone Route Decisions","Situational Walkthrough"]},
-Soccer:{icon:"⚽",names:["Inside-Foot Passing","Sole Roll","Straight-Line Dribbling","Cone Weaving","First-Touch Cushion","Short-Pass Accuracy","Inside-Foot Shooting","Juggling Basics","Defensive Stance","Wall Passing","Outside-Foot Dribbling","Change of Direction","First Touch Across Body","One-Touch Passing","Weak-Foot Passing","Shooting After Touch","Give-and-Go","Shielding the Ball","Side-On Defending","Receiving on the Move","Speed Dribbling","Finishing Across Goal","Passing Triangle","Turning Under Pressure","Crossing Technique","Defensive Channeling","Transition to Attack","Through-Ball Weighting","Safe Volley Technique","Small-Sided Decisions","Combination Play","Directional First Touch","Finishing From Angles","Switching Play","Pressure-Release Passing","Defending Overloads","Counterattack Decisions","Creating Space","Set-Piece Delivery","Game-Situation Circuit"]},
-Volleyball:{icon:"🏐",names:["Ready Position","Forearm Passing","Overhead Setting","Underhand Serving","Standing Float Serve","Approach Footwork","Spike Arm Swing","Blocking Footwork","Court Movement","Wall Passing","Pass-and-Move","Setting to a Target","Serve Accuracy","Jump-Float Serve Basics","Three-Step Approach","Controlled Attacking","Block Timing","Defensive Digging","Coverage Positioning","Communication Calls","Serve-Receive Formation","Setter Footwork","Attacking From Left Side","Attacking From Right Side","Back-Row Attack Footwork","Transition Defense","Reading the Hitter","Tip Coverage","Free-Ball Organization","Rotation Awareness","Combination Attack Timing","Quick Set Footwork","Block-Then-Cover","Defensive Read and React","Serve Pressure Routine","Out-of-System Setting","Backcourt Coverage","Team Transition Circuit","Situational Rally Practice","Full-Skill Rotation Circuit"]},
-Hockey:{icon:"🏒",names:["Athletic Skating Stance","Forward Glide","Backward Skating Basics","Controlled Stops","Tight Turns","Puck Control Basics","Forehand Stickhandling","Backhand Stickhandling","Stationary Passing","Receiving a Pass","Wrist-Shot Technique","Target Shooting","Safe Hockey Posture","Puck Protection","Passing on the Move","Quick Puck Release","Cone Stickhandling","Figure-Eight Puck Control","Give-and-Go Passing","Defensive Gap Position","Backward-to-Forward Transition","Crossovers","Passing Through Targets","Moving Wrist Shot","Backhand Shooting","One-Timer Footwork","Screen-Aware Shooting","Defensive Stick Position","Angling Footwork","Board-Pass Practice","Breakout Passing","Forecheck Positioning","Backcheck Awareness","Blue-Line Puck Control","Quick Transition Drill","Shot Selection","Net-Front Positioning","Power-Play Passing Patterns","Penalty-Kill Positioning","Game-Situation Circuit"]}
+// STEP 1: Replace these two placeholders with your Supabase project details.
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
+
+const SPORTS = {
+ Baseball:{emoji:"⚾",drills:[
+ "Tee Work","Soft Toss","Batting Practice","One-Hand Batting","Contact Point Drill","Opposite Field Hitting","Bunting Practice","Load and Stride","Dry Swings","Reaction Hitting",
+ "Ground Ball Fielding","Forehand Grounders","Backhand Grounders","Ready Position","Quick Hands","Double Play Feeds","Slow Roller Fielding","Charging the Ball","Short Hop Practice","Fielding Footwork",
+ "Long Toss","Kneeling Throws","Crow Hop Throws","Accuracy Throws","Quick Release","Throwing Mechanics","Wrist Snap","Target Throws","Relay Throws","Pickoff Footwork",
+ "Base Running Starts","First-to-Third Reads","Sliding Technique","Lead-Off Practice","Stealing Reads","Rounding Bases","Home-to-First Sprint","Tag-Up Reads","Reaction Starts","Agility Ladder"
+ ]},
+ Softball:{emoji:"🥎",drills:[
+ "Tee Hitting","Soft Toss","Front Toss","Contact Hitting","Opposite Field Hitting","Bunting","Slap Hitting Footwork","Bat Speed Swings","Load and Stride","Two-Strike Hitting",
+ "Ground Ball Fielding","Backhand Fielding","Forehand Fielding","Quick Hands","Short Hops","Charging Slow Rollers","Double Play Feeds","Ready Position","Glove-to-Hand Transfer","Fielding Footwork",
+ "Throwing Mechanics","Wrist Snap Throws","Accuracy Throws","Quick Release","Crow Hop Throws","Long Toss","Relay Throws","Target Throws","Footwork Around Bases","Catching Pop Flies",
+ "Base Running Starts","Sliding Practice","Rounding Bases","Stealing Reads","Tag-Up Reads","Home-to-First Sprint","Agility Ladder","Reaction Starts","Lead-Off Practice","Sprint Intervals"
+ ]},
+ Basketball:{emoji:"🏀",drills:[
+ "Stationary Dribbling","Crossover Dribbles","Between-the-Legs Dribbles","Behind-the-Back Dribbles","Weak-Hand Dribbling","Cone Dribbling","Change of Pace","Retreat Dribble","Two-Ball Dribbling","Full-Court Control",
+ "Form Shooting","Free Throws","Spot Shooting","Midrange Pull-Ups","Three-Point Shooting","Catch-and-Shoot","Off-the-Dribble Shooting","Bank Shots","Layups Right Hand","Layups Left Hand",
+ "Mikan Drill","Reverse Layups","Euro Step Footwork","Jump Stops","Pivot Practice","Triple Threat Moves","Defensive Slides","Closeout Footwork","Rebounding Position","Box-Out Practice",
+ "Chest Pass Accuracy","Bounce Pass Accuracy","Overhead Pass","Wall Passing","Pick-and-Roll Reads","Fast Break Finishing","Lateral Agility","Sprint and Stop","Reaction Drills","Conditioning Runs"
+ ]},
+ Football:{emoji:"🏈",drills:[
+ "Three-Point Stance","Explosive Starts","10-Yard Acceleration","Cone Sprints","Lateral Shuffle","Backpedal Technique","Change of Direction","T-Drill Footwork","Reaction Starts","Short Shuttle",
+ "Route Running","Slant Routes","Out Routes","Comeback Routes","Curl Routes","Release Footwork","Catching Fundamentals","High-Point Catches","Sideline Toe Taps","Over-the-Shoulder Catches",
+ "Spiral Passing","Short Passing Accuracy","Intermediate Passing","Dropback Footwork","Pocket Movement","Target Passing","Throwing on the Run","Quick Release","Ball Security","Hand-Off Technique",
+ "Stance and Start","Mirror Footwork","Flag Pulling Technique","Safe Blocking Footwork","Tackling Form on Pads","Pursuit Angles","Backpedal and Break","Coverage Drops","Agility Ladder","Conditioning Intervals"
+ ]},
+ Soccer:{emoji:"⚽",drills:[
+ "Inside-Foot Passing","Wall Passes","One-Touch Passing","Two-Touch Passing","Long Passing","Switching Play","First Touch","Receiving on the Move","Passing Through Gates","Give-and-Go",
+ "Inside Cuts","Outside Cuts","Sole Rolls","Stepovers","Body Feints","Cone Dribbling","Change of Pace","Weak-Foot Dribbling","Shielding the Ball","Close Control",
+ "Instep Shooting","Placement Shooting","Weak-Foot Shooting","One-on-One Finishing","First-Time Finishing","Volleys Technique","Penalty Practice","Finishing After a Sprint","Curved Runs","Shooting Accuracy",
+ "Defensive Stance","Jockeying","Lateral Movement","Interceptions","Tracking Runners","Heading Technique","Throw-In Technique","Goalkeeper Handling","Agility Ladder","Sprint Intervals"
+ ]},
+ Volleyball:{emoji:"🏐",drills:[
+ "Wall Forearm Passes","Partner Passing","Platform Control","Shuffle Passing","Serve Receive","Target Passing","Move-and-Pass","Low Defensive Stance","Reaction Digging","Passing Accuracy",
+ "Wall Setting","Partner Setting","High Sets","Quick Sets","Back Sets","Setting Footwork","Jump Setting","Setter Release","Target Setting","Emergency Setting",
+ "Standing Float Serve","Jump Float Serve","Serving Accuracy","Short Serves","Deep Corner Serves","Toss Consistency","Serve Routine","Target Zone Serving","Serve Receive Reads","Overhand Serving",
+ "Approach Footwork","Arm Swing Mechanics","Block Footwork","Block Jump Timing","Transition Footwork","Tip Coverage","Roll Shots","Hitting Approach","Lateral Agility","Jump Technique"
+ ]},
+ Hockey:{emoji:"🏒",drills:[
+ "Stationary Stickhandling","Wide Dribbles","Tight Dribbles","Cone Stickhandling","Puck Protection","Toe Drags","Pull-and-Release","Head-Up Stickhandling","Quick Hands","Change of Direction",
+ "Forehand Passing","Backhand Passing","Wall Passes","One-Touch Passing","Pass Reception","Saucer Pass Technique","Passing Through Gates","Give-and-Go","Moving Passes","Target Passing",
+ "Forehand Wrist Shot","Backhand Shot","Snapshot Technique","Shooting Accuracy","Quick Release","Shot Placement","Shooting in Motion","One-Timer Footwork","Rebound Practice","Deception Moves",
+ "Forward Stride Technique","Backward Skating","Crossover Footwork","Tight Turns","Stopping Technique","Edge Control","Acceleration Starts","Lateral Movement","Reaction Agility","Conditioning Intervals"
+ ]}
 };
-const LEAGUES={
-mlb:{name:"MLB",path:"baseball/mlb"},nfl:{name:"NFL",path:"football/nfl"},nba:{name:"NBA",path:"basketball/nba"},nhl:{name:"NHL",path:"hockey/nhl"},mls:{name:"MLS",path:"soccer/usa.1"},epl:{name:"Premier League",path:"soccer/eng.1"},
-cfb:{name:"NCAA Football",path:"football/college-football"},cmbb:{name:"Men's College Basketball",path:"basketball/mens-college-basketball"},cwbb:{name:"Women's College Basketball",path:"basketball/womens-college-basketball"},cbase:{name:"College Baseball",path:"baseball/college-baseball"},csoft:{name:"College Softball",path:"softball/college-softball"},chock:{name:"College Hockey",path:"hockey/mens-college-hockey"},cvolley:{name:"College Volleyball",path:"volleyball/womens-college-volleyball"}
+
+const appState = {
+ user:null, profile:null, selectedSports:["Baseball"], completed:[],
+ xp:0, practiceDays:[], settings:{
+ theme:"light",textSize:"medium",highContrast:false,reduceMotion:false,
+ sound:false,reminders:false,reminderTime:"18:00",
+ reminderDays:[0,1,2,3,4,5,6],reminderType:"both"
+ }
 };
-const LEVELS=[["Rookie",0,"🌱"],["Prospect",200,"⭐"],["Starter",500,"🔥"],["All-Star",900,"🏆"],["Elite",1400,"💎"],["Legend",2000,"👑"]];
-const DRILLS=[];
-Object.entries(SPORTS).forEach(([sport,info])=>info.names.forEach((name,i)=>DRILLS.push({id:sport.toLowerCase()+"-"+i,sport,name,difficulty:i<10?"Beginner":i<25?"Intermediate":"Advanced",minutes:i<10?8:i<25?12:15,xp:i<10?15:i<25?25:35,index:i})));
-function fresh(){return{completed:[],name:"",favorite:"Baseball"}}
-function loadData(){try{let d=JSON.parse(localStorage.getItem("skillforge_v4")||"{}");return{...fresh(),...d,completed:Array.isArray(d.completed)?d.completed.filter(id=>DRILLS.some(x=>x.id===id)):[]}}catch(e){return fresh()}}
-let data=loadData(),currentSport=SPORTS[data.favorite]?data.favorite:"Baseball",currentLeague="mlb",currentDetail=null;
-function save(){try{localStorage.setItem("skillforge_v4",JSON.stringify(data))}catch(e){}}
-function xp(){return DRILLS.filter(d=>data.completed.includes(d.id)).reduce((s,d)=>s+d.xp,0)}
-function level(){let chosen=LEVELS[0];LEVELS.forEach(l=>{if(xp()>=l[1])chosen=l});return chosen}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function switchView(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));if(id==="scores")loadScores();if(id==="progress")renderProgress();if(id==="profile")renderProfile();window.scrollTo({top:0,behavior:"smooth"})}
-document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>switchView(b.dataset.view));
-function chooseSport(s){currentSport=s;data.favorite=s;save();renderAll();switchView("training");document.getElementById("library").scrollIntoView({behavior:"smooth"})}
-function renderSportTabs(){document.getElementById("sporttabs").innerHTML=Object.keys(SPORTS).map(s=>`<button class="tab ${s===currentSport?"active":""}" data-sport="${s}">${SPORTS[s].icon} ${s}</button>`).join("");document.querySelectorAll("[data-sport]").forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;renderSportTabs();renderDrills()})}
-["search","difficulty","completion"].forEach(id=>document.getElementById(id).addEventListener(id==="search"?"input":"change",renderDrills));
-function guide(d){let s=d.sport,n=d.name.toLowerCase(),steps,tips,goal;
-if(["Baseball","Softball"].includes(s)){steps=["Get into a balanced athletic stance in a clear practice area.","Practice the movement slowly, watching the ball and your target.","Repeat with controlled footwork and consistent technique.","Reset and repeat, increasing difficulty only when comfortable."];tips="Stay balanced, communicate with teammates, and prioritize control over power. Stop if you feel pain.";goal="Complete 10 controlled repetitions."}
-else if(s==="Basketball"){steps=["Start balanced with knees slightly bent.","Practice the ball handling, footwork, pass, or shot slowly.","Keep your eyes up and aim for a consistent target.","Repeat with both hands or from both sides when appropriate."];tips="Focus on control, balance, and safe spacing around other players.";goal="Complete 10 focused repetitions."}
-else if(s==="Football"){steps=["Begin in the correct athletic stance for the drill.","Practice the route, catch, footwork, or assignment slowly.","Repeat with a clear target and controlled movements.","Reset and review your technique."];tips="Contact and tackling drills should only be practiced with qualified coaching and proper protective equipment.";goal="Complete 10 controlled repetitions."}
-else if(s==="Soccer"){steps=["Set up a ball and a clear practice space.","Practice the pass, touch, dribble, or movement slowly.","Use both feet when appropriate and keep the ball under control.","Repeat, gradually increasing speed while maintaining technique."];tips="Look up between touches and communicate with teammates.";goal="Complete 10 focused repetitions."}
-else if(s==="Volleyball"){steps=["Start in a balanced ready position.","Practice the serve, set, pass, footwork, or defensive movement.","Aim for a consistent target and communicate clearly.","Repeat with controlled technique."];tips="Use safe shoulder mechanics and avoid diving into other players.";goal="Complete 10 quality repetitions."}
-else{steps=["Wear appropriate protective equipment and use an approved practice area.","Start in a balanced stance with knees bent and stick under control.","Practice the skating, passing, shooting, or positioning movement slowly.","Reset safely and repeat with control."];tips="Follow rink safety rules, keep your stick controlled, and learn skating skills with qualified supervision.";goal="Complete 10 controlled repetitions."}
-if(/throw|pitch|serve/.test(n))tips+=" Focus on accuracy and comfortable mechanics; stop if your arm or shoulder hurts.";
-if(d.difficulty==="Advanced")tips+=" This is a challenging variation. Build up gradually.";
-return{steps,tips,goal}}
-function openDrill(id){currentDetail=DRILLS.find(d=>d.id===id);if(!currentDetail)return;let d=currentDetail,g=guide(d);document.getElementById("detailsport").textContent=SPORTS[d.sport].icon+" "+d.sport.toUpperCase()+" TRAINING";document.getElementById("detailtitle").textContent=d.name;document.getElementById("detailmeta").textContent=d.difficulty+" • "+d.minutes+" minutes • "+d.xp+" XP";document.getElementById("detailsteps").innerHTML=g.steps.map(x=>"<li>"+esc(x)+"</li>").join("");document.getElementById("detailtips").textContent=g.tips;document.getElementById("detailgoal").textContent=g.goal;document.getElementById("completebutton").textContent=data.completed.includes(id)?"✓ Completed — undo":"✓ Mark completed";document.getElementById("drillmodal").hidden=false}
-function closeDrill(){document.getElementById("drillmodal").hidden=true;currentDetail=null}
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrill()});
-function toggleDrill(id){if(data.completed.includes(id))data.completed=data.completed.filter(x=>x!==id);else data.completed.push(id);save();renderAll();if(currentDetail)document.getElementById("completebutton").textContent=data.completed.includes(currentDetail.id)?"✓ Completed — undo":"✓ Mark completed"}
-function completeCurrent(){if(currentDetail)toggleDrill(currentDetail.id)}
-function renderDrills(){let search=document.getElementById("search").value.toLowerCase().trim(),dif=document.getElementById("difficulty").value,comp=document.getElementById("completion").value;let arr=DRILLS.filter(d=>d.sport===currentSport&&d.name.toLowerCase().includes(search)&&(dif==="all"||d.difficulty===dif)&&(comp==="all"||(comp==="completed"&&data.completed.includes(d.id))||(comp==="incomplete"&&!data.completed.includes(d.id))));document.getElementById("sportheading").textContent=SPORTS[currentSport].icon+" "+currentSport+" drills";document.getElementById("count").textContent=arr.length+" of 40 drills";document.getElementById("noresults").hidden=arr.length>0;document.getElementById("drillgrid").innerHTML=arr.map(d=>{let done=data.completed.includes(d.id);return `<article class="card drill-card ${done?"done":""}"><div><span class="pill">${d.difficulty}</span> <span class="small">${d.minutes} min</span></div><button class="drill-name" onclick="openDrill('${d.id}')">${esc(d.name)} → View instructions</button><p class="small">${d.sport} practice</p><div class="drill-bottom"><span class="pill">⚡ ${d.xp} XP</span><button class="btn ${done?"":"primary"}" onclick="toggleDrill('${d.id}')">${done?"✓ Completed":"Complete"}</button></div></article>`}).join("")}
-function renderQuick(){document.getElementById("headerxp").textContent=xp()+" XP";document.getElementById("quickstats").innerHTML=`<div class="card"><p>Total XP</p><div class="stat">${xp()}</div></div><div class="card"><p>Drills completed</p><div class="stat">${data.completed.length}/280</div></div><div class="card"><p>Current level</p><div class="stat">${level()[2]} ${level()[0]}</div></div>`}
-function renderProgress(){document.getElementById("progressstats").innerHTML=`<div class="card"><p>Total XP</p><div class="stat">${xp()}</div></div><div class="card"><p>Completed drills</p><div class="stat">${data.completed.length}/280</div></div><div class="card"><p>Current level</p><div class="stat">${level()[0]}</div></div>`;document.getElementById("sportprogress").innerHTML=Object.keys(SPORTS).map(s=>{let n=DRILLS.filter(d=>d.sport===s&&data.completed.includes(d.id)).length;return `<div class="card"><h3>${SPORTS[s].icon} ${s}</h3><div class="stat">${n}/40</div><div class="progressbar"><div class="fill" style="width:${n/40*100}%"></div></div><button class="btn" onclick="chooseSport('${s}')">Train ${s}</button></div>`}).join("");document.getElementById("levels").innerHTML=LEVELS.map(l=>`<div class="line"><strong>${l[2]} ${l[0]} — ${l[1]} XP</strong><span class="pill">${xp()>=l[1]?"Unlocked":"Locked"}</span></div>`).join("");let done=DRILLS.filter(d=>data.completed.includes(d.id));document.getElementById("completedlist").innerHTML=done.length?done.map(d=>`<div class="line"><span>${SPORTS[d.sport].icon} ${esc(d.name)} <span class="small">(${d.sport})</span></span><strong>+${d.xp} XP</strong></div>`).join(""):'<p>No completed drills yet. Start training to earn XP.</p>'}
-function renderProfile(){document.getElementById("athletename").value=data.name||"";document.getElementById("favoritesport").innerHTML=Object.keys(SPORTS).map(s=>`<option ${data.favorite===s?"selected":""}>${s}</option>`).join("");document.getElementById("profilename").textContent=data.name?data.name+"'s profile":"Your athlete profile";document.getElementById("profiledetail").textContent="Favorite sport: "+data.favorite+" • Level: "+level()[0]+" • "+xp()+" XP"}
-document.getElementById("profileform").onsubmit=e=>{e.preventDefault();data.name=document.getElementById("athletename").value.trim();data.favorite=document.getElementById("favoritesport").value;currentSport=data.favorite;save();renderAll();renderSportTabs();alert("Profile saved!")};
-function resetProgress(){if(confirm("Reset all completed drills and XP?")){data.completed=[];save();renderAll()}}
-function renderScoreTabs(){let pro=["mlb","nfl","nba","nhl","mls","epl"],college=["cfb","cmbb","cwbb","cbase","csoft","chock","cvolley"];document.getElementById("protabs").innerHTML=pro.map(k=>`<button class="tab ${k===currentLeague?"active":""}" data-league="${k}">${LEAGUES[k].name}</button>`).join("");document.getElementById("collegetabs").innerHTML=college.map(k=>`<button class="tab ${k===currentLeague?"active":""}" data-league="${k}">${LEAGUES[k].name}</button>`).join("");document.querySelectorAll("[data-league]").forEach(b=>b.onclick=()=>{currentLeague=b.dataset.league;renderScoreTabs();loadScores()})}
-async function loadScores(){let l=LEAGUES[currentLeague];document.getElementById("scoretitle").textContent=l.name+" Scores";document.getElementById("scorestatus").textContent="Loading scores...";document.getElementById("scoreboard").innerHTML="Loading scoreboard…";try{let r=await fetch("https://site.api.espn.com/apis/site/v2/sports/"+l.path+"/scoreboard");if(!r.ok)throw Error();let result=await r.json(),events=result.events||[];if(!events.length){document.getElementById("scorestatus").textContent="No games returned right now.";document.getElementById("scoreboard").innerHTML="No games listed right now. This league may be out of season or its feed may be unavailable.";return}document.getElementById("scorestatus").textContent=events.length+" games listed";document.getElementById("scoreboard").innerHTML=events.map(ev=>{let teams=ev.competitions?.[0]?.competitors||[],away=teams.find(t=>t.homeAway==="away")||teams[0]||{},home=teams.find(t=>t.homeAway==="home")||teams[1]||{};return `<div class="line"><div><strong>${esc(away.team?.displayName||"Away")}</strong><br><strong>${esc(home.team?.displayName||"Home")}</strong><div class="small">${esc(ev.status?.type?.shortDetail||"Scheduled")}</div></div><div style="text-align:right;font-size:20px;font-weight:bold">${esc(away.score??"—")}<br>${esc(home.score??"—")}</div></div>`}).join("")}catch(e){document.getElementById("scorestatus").textContent="Could not load scores.";document.getElementById("scoreboard").textContent="This scoreboard feed is unavailable right now. Check your connection or try another league."}}
-function renderAll(){renderQuick();renderDrills();renderProgress();renderProfile()}
-renderSportTabs();renderScoreTabs();renderAll();
+
+let db=null, activeTab="dashboard", reminderTimer=null;
+const $=id=>document.getElementById(id);
+const sportsNames=Object.keys(SPORTS);
+const validDB=()=>SUPABASE_URL.startsWith("https://") && SUPABASE_KEY.length>10 && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_KEY.includes("YOUR_");
+
+function notify(msg){
+ $("message").textContent=msg;
+ $("message").classList.remove("hidden");
+}
+function authNotify(msg){
+ $("authMessage").textContent=msg;
+ $("authMessage").classList.remove("hidden");
+}
+function hideMessages(){
+ $("message").classList.add("hidden");
+ $("authMessage").classList.add("hidden");
+}
+function totalDrills(){return appState.selectedSports.reduce((n,s)=>n+SPORTS[s].drills.length,0)}
+function completedForSport(s){return SPORTS[s].drills.filter((_,i)=>appState.completed.includes(s+"::"+i)).length}
+function allCompleted(){return appState.completed.length}
+function totalXP(){return appState.xp || allCompleted()*25}
+function level(){return Math.floor(totalXP()/250)+1}
+function streak(){return appState.practiceDays.length}
+function today(){return new Date().toISOString().slice(0,10)}
+
+async function signup(){
+ hideMessages();
+ if(!db){authNotify("First add your Supabase Project URL and publishable key in the code. I can help you find them.");return}
+ const name=$("signupName").value.trim(),email=$("signupEmail").value.trim(),password=$("signupPassword").value;
+ if(!name||!email||password.length<6){authNotify("Enter your name, a valid email, and a password with at least 6 characters.");return}
+ const {data,error}=await db.auth.signUp({email,password,options:{data:{name}}});
+ if(error){authNotify(error.message);return}
+ if(data.session){appState.user=data.user;appState.profile={name};await loadProfile();openApp()}
+ else authNotify("Account created! Check your email if confirmation is required, then log in.")
+}
+async function login(){
+ hideMessages();
+ if(!db){authNotify("First add your Supabase Project URL and publishable key in the code.");return}
+ const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error){authNotify(error.message);return}
+ appState.user=data.user;await loadProfile();openApp()
+}
+async function logout(){
+ if(db)await db.auth.signOut();
+ appState.user=null;appState.profile=null;
+ $("app").classList.add("hidden");$("welcome").classList.remove("hidden");
+ $("logoutBtn").classList.add("hidden");$("userLabel").textContent="";
+ if(reminderTimer)clearInterval(reminderTimer);
+}
+async function loadProfile(){
+ if(!appState.user)return;
+ const {data,error}=await db.from("skillforge_profiles").select("*").eq("user_id",appState.user.id).maybeSingle();
+ if(error){notify("Couldn't load your profile: "+error.message);return}
+ if(data){
+  appState.profile=data;
+  appState.selectedSports=(data.selected_sports||[]).filter(s=>SPORTS[s]);
+  appState.completed=data.completed||[];
+  appState.practiceDays=data.practice_days||[];
+  appState.settings={...appState.settings,...(data.settings||{})};
+  appState.xp=appState.completed.length*25;
+ }else{
+  appState.profile={name:appState.user.user_metadata?.name||""};
+  await saveProfile()
+ }
+}
+async function saveProfile(){
+ if(!db||!appState.user)return;
+ const payload={
+  user_id:appState.user.id,
+  name:appState.profile?.name||appState.user.user_metadata?.name||"",
+  favorite:appState.selectedSports[0]||"Baseball",
+  selected_sports:appState.selectedSports,
+  completed:appState.completed,
+  practice_days:appState.practiceDays,
+  settings:appState.settings,
+  updated_at:new Date().toISOString()
+ };
+ const {error}=await db.from("skillforge_profiles").upsert(payload,{onConflict:"user_id"});
+ if(error)notify("Save failed: "+error.message)
+}
+function openApp(){
+ $("welcome").classList.add("hidden");$("app").classList.remove("hidden");
+ $("logoutBtn").classList.remove("hidden");
+ $("userLabel").textContent=appState.user.email;
+ $("accountEmail").textContent=appState.user.email;
+ $("greeting").textContent="Let's get to work"+(appState.profile?.name?", "+appState.profile.name:"")+".";
+ renderAll();showTab("dashboard");applySettings();startReminderChecker()
+}
+function showTab(tab){
+ activeTab=tab;
+ if(tab!=="settings"&&tab!=="scores"&&tab!=="progress"&&tab!=="sports"&&tab!=="drills"&&tab!=="dashboard")tab="dashboard";
+ ["dashboard","sports","drills","scores","progress","settings"].forEach(t=>{
+  $("tab-"+t).classList.toggle("hidden",t!==tab)
+ });
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+ if(tab==="sports")renderSportChoices();
+ if(tab==="drills")renderDrills();
+ if(tab==="progress")renderProgress();
+ if(tab==="scores")loadScores()
+}
+function renderAll(){
+ renderStats();renderDashboardSports();renderSportChoices();fillSportSelect();renderDrills();renderProgress();fillSettings()
+}
+function renderStats(){
+ $("xpStat").textContent=totalXP();
+ $("levelStat").textContent=level();
+ $("completedStat").textContent=allCompleted();
+ $("streakStat").textContent=streak();
+ const total=totalDrills(),done=appState.selectedSports.reduce((n,s)=>n+completedForSport(s),0);
+ $("overallBar").style.width=(total?done/total*100:0)+"%";
+ $("overallText").textContent=appState.selectedSports.length?`${done} of ${total} drills completed across your selected sports.`:"Select sports to personalize your dashboard."
+}
+function renderDashboardSports(){
+ const box=$("dashboardSports");
+ if(!appState.selectedSports.length){box.innerHTML='<div class="card"><h3>No sports selected yet</h3><button class="primary" onclick="showTab(\\'sports\\')">Choose sports</button></div>';return}
+ box.innerHTML=appState.selectedSports.map(s=>`<div class="sport" onclick="openSportDrills('${s}')"><div class="emoji">${SPORTS[s].emoji}</div><h3>${s}</h3><p class="muted">${completedForSport(s)} of 40 drills complete</p><div class="progress"><div style="width:${completedForSport(s)/40*100}%"></div></div><span class="tag">View drills →</span></div>`).join("")
+}
+function renderSportChoices(){
+ $("sportChoices").innerHTML=sportsNames.map(s=>`<label class="sport"><div class="checkrow"><input type="checkbox" value="${s}" ${appState.selectedSports.includes(s)?"checked":""}> <span class="emoji">${SPORTS[s].emoji}</span></div><h3>${s}</h3><p class="muted small">40 training drills</p></label>`).join("")
+}
+async function saveSports(){
+ const selected=[...$("sportChoices").querySelectorAll("input:checked")].map(x=>x.value);
+ if(!selected.length){notify("Choose at least one sport.");return}
+ appState.selectedSports=selected;
+ if(!selected.includes($("sportSelect").value))$("sportSelect").value=selected[0];
+ await saveProfile();renderAll();notify("Your sports have been saved!")
+}
+function fillSportSelect(){
+ const select=$("sportSelect");
+ const old=select.value;
+ select.innerHTML=(appState.selectedSports.length?appState.selectedSports:sportsNames).map(s=>`<option>${s}</option>`).join("");
+ if(appState.selectedSports.includes(old))select.value=old
+}
+function openSportDrills(s){
+ fillSportSelect();$("sportSelect").value=s;showTab("drills");renderDrills()
+}
+function renderDrills(){
+ const sport=$("sportSelect").value;
+ if(!SPORTS[sport]){$("drillList").innerHTML='<div class="card">Select a sport first.</div>';return}
+ const difficulty=$("difficultySelect").value;
+ const drills=SPORTS[sport].drills;
+ $("drillSummary").textContent=`${sport}: ${completedForSport(sport)} of ${drills.length} completed. Complete a drill to earn 25 XP.`;
+ $("drillList").innerHTML=drills.map((name,i)=>{
+  const key=sport+"::"+i,done=appState.completed.includes(key);
+  const diff=i<14?"Beginner":i<28?"Intermediate":"Advanced";
+  if(difficulty!=="All"&&difficulty!==diff)return "";
+  return `<div class="drill"><div class="actions" style="justify-content:space-between"><h3>${SPORTS[sport].emoji} ${i+1}. ${name}</h3><span class="tag">${diff}</span></div><p class="muted small">${drillInstruction(name,sport)}</p><button class="${done?"secondary":"primary"}" onclick="toggleDrill('${sport}',${i})">${done?"✓ Completed — undo":"Mark complete +25 XP"}</button></div>`
+ }).join("")
+}
+function drillInstruction(name,sport){
+ return `Focus on good technique and control. ${name} is a ${sport.toLowerCase()} training exercise. Start slowly, repeat with correct form, and increase speed only when you feel comfortable. Take breaks and use a safe practice area.`
+}
+async function toggleDrill(sport,i){
+ const key=sport+"::"+i;
+ if(appState.completed.includes(key))appState.completed=appState.completed.filter(k=>k!==key);
+ else{
+  appState.completed.push(key);
+  const d=today();
+  if(!appState.practiceDays.includes(d))appState.practiceDays.push(d);
+ }
+ appState.xp=appState.completed.length*25;
+ await saveProfile();renderAll();showTab("drills");notify("Progress saved!")
+}
+function renderProgress(){
+ const total=totalDrills(),done=appState.selectedSports.reduce((n,s)=>n+completedForSport(s),0);
+ $("progressIntro").textContent=`You've completed ${done} of ${total} drills in your selected sports and earned ${totalXP()} XP.`;
+ $("progressSports").innerHTML=appState.selectedSports.length?appState.selectedSports.map(s=>`<div class="card"><div class="actions" style="justify-content:space-between"><h3>${SPORTS[s].emoji} ${s}</h3><strong>${completedForSport(s)}/40</strong></div><div class="progress"><div style="width:${completedForSport(s)/40*100}%"></div></div></div>`).join(""):"Choose sports to see your progress."
+}
+function fillSettings(){
+ $("themeSetting").value=appState.settings.theme||"light";
+ $("textSetting").value=appState.settings.textSize||"medium";
+ $("contrastSetting").checked=!!appState.settings.highContrast;
+ $("motionSetting").checked=!!appState.settings.reduceMotion;
+ $("reminderEnabled").checked=!!appState.settings.reminders;
+ $("reminderTime").value=appState.settings.reminderTime||"18:00";
+ $("reminderType").value=appState.settings.reminderType||"both";
+ document.querySelectorAll("#reminderDays input").forEach(c=>c.checked=(appState.settings.reminderDays||[]).includes(Number(c.value)))
+}
+async function updateSetting(key,value){
+ appState.settings[key]=value;applySettings();await saveProfile()
+}
+async function saveReminderDays(){
+ appState.settings.reminderDays=[...document.querySelectorAll("#reminderDays input:checked")].map(c=>Number(c.value));
+ await saveProfile();notify("Reminder days saved.")
+}
+function applySettings(){
+ const theme=appState.settings.theme;
+ const dark=theme==="dark"||(theme==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);
+ document.body.classList.toggle("dark",dark);
+ document.body.style.fontSize=({small:"14px",medium:"16px",large:"19px"})[appState.settings.textSize]||"16px";
+ document.body.style.filter=appState.settings.highContrast?"contrast(1.15)":"";
+ document.documentElement.style.scrollBehavior=appState.settings.reduceMotion?"auto":"smooth";
+}
+async function requestNotifications(){
+ if(!("Notification" in window)){notify("This browser doesn't support notifications.");return}
+ const permission=await Notification.requestPermission();
+ notify(permission==="granted"?"Notifications enabled. Keep SkillForge open for reminders.":"Notifications were not enabled. You can change this in your browser settings.")
+}
+function startReminderChecker(){
+ if(reminderTimer)clearInterval(reminderTimer);
+ let lastFired="";
+ reminderTimer=setInterval(()=>{
+  const s=appState.settings;if(!s.reminders)return;
+  const now=new Date(),day=now.getDay();
+  const time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  const key=today()+"-"+time;
+  if(time===s.reminderTime&&(s.reminderDays||[]).includes(day)&&lastFired!==key){
+   lastFired=key;
+   if("Notification" in window&&Notification.permission==="granted"){
+    new Notification("SkillForge practice reminder",{body:s.reminderType==="streak"?"Keep your practice habit going!":"It's time to work on your skills!"})
+   }else notify("SkillForge reminder: It's time to practice!")
+  }
+ },15000)
+}
+async function loadScores(){
+ const league=$("leagueSelect").value;
+ const box=$("scoresList");box.innerHTML='<div class="card">Loading scores…</div>';
+ try{
+  const url="https://site.api.espn.com/apis/site/v2/sports/"+league+"/scoreboard";
+  const response=await fetch(url);
+  if(!response.ok)throw new Error("Scoreboard unavailable");
+  const data=await response.json();
+  const events=data.events||[];
+  if(!events.length){box.innerHTML='<div class="card">No games are currently listed for this league. Try another league or check again later.</div>';return}
+  box.innerHTML=events.map(e=>{
+   const comp=e.competitions?.[0],teams=comp?.competitors||[];
+   const status=e.status?.type?.shortDetail||"Scheduled";
+   return `<div class="card"><h3>${e.name||"Game"}</h3><p>${teams.map(t=>`${t.team?.displayName||"Team"} — ${t.score??"—"}`).join("<br>")}</p><p class="muted small">${status}</p></div>`
+  }).join("")
+ }catch(e){box.innerHTML='<div class="card">Could not load scores right now. Check your connection or try again later.</div>'}
+}
+async function init(){
+ if(!validDB()){
+  $("authMessage").textContent="Website code is installed, but Supabase still needs to be connected using your project URL and publishable key.";
+  $("authMessage").classList.remove("hidden");
+  return
+ }
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+ const {data}=await db.auth.getSession();
+ if(data.session){appState.user=data.session.user;await loadProfile();openApp()}
+ db.auth.onAuthStateChange(async(event,session)=>{
+  if(event==="SIGNED_OUT"){appState.user=null;$("app").classList.add("hidden");$("welcome").classList.remove("hidden")}
+  else if(session&&event==="SIGNED_IN"&&!appState.profile){
+   appState.user=session.user;await loadProfile();openApp()
+  }
+ })
+}
+init();
 </script>
 </body>
 </html>
