@@ -399,6 +399,7 @@ async function logout() {
   message("You have logged out.");
 }
 function init() {
+  message("JavaScript is running!");
   fillSports();
   loadLocal();
   $("sportSelect").value = data.favorite || "Baseball";
