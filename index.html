@@ -2,600 +2,399 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a1020">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SkillForge | Train Smarter</title>
 <style>
-:root {
-  --bg:#090e1b;
-  --panel:#111a2d;
-  --panel2:#19243a;
-  --line:#2a3853;
-  --text:#f4f7ff;
-  --muted:#9ba9c3;
-  --lime:#b8f34a;
-  --blue:#72a8ff;
-  --red:#ff7777;
-}
+:root{--bg:#090e1b;--panel:#111a2d;--panel2:#19243a;--line:#2a3853;--text:#f4f7ff;--muted:#9ba9c3;--lime:#b8f34a;--blue:#72a8ff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
-header{position:sticky;top:0;z-index:10;background:#090e1bf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.header-inner{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;letter-spacing:-.7px}
-.logo{display:grid;place-items:center;background:var(--lime);color:#101719;border-radius:12px;width:39px;height:39px;font-size:21px}
-.brand span{color:var(--lime)}
-.xp-chip{font-size:13px;color:var(--lime);background:#b8f34a12;border:1px solid #b8f34a45;padding:7px 11px;border-radius:99px;font-weight:bold}
-.wrap{max-width:1200px;margin:auto;padding:24px 20px 100px}
-.main-tabs,.sub-tabs{display:flex;gap:8px;overflow-x:auto;padding:5px 0 12px;scrollbar-width:thin}
-.tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:10px 16px;border-radius:11px;white-space:nowrap;font-weight:700}
-.tab:hover{color:var(--text);border-color:#61718c}
-.tab.active{background:var(--lime);border-color:var(--lime);color:#101719}
-.sub-tabs{margin:8px 0 18px}
-.sub-tabs .tab{font-size:13px;padding:8px 13px}
-.view{display:none}
-.view.active{display:block}
-.hero{background:linear-gradient(120deg,#182640,#111a2d 58%,#202d19);border:1px solid var(--line);border-radius:24px;padding:32px;margin:12px 0 22px;position:relative;overflow:hidden}
-.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);font-weight:800}
-h1{font-size:clamp(30px,5vw,52px);line-height:1.08;letter-spacing:-1.8px;margin:10px 0}
-h2{font-size:26px;letter-spacing:-.6px;margin:10px 0}
-h3{margin:0 0 7px;font-size:17px}
-p{margin:6px 0;color:var(--muted)}
-.hero p{max-width:640px;font-size:16px}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:25px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0}
-.card p{font-size:14px}
-.stat{font-size:29px;font-weight:900;letter-spacing:-1px}
-.muted{color:var(--muted)}
-.small{font-size:12px;color:var(--muted)}
-.pill{display:inline-block;border:1px solid var(--line);background:var(--panel2);border-radius:99px;padding:4px 9px;font-size:11px;font-weight:bold;color:var(--muted)}
-.pill.lime{color:var(--lime);border-color:#b8f34a55;background:#b8f34a10}
-.pill.blue{color:var(--blue)}
-.btn{border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:var(--panel2);color:var(--text);font-weight:700}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.5}
+button,input,select{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:10;background:#090e1bf5;border-bottom:1px solid var(--line)}
+.header{max-width:1200px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:21px;font-weight:900}.brand span{color:var(--lime)}
+.xpchip{color:var(--lime);border:1px solid #b8f34a55;border-radius:30px;padding:6px 12px;font-weight:bold;font-size:13px}
+main{max-width:1200px;margin:auto;padding:18px 18px 70px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px}
+.tab,.btn{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:10px;padding:10px 13px;font-weight:bold;white-space:nowrap}
+.tab.active{background:var(--lime);color:#101719;border-color:var(--lime)}
+.btn{color:var(--text);background:var(--panel2)}
 .btn.primary{background:var(--lime);color:#101719;border-color:var(--lime)}
-.btn:hover{filter:brightness(1.1)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:16px}
-.field{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px}
-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
-.drill-card{display:flex;flex-direction:column;gap:10px}
-.drill-card .drill-bottom{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:auto;padding-top:7px}
-.drill-card.done{border-color:#b8f34a66}
-.drill-card.done .drill-title{color:var(--lime)}
-.drill-title{font-size:16px;font-weight:800}
-.drill-desc{font-size:13px;color:var(--muted)}
-.progress-track{height:8px;background:#28334a;border-radius:99px;overflow:hidden;margin:9px 0}
-.progress-fill{height:100%;width:0;background:var(--lime);border-radius:99px;transition:width .25s}
-.score-game{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-bottom:1px solid var(--line)}
-.score-game:last-child{border-bottom:0}
-.score-teams{font-weight:700}
-.score-value{font-size:21px;font-weight:900;text-align:right}
-.team-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
-.team-line:last-child{border-bottom:0}
-.level-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.level-row:last-child{border:0}
-.level-icon{font-size:25px}
-.empty{text-align:center;padding:35px 15px;border:1px dashed var(--line);border-radius:15px;color:var(--muted)}
-.notice{border:1px solid #72a8ff55;background:#72a8ff0e;border-radius:12px;padding:13px;color:var(--muted);font-size:13px;margin-top:14px}
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:var(--lime);color:#101719;font-weight:800;padding:12px 18px;border-radius:12px;z-index:50;box-shadow:0 8px 30px #0008;display:none;max-width:90vw}
+.view{display:none}.view.active{display:block}
+.hero{padding:25px;background:linear-gradient(120deg,#182640,#111a2d 65%,#202d19);border:1px solid var(--line);border-radius:20px;margin:12px 0 20px}
+.eyebrow{font-size:12px;letter-spacing:2px;color:var(--lime);font-weight:800;text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:8px 0}
+h2{font-size:24px;margin:8px 0}h3{font-size:17px;margin:12px 0 5px}
+p{color:var(--muted);margin:6px 0}.small{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px;min-width:0}
+.stat{font-size:27px;font-weight:900}.pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:3px 9px;font-size:11px;color:var(--muted)}
+.pill.lime{color:var(--lime);border-color:#b8f34a55}.pill.blue{color:var(--blue)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:23px 0 12px}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin:12px 0}
+.field{width:100%;padding:11px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--text)}
+.drill-card{display:flex;flex-direction:column;gap:10px}.drill-card.done{border-color:#b8f34a77}
+.drill-title{white-space:normal;text-align:left;width:100%;color:var(--text);font-size:15px}
+.drill-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+.empty{text-align:center;padding:25px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+.progressbar{height:8px;background:#29334a;border-radius:30px;overflow:hidden;margin:8px 0}
+.fill{height:100%;background:var(--lime)}
+.line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.notice{font-size:13px;background:#72a8ff10;border:1px solid #72a8ff55;padding:12px;border-radius:10px;margin-top:14px;color:var(--muted)}
+[hidden]{display:none!important}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:14px}
+.backdrop{position:absolute;inset:0;background:#000d}
+.modalbox{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;width:100%;max-width:620px;max-height:88vh;overflow-y:auto}
+.close{float:right}.modalbox h2{padding-right:40px}.modalbox h3{color:var(--lime);margin-top:20px}
+.modalbox li{padding:5px 0}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 0}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){
- .header-inner{padding:10px 14px}
- .brand{font-size:18px}
- .wrap{padding:16px 13px 100px}
- .hero{padding:23px 19px;border-radius:18px}
- .grid{grid-template-columns:1fr}
- .filters{grid-template-columns:1fr}
- .tab{padding:9px 12px;font-size:13px}
- .main-tabs{gap:6px}
- .stat{font-size:25px}
-}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){main{padding:12px 11px 55px}.header{padding:10px 12px}.grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.hero{padding:20px}.modalbox{padding:17px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="brand"><div class="logo">S</div> SKILL<span>FORGE</span></div>
-    <div class="xp-chip" id="header-xp">⚡ 0 XP</div>
-  </div>
-</header>
+<header><div class="header">
+<div class="brand">⚡ SKILL<span>FORGE</span></div>
+<div class="xpchip" id="headerxp">0 XP</div>
+</div></header>
 
-<main class="wrap">
-  <nav class="main-tabs" aria-label="Main navigation">
-    <button class="tab active" data-view="training">🏋️ Training</button>
-    <button class="tab" data-view="scores">📊 Scores</button>
-    <button class="tab" data-view="progress">📈 Progress</button>
-    <button class="tab" data-view="profile">👤 Profile</button>
-  </nav>
+<main>
+<nav class="tabs">
+<button class="tab active" data-view="training">🏋️ Training</button>
+<button class="tab" data-view="scores">📊 Scores</button>
+<button class="tab" data-view="progress">📈 Progress</button>
+<button class="tab" data-view="profile">👤 Profile</button>
+</nav>
 
-  <section id="training" class="view active">
-    <div class="hero">
-      <div class="eyebrow">Your next level starts here</div>
-      <h1>Put in the work.<br>Build your game.</h1>
-      <p>Train with purpose, complete drills, earn XP, and track your progress across four sports.</p>
-      <div class="btn-row">
-        <button class="btn primary" onclick="document.getElementById('drill-library').scrollIntoView({behavior:'smooth'})">Explore drills ↓</button>
-        <button class="btn" onclick="switchView('progress')">View my progress</button>
-      </div>
-    </div>
-    <div class="grid" id="quick-stats"></div>
-    <div class="section-head" id="drill-library">
-      <div><div class="eyebrow">Training library</div><h2>Choose your sport</h2></div>
-      <span class="pill lime">160 drills</span>
-    </div>
-    <div class="sub-tabs" id="sport-tabs" aria-label="Choose sport">
-      <button class="tab active" data-sport="Baseball">⚾ Baseball</button>
-      <button class="tab" data-sport="Basketball">🏀 Basketball</button>
-      <button class="tab" data-sport="Football">🏈 Football</button>
-      <button class="tab" data-sport="Soccer">⚽ Soccer</button>
-    </div>
-    <div class="filters">
-      <input class="field" id="drill-search" placeholder="Search drills..." aria-label="Search drills">
-      <select class="field" id="difficulty-filter" aria-label="Filter difficulty">
-        <option value="all">All difficulties</option>
-        <option value="Beginner">Beginner</option>
-        <option value="Intermediate">Intermediate</option>
-        <option value="Advanced">Advanced</option>
-      </select>
-      <select class="field" id="completion-filter" aria-label="Filter completion">
-        <option value="all">All drills</option>
-        <option value="incomplete">Not completed</option>
-        <option value="completed">Completed</option>
-      </select>
-    </div>
-    <div class="section-head">
-      <div><h2 id="sport-heading">Baseball drills</h2><p id="drill-count">40 drills available</p></div>
-    </div>
-    <div class="grid" id="drill-grid"></div>
-    <div id="drill-empty" class="empty" hidden>No drills match those filters. Try another search or filter.</div>
-  </section>
+<section class="view active" id="training">
+<div class="hero">
+<div class="eyebrow">Your next level starts here</div>
+<h1>Put in the work.<br>Build your game.</h1>
+<p>Choose a sport, tap a drill to learn how to do it, and earn XP as you train.</p>
+<button class="btn primary" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">Explore drills ↓</button>
+</div>
+<div class="grid" id="quickstats"></div>
+<div class="section-head" id="library"><div><div class="eyebrow">Training library</div><h2>Choose your sport</h2></div><span class="pill lime">280 drills</span></div>
+<nav class="tabs" id="sporttabs">
+<button class="tab active" data-sport="Baseball">⚾ Baseball</button>
+<button class="tab" data-sport="Softball">🥎 Softball</button>
+<button class="tab" data-sport="Basketball">🏀 Basketball</button>
+<button class="tab" data-sport="Football">🏈 Football</button>
+<button class="tab" data-sport="Soccer">⚽ Soccer</button>
+<button class="tab" data-sport="Volleyball">🏐 Volleyball</button>
+<button class="tab" data-sport="Hockey">🏒 Hockey</button>
+</nav>
+<div class="filters">
+<input class="field" id="search" placeholder="Search drills...">
+<select class="field" id="difficulty"><option value="all">All difficulties</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+<select class="field" id="completion"><option value="all">All drills</option><option value="incomplete">Not completed</option><option value="completed">Completed</option></select>
+</div>
+<div class="section-head"><h2 id="sportheading">⚾ Baseball drills</h2><span class="small" id="count"></span></div>
+<div class="grid" id="drillgrid"></div><div id="noresults" class="empty" hidden>No drills match. Try another filter.</div>
+</section>
 
-  <section id="scores" class="view">
-    <div class="hero">
-      <div class="eyebrow">Game day</div>
-      <h1>Keep up with<br>the scoreboard.</h1>
-      <p>Check scores from major leagues. Score data needs an internet connection and may not always be available.</p>
-    </div>
-    <div class="sub-tabs" id="league-tabs">
-      <button class="tab active" data-league="mlb">⚾ MLB</button>
-      <button class="tab" data-league="nfl">🏈 NFL</button>
-      <button class="tab" data-league="nba">🏀 NBA</button>
-      <button class="tab" data-league="mls">⚽ MLS</button>
-      <button class="tab" data-league="soccer">🌍 Premier League</button>
-    </div>
-    <div class="card">
-      <div class="section-head" style="margin-top:0">
-        <div><h2 id="score-heading">MLB Scores</h2><p id="score-status">Ready to load scores.</p></div>
-        <button class="btn primary" id="refresh-scores">↻ Refresh</button>
-      </div>
-      <div id="scoreboard"><div class="empty">Select Refresh to load the latest available scores.</div></div>
-    </div>
-    <p class="small">Scores are requested from ESPN's public scoreboard feed. Availability and coverage can vary.</p>
-  </section>
+<section class="view" id="scores">
+<div class="hero"><div class="eyebrow">Game day</div><h1>Follow the scores.</h1><p>Choose a professional league or college sport below.</p></div>
+<div class="section-head"><h2>Professional scores</h2></div>
+<nav class="tabs" id="protabs">
+<button class="tab active" data-league="mlb">⚾ MLB</button>
+<button class="tab" data-league="nfl">🏈 NFL</button>
+<button class="tab" data-league="nba">🏀 NBA</button>
+<button class="tab" data-league="nhl">🏒 NHL</button>
+<button class="tab" data-league="mls">⚽ MLS</button>
+<button class="tab" data-league="epl">🌍 Premier League</button>
+</nav>
+<div class="section-head"><h2>College scores</h2></div>
+<nav class="tabs" id="collegetabs">
+<button class="tab" data-league="cfb">🏈 NCAA Football</button>
+<button class="tab" data-league="cmbb">🏀 Men's Basketball</button>
+<button class="tab" data-league="cwbb">🏀 Women's Basketball</button>
+<button class="tab" data-league="cbase">⚾ College Baseball</button>
+<button class="tab" data-league="csoft">🥎 College Softball</button>
+<button class="tab" data-league="chock">🏒 College Hockey</button>
+<button class="tab" data-league="cvolley">🏐 College Volleyball</button>
+</nav>
+<div class="card">
+<div class="section-head" style="margin-top:0"><div><h2 id="scoretitle">MLB Scores</h2><p id="scorestatus">Select a league or refresh scores.</p></div><button class="btn primary" onclick="loadScores()">↻ Refresh</button></div>
+<div id="scoreboard"><div class="empty">Choose a league to load scores.</div></div>
+</div>
+<p class="small">Scores come from public ESPN scoreboard feeds. Some college and less widely covered leagues may not return results.</p>
+</section>
 
-  <section id="progress" class="view">
-    <div class="hero">
-      <div class="eyebrow">Your development</div>
-      <h1>Progress is earned.</h1>
-      <p>Every completed drill helps you build consistency and earn XP.</p>
-    </div>
-    <div class="grid" id="progress-stats"></div>
-    <div class="sub-tabs" id="progress-tabs">
-      <button class="tab active" data-progress="overview">Overview</button>
-      <button class="tab" data-progress="levels">XP & Levels</button>
-      <button class="tab" data-progress="completed">Completed Drills</button>
-    </div>
-    <div id="progress-overview" class="progress-panel"></div>
-    <div id="progress-levels" class="progress-panel" hidden></div>
-    <div id="progress-completed" class="progress-panel" hidden></div>
-  </section>
+<section class="view" id="progress">
+<div class="hero"><div class="eyebrow">Your development</div><h1>Progress is earned.</h1><p>Complete drills to earn XP and unlock levels.</p></div>
+<div class="grid" id="progressstats"></div>
+<nav class="tabs">
+<button class="tab active" data-ptab="overview">Overview</button>
+<button class="tab" data-ptab="levels">XP & Levels</button>
+<button class="tab" data-ptab="completed">Completed Drills</button>
+</nav>
+<div id="poverview"></div><div id="plevels" hidden></div><div id="pcompleted" hidden></div>
+</section>
 
-  <section id="profile" class="view">
-    <div class="hero">
-      <div class="eyebrow">Athlete dashboard</div>
-      <h1>Your profile.<br>Your journey.</h1>
-      <p>Set up your athlete profile and choose the sport you want to focus on.</p>
-    </div>
-    <div class="sub-tabs" id="profile-tabs">
-      <button class="tab active" data-profile="info">Athlete Info</button>
-      <button class="tab" data-profile="favorite">Favorite Sport</button>
-      <button class="tab" data-profile="settings">Settings</button>
-    </div>
-    <div id="profile-info" class="profile-panel card">
-      <h2>Athlete information</h2>
-      <form id="profile-form">
-        <label for="athlete-name">Athlete name</label>
-        <input class="field" id="athlete-name" maxlength="40" placeholder="Enter your name">
-        <div style="height:14px"></div>
-        <label for="favorite-sport">Favorite sport</label>
-        <select class="field" id="favorite-sport">
-          <option>Baseball</option><option>Basketball</option><option>Football</option><option>Soccer</option>
-        </select>
-        <div class="btn-row"><button class="btn primary" type="submit">Save profile</button></div>
-      </form>
-      <div class="notice">Your profile is saved in this browser on this device. It is not a secure online account and will not automatically sync to other devices.</div>
-    </div>
-    <div id="profile-favorite" class="profile-panel card" hidden>
-      <h2>Choose your focus</h2>
-      <p>Select a sport to jump straight into its training library.</p>
-      <div class="btn-row">
-        <button class="btn" onclick="chooseSport('Baseball')">⚾ Baseball</button>
-        <button class="btn" onclick="chooseSport('Basketball')">🏀 Basketball</button>
-        <button class="btn" onclick="chooseSport('Football')">🏈 Football</button>
-        <button class="btn" onclick="chooseSport('Soccer')">⚽ Soccer</button>
-      </div>
-    </div>
-    <div id="profile-settings" class="profile-panel card" hidden>
-      <h2>Settings</h2>
-      <p>Resetting progress removes completed drills and XP saved in this browser.</p>
-      <div class="btn-row"><button class="btn" id="reset-progress">Reset training progress</button></div>
-      <div class="notice">Resetting progress does not delete your athlete name or favorite sport.</div>
-    </div>
-    <div class="card" style="margin-top:15px">
-      <div class="section-head" style="margin-top:0">
-        <div><h2 id="profile-name">Your athlete profile</h2><p id="profile-detail">Set your information above to personalize your dashboard.</p></div>
-        <span class="pill lime" id="profile-level">Rookie</span>
-      </div>
-      <div class="grid" id="profile-stats"></div>
-    </div>
-  </section>
-
-  <footer>SKILLFORGE • Train consistently. Compete confidently.<br>Practice safely and use equipment appropriate for your age and skill level.</footer>
+<section class="view" id="profile">
+<div class="hero"><div class="eyebrow">Athlete dashboard</div><h1>Your profile.<br>Your journey.</h1><p>Save your athlete name and favorite sport on this device.</p></div>
+<nav class="tabs">
+<button class="tab active" data-ptab-profile="info">Athlete Info</button>
+<button class="tab" data-ptab-profile="favorite">Favorite Sport</button>
+<button class="tab" data-ptab-profile="settings">Settings</button>
+</nav>
+<div id="pinfo" class="card">
+<h2>Athlete information</h2>
+<form id="profileform">
+<label for="athletename">Athlete name</label><input class="field" id="athletename" maxlength="40" placeholder="Enter your name">
+<label for="favoritesport" style="margin-top:12px">Favorite sport</label>
+<select class="field" id="favoritesport">
+<option>Baseball</option><option>Softball</option><option>Basketball</option><option>Football</option><option>Soccer</option><option>Volleyball</option><option>Hockey</option>
+</select>
+<div style="margin-top:14px"><button class="btn primary">Save profile</button></div>
+</form>
+<div class="notice">This is a local browser profile, not a secure online account. Progress does not automatically sync between devices.</div>
+</div>
+<div id="pfavorite" class="card" hidden><h2>Pick a sport to train</h2><div class="tabs" id="favoritesportbuttons"></div></div>
+<div id="psettings" class="card" hidden><h2>Settings</h2><p>Reset completed drills and XP in this browser.</p><button class="btn" id="reset">Reset training progress</button></div>
+<div class="card" style="margin-top:14px"><h2 id="profilename">Your athlete profile</h2><p id="profiledetail"></p><div class="grid" id="profilestats"></div></div>
+</section>
+<footer>SKILLFORGE • Train consistently. Compete confidently.<br>Practice safely with appropriate equipment and supervision.</footer>
 </main>
-<div class="toast" id="toast" role="status"></div>
+
+<div class="modal" id="drillmodal" hidden>
+<div class="backdrop" onclick="closeDrill()"></div>
+<div class="modalbox" role="dialog" aria-modal="true" aria-labelledby="detailtitle">
+<button class="btn close" onclick="closeDrill()">✕</button>
+<div class="eyebrow" id="detailsport"></div><h2 id="detailtitle"></h2><p id="detailmeta"></p>
+<h3>📋 How to do it</h3><ol id="detailsteps"></ol>
+<h3>🎯 Coaching tips</h3><p id="detailtips"></p>
+<h3>🏁 Your goal</h3><p id="detailgoal"></p>
+<div class="actions"><button class="btn primary" id="completebutton" onclick="completeCurrent()">✓ Mark completed</button><button class="btn" onclick="closeDrill()">Close</button></div>
+</div></div>
+<div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:150;background:var(--lime);color:#101719;font-weight:bold;padding:12px 17px;border-radius:12px"></div>
 
 <script>
-const DRILL_NAMES = {
-Baseball: [
-"Batting Tee Fundamentals","Ready Position & Setup","Two-Handed Catching","Short-Hop Fielding","Throwing Mechanics Basics","Grip and Ball Release","Footwork Around the Bag","Ground Ball Approach","Soft Toss Timing","Accuracy Throwing Targets",
-"Inside Pitch Recognition","Outside Pitch Approach","Opposite-Field Hitting","Line-Drive Contact","Bunting Fundamentals","Infield Double-Play Footwork","Backhand Ground Balls","Forehand Ground Balls","Pop Fly Communication","Outfield Drop-Step Practice",
-"Breaking-Ball Recognition","Situational Hitting Decisions","Hit-and-Run Awareness","Two-Strike Approach","Gap-to-Gap Hitting","Outfield Routes to the Ball","Charging Slow Rollers","Quick Transfer and Release","Relay Throw Accuracy","First-and-Third Defense",
-"Advanced Pitch Recognition","Count-Based At-Bats","Power-Hitting Mechanics","Pitch Location Adjustments","High-Pressure Fielding Reps","Long-Toss Progression","Advanced Double-Play Turns","Outfield Wall Awareness","Base-Running Read Decisions","Full Defensive Situations"
-],
-Basketball: [
-"Stationary Right-Hand Dribble","Stationary Left-Hand Dribble","Chest-Pass Fundamentals","Bounce-Pass Accuracy","Form Shooting Close to Basket","Right-Hand Layup Footwork","Left-Hand Layup Footwork","Defensive Stance Basics","Jump-Stop Practice","Pivot Footwork",
-"Two-Ball Dribbling Control","Crossover Dribble","Between-the-Legs Dribble","Behind-the-Back Control","Moving Layup Series","Catch-and-Shoot Footwork","Free-Throw Routine","Passing on the Move","Closeout Footwork","Rebounding Position",
-"Change-of-Pace Dribbling","Pull-Up Jump Shot","Finishing Through Contact Pads","Weak-Hand Finishing","Give-and-Go Timing","Off-Ball Cutting","Transition Defense","Box-Out and Rebound","Pass-Fake Decisions","Midrange Spot Shooting",
-"Combo Dribble Sequences","Step-Back Footwork","Read-and-React Finishing","Shooting Off Screens","Advanced Weak-Hand Control","Defending Pick-and-Roll","Help-Side Rotation","Full-Court Decision Making","Late-Clock Shot Choices","Game-Speed Skill Circuit"
-],
-Football: [
-"Ready Stance Fundamentals","Short-Pass Accuracy","Easy Catching Fundamentals","Secure the Football","Basic Route Stems","Three-Step Drop Footwork","Center Exchange Practice","Backpedal Basics","Lateral Shuffle Footwork","Hand-Eye Tracking",
-"Slant Route Timing","Out Route Breaks","Curl Route Technique","Catch Away from Body","Quarterback Target Progression","Pocket Footwork","Running-Back Ball Security","Receiver Release Footwork","Defensive Back Hip Turns","Tackling Form With a Pad",
-"Dig Route Timing","Comeback Route Technique","Deep-Ball Tracking","Catch-and-Turn Drill","Read Option Decision Walkthrough","Pass-Rush Hand Placement","Linebacker Drop Coverage","Zone Coverage Spacing","Route Combination Recognition","Special-Teams Lane Discipline",
-"Full Route Tree Practice","Coverage Recognition Walkthrough","Pressure-to-Throw Decisions","Pocket Movement and Reset","Advanced Ball-Security Circuit","Receiver Contested-Catch Positioning","Defensive Break-on-Ball Drill","Two-Minute Offense Walkthrough","Red-Zone Route Decisions","Situational Football Walkthrough"
-],
-Soccer: [
-"Inside-Foot Passing","Sole Roll Ball Control","Straight-Line Dribbling","Cone Weaving Basics","First-Touch Cushioning","Short-Pass Accuracy","Inside-Foot Shooting","Juggling Fundamentals","Basic Defensive Stance","Passing Against a Wall",
-"Outside-Foot Dribbling","Change-of-Direction Control","First Touch Across Body","One-Touch Passing","Weak-Foot Passing","Shooting After a Touch","Give-and-Go Movement","Shielding the Ball","Defensive Side-On Stance","Receiving on the Move",
-"Speed Dribbling With Control","Finishing Across Goal","Passing Triangle Movement","Turning Under Pressure","Crossing Technique","Defensive Channeling","Transition Into Attack","Through-Ball Weighting","Volleys With Safe Technique","Small-Sided Decision Making",
-"Combination Play Patterns","Advanced First-Touch Direction","Finishing From Multiple Angles","Switching the Point of Attack","Pressure-Release Passing","Defending Overloads","Counterattack Decisions","Movement to Create Space","Set-Piece Delivery Practice","Game-Situation Decision Circuit"
-]
+const SPORTS={
+Baseball:{icon:"⚾",names:["Batting Tee Fundamentals","Ready Position","Two-Handed Catching","Short-Hop Fielding","Throwing Mechanics","Grip and Release","Footwork Around the Bag","Ground Ball Approach","Soft Toss Timing","Accuracy Throwing","Inside Pitch Recognition","Outside Pitch Approach","Opposite-Field Hitting","Line-Drive Contact","Bunting Fundamentals","Double-Play Footwork","Backhand Ground Balls","Forehand Ground Balls","Pop Fly Communication","Outfield Drop Step","Breaking-Ball Recognition","Situational Hitting","Hit-and-Run Awareness","Two-Strike Approach","Gap-to-Gap Hitting","Outfield Routes","Charging Slow Rollers","Quick Transfer","Relay Throw Accuracy","First-and-Third Defense","Advanced Pitch Recognition","Count-Based At-Bats","Power-Hitting Mechanics","Pitch Location Adjustments","High-Pressure Fielding","Long-Toss Progression","Advanced Double Plays","Outfield Wall Awareness","Base-Running Reads","Full Defensive Situations"]},
+Softball:{icon:"🥎",names:["Tee Hitting Basics","Batting Stance","Catching Fundamentals","Ground Ball Fielding","Throwing Accuracy","Softball Grip","Footwork at First Base","Underhand Toss Practice","Soft Toss Hitting","Target Throws","Inside Pitch Hitting","Outside Pitch Hitting","Bunting Technique","Slap-Hit Footwork","Line-Drive Hitting","Double-Play Turns","Backhand Fielding","Forehand Fielding","Pop Fly Calls","Outfield First Step","Pitch Recognition","Situational Hitting","Base-Running Starts","Two-Strike Approach","Gap Hitting","Outfield Routes","Charging Slow Rollers","Quick Release","Relay Throws","Tag Play Footwork","Advanced Pitch Recognition","Count-Based Hitting","Power-Hitting Form","Location Adjustments","Pressure Fielding","Long Throw Progression","Advanced Double Plays","Fence Awareness","Steal Decisions","Full Defensive Situations"]},
+Basketball:{icon:"🏀",names:["Right-Hand Dribbling","Left-Hand Dribbling","Chest Pass","Bounce Pass","Close-Range Form Shooting","Right Layup Footwork","Left Layup Footwork","Defensive Stance","Jump Stop","Pivot Footwork","Two-Ball Control","Crossover Dribble","Between-the-Legs Dribble","Behind-the-Back Control","Moving Layups","Catch-and-Shoot Footwork","Free-Throw Routine","Passing on the Move","Closeout Footwork","Rebounding Position","Change-of-Pace Dribble","Pull-Up Jump Shot","Controlled Finishing","Weak-Hand Finishing","Give-and-Go Timing","Off-Ball Cutting","Transition Defense","Box-Out Technique","Pass-Fake Decisions","Midrange Shooting","Combo Dribble","Step-Back Footwork","Read-and-React Finishing","Shooting Off Screens","Advanced Weak-Hand Control","Pick-and-Roll Defense","Help-Side Rotation","Full-Court Decisions","Late-Clock Choices","Game-Speed Skill Circuit"]},
+Football:{icon:"🏈",names:["Ready Stance","Short-Pass Accuracy","Catching Basics","Secure the Football","Basic Route Stems","Three-Step Drop","Center Exchange","Backpedal Basics","Lateral Shuffle","Hand-Eye Tracking","Slant Route","Out Route Breaks","Curl Route","Catch Away From Body","Quarterback Target Progression","Pocket Footwork","Running-Back Ball Security","Receiver Release","Defensive Back Hip Turns","Safe Tackling Form With Coach","Dig Route","Comeback Route","Deep-Ball Tracking","Catch and Turn","Read Option Walkthrough","Pass-Rush Footwork","Linebacker Drop","Zone Coverage Spacing","Route Recognition","Special-Teams Lane Discipline","Full Route Tree","Coverage Recognition","Pressure Decisions","Pocket Movement","Ball-Security Circuit","Contested-Catch Positioning","Defensive Break on Ball","Two-Minute Walkthrough","Red-Zone Route Decisions","Situational Walkthrough"]},
+Soccer:{icon:"⚽",names:["Inside-Foot Passing","Sole Roll","Straight-Line Dribbling","Cone Weaving","First-Touch Cushion","Short-Pass Accuracy","Inside-Foot Shooting","Juggling Basics","Defensive Stance","Wall Passing","Outside-Foot Dribbling","Change of Direction","First Touch Across Body","One-Touch Passing","Weak-Foot Passing","Shooting After Touch","Give-and-Go","Shielding the Ball","Side-On Defending","Receiving on the Move","Speed Dribbling","Finishing Across Goal","Passing Triangle","Turning Under Pressure","Crossing Technique","Defensive Channeling","Transition to Attack","Through-Ball Weighting","Safe Volley Technique","Small-Sided Decisions","Combination Play","Directional First Touch","Finishing From Angles","Switching Play","Pressure-Release Passing","Defending Overloads","Counterattack Decisions","Creating Space","Set-Piece Delivery","Game-Situation Circuit"]},
+Volleyball:{icon:"🏐",names:["Ready Position","Forearm Passing","Overhead Setting","Underhand Serving","Standing Float Serve","Approach Footwork","Spike Arm Swing","Blocking Footwork","Court Movement","Wall Passing","Pass-and-Move","Setting to a Target","Serve Accuracy","Jump-Float Serve Basics","Three-Step Approach","Controlled Attacking","Block Timing","Defensive Digging","Coverage Positioning","Communication Calls","Serve-Receive Formation","Setter Footwork","Attacking From Left Side","Attacking From Right Side","Back-Row Attack Footwork","Transition Defense","Reading the Hitter","Tip Coverage","Free-Ball Organization","Rotation Awareness","Combination Attack Timing","Quick Set Footwork","Block-Then-Cover","Defensive Read and React","Serve Pressure Routine","Out-of-System Setting","Backcourt Coverage","Team Transition Circuit","Situational Rally Practice","Full-Skill Rotation Circuit"]},
+Hockey:{icon:"🏒",names:["Athletic Skating Stance","Forward Glide","Backward Skating Basics","Controlled Stops","Tight Turns","Puck Control Basics","Forehand Stickhandling","Backhand Stickhandling","Stationary Passing","Receiving a Pass","Wrist-Shot Technique","Target Shooting","Safe Hockey Posture","Puck Protection","Passing on the Move","Quick Puck Release","Cone Stickhandling","Figure-Eight Puck Control","Give-and-Go Passing","Defensive Gap Position","Backward-to-Forward Transition","Crossovers","Passing Through Targets","Moving Wrist Shot","Backhand Shooting","One-Timer Footwork","Screen-Aware Shooting","Defensive Stick Position","Angling Footwork","Board-Pass Practice","Breakout Passing","Forecheck Positioning","Backcheck Awareness","Blue-Line Puck Control","Quick Transition Drill","Shot Selection","Net-Front Positioning","Power-Play Passing Patterns","Penalty-Kill Positioning","Game-Situation Circuit"]}
 };
-
-const SPORT_META = {
- Baseball:{icon:"⚾",description:"Practice hitting, throwing, fielding, catching, and base running."},
- Basketball:{icon:"🏀",description:"Build ball control, shooting, passing, footwork, and defense."},
- Football:{icon:"🏈",description:"Work on routes, catching, passing, agility, and football awareness."},
- Soccer:{icon:"⚽",description:"Develop touch, dribbling, passing, finishing, and defending."}
-};
-
-const LEVELS = [
-{name:"Rookie",min:0,icon:"🌱"},
-{name:"Prospect",min:200,icon:"⭐"},
-{name:"Starter",min:500,icon:"🔥"},
-{name:"All-Star",min:900,icon:"🏆"},
-{name:"Elite",min:1400,icon:"💎"},
-{name:"Legend",min:2000,icon:"👑"}
-];
-
-const LEAGUES = {
+const LEAGUES={
 mlb:{name:"MLB",path:"baseball/mlb"},
 nfl:{name:"NFL",path:"football/nfl"},
 nba:{name:"NBA",path:"basketball/nba"},
+nhl:{name:"NHL",path:"hockey/nhl"},
 mls:{name:"MLS",path:"soccer/usa.1"},
-soccer:{name:"Premier League",path:"soccer/eng.1"}
+epl:{name:"Premier League",path:"soccer/eng.1"},
+cfb:{name:"NCAA Football",path:"football/college-football"},
+cmbb:{name:"Men's College Basketball",path:"basketball/mens-college-basketball"},
+cwbb:{name:"Women's College Basketball",path:"basketball/womens-college-basketball"},
+cbase:{name:"College Baseball",path:"baseball/college-baseball"},
+csoft:{name:"College Softball",path:"softball/college-softball"},
+chock:{name:"College Hockey",path:"hockey/mens-college-hockey"},
+cvolley:{name:"College Volleyball",path:"volleyball/womens-college-volleyball"}
 };
+const LEVELS=[["Rookie",0,"🌱"],["Prospect",200,"⭐"],["Starter",500,"🔥"],["All-Star",900,"🏆"],["Elite",1400,"💎"],["Legend",2000,"👑"]];
+const DRILLS=[];
+Object.entries(SPORTS).forEach(([sport,info])=>info.names.forEach((name,i)=>DRILLS.push({id:sport.toLowerCase()+"-"+i,sport,name,difficulty:i<10?"Beginner":i<25?"Intermediate":"Advanced",minutes:i<10?8:i<25?12:15,xp:i<10?15:i<25?25:35,index:i})));
+function fresh(){return{completed:[],name:"",favorite:"Baseball"}}
+function loadData(){try{let d=JSON.parse(localStorage.getItem("skillforge_v3")||"{}");return{...fresh(),...d,completed:Array.isArray(d.completed)?d.completed.filter(id=>DRILLS.some(x=>x.id===id)):[]}}catch(e){return fresh()}}
+let data=loadData(),currentSport=data.favorite||"Baseball",currentLeague="mlb",currentDetail=null,progressTab="overview",profileTab="info",toastTimer;
+function save(){try{localStorage.setItem("skillforge_v3",JSON.stringify(data))}catch(e){toast("Could not save to this browser.")}}
+function xp(){return DRILLS.filter(d=>data.completed.includes(d.id)).reduce((s,d)=>s+d.xp,0)}
+function level(){let chosen=LEVELS[0];LEVELS.forEach(l=>{if(xp()>=l[1])chosen=l});return chosen}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(s){let el=document.getElementById("toast");el.textContent=s;el.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display="none",2200)}
+function switchView(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="scores")loadScores();if(id==="progress")renderProgress();if(id==="profile")renderProfile()}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+function chooseSport(s){currentSport=s;data.favorite=s;save();renderAll();switchView("training");document.getElementById("library").scrollIntoView({behavior:"smooth"})}
+document.querySelectorAll("[data-sport]").forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;document.querySelectorAll("[data-sport]").forEach(x=>x.classList.toggle("active",x===b));renderDrills()});
+["search","difficulty","completion"].forEach(id=>document.getElementById(id).addEventListener(id==="search"?"input":"change",renderDrills));
 
-const DRILLS = [];
-Object.entries(DRILL_NAMES).forEach(([sport,names])=>{
- names.forEach((name,index)=>{
-  const difficulty=index<10?"Beginner":index<25?"Intermediate":"Advanced";
-  const minutes=index<10?8:index<25?12:15;
-  const xp=index<10?15:index<25?25:35;
-  DRILLS.push({
-   id:sport.toLowerCase()+"-"+(index+1),
-   sport,name,difficulty,minutes,xp,index
-  });
- });
-});
-
-function freshData(){
- return {completed:[],name:"",favorite:"Baseball"};
-}
-function loadData(){
- try{
-  const saved=JSON.parse(localStorage.getItem("skillforge_v2_data")||"{}");
-  return {
-   ...freshData(),
-   ...saved,
-   completed:Array.isArray(saved.completed)?saved.completed.filter(id=>DRILLS.some(d=>d.id===id)):[]
-  };
- }catch(e){return freshData();}
-}
-let data=loadData();
-let currentSport=data.favorite||"Baseball";
-let currentLeague="mlb";
-let currentProgress="overview";
-let currentProfile="info";
-let toastTimeout;
-
-function saveData(){
- try{localStorage.setItem("skillforge_v2_data",JSON.stringify(data));}
- catch(e){showToast("Could not save. Browser storage may be unavailable.");}
-}
-function getXP(){
- return DRILLS.filter(d=>data.completed.includes(d.id)).reduce((sum,d)=>sum+d.xp,0);
-}
-function getLevel(){
- const xp=getXP();
- let level=LEVELS[0];
- LEVELS.forEach(item=>{if(xp>=item.min)level=item;});
- const index=LEVELS.indexOf(level);
- const next=LEVELS[index+1]||null;
- return {level,next,index,xp};
-}
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,char=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[char]));
-}
-function showToast(message){
- const el=document.getElementById("toast");
- el.textContent=message;
- el.style.display="block";
- clearTimeout(toastTimeout);
- toastTimeout=setTimeout(()=>el.style.display="none",2400);
-}
-
-function switchView(view){
- document.querySelectorAll(".view").forEach(el=>el.classList.toggle("active",el.id===view));
- document.querySelectorAll("[data-view]").forEach(el=>el.classList.toggle("active",el.dataset.view===view));
- window.scrollTo({top:0,behavior:"smooth"});
- if(view==="scores")loadScores();
- if(view==="progress")renderProgress();
- if(view==="profile")renderProfile();
-}
-document.querySelectorAll("[data-view]").forEach(btn=>btn.addEventListener("click",()=>switchView(btn.dataset.view)));
-
-function chooseSport(sport){
- currentSport=sport;
- document.querySelectorAll("[data-sport]").forEach(btn=>btn.classList.toggle("active",btn.dataset.sport===sport));
- document.getElementById("favorite-sport").value=sport;
- data.favorite=sport;
- saveData();
- renderDrills();
- switchView("training");
- document.getElementById("drill-library").scrollIntoView({behavior:"smooth"});
-}
-
-document.querySelectorAll("[data-sport]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  currentSport=btn.dataset.sport;
-  document.querySelectorAll("[data-sport]").forEach(b=>b.classList.toggle("active",b===btn));
-  renderDrills();
- });
-});
-
-["drill-search","difficulty-filter","completion-filter"].forEach(id=>{
- document.getElementById(id).addEventListener(id==="drill-search"?"input":"change",renderDrills);
-});
-
-function renderDrills(){
- const search=document.getElementById("drill-search").value.trim().toLowerCase();
- const difficulty=document.getElementById("difficulty-filter").value;
- const completion=document.getElementById("completion-filter").value;
- const filtered=DRILLS.filter(d=>{
-  const done=data.completed.includes(d.id);
-  return d.sport===currentSport&&
-   d.name.toLowerCase().includes(search)&&
-   (difficulty==="all"||d.difficulty===difficulty)&&
-   (completion==="all"||(completion==="completed"&&done)||(completion==="incomplete"&&!done));
- });
- document.getElementById("sport-heading").textContent=SPORT_META[currentSport].icon+" "+currentSport+" drills";
- document.getElementById("drill-count").textContent=filtered.length+" drills shown • 40 total for "+currentSport;
- const grid=document.getElementById("drill-grid");
- document.getElementById("drill-empty").hidden=filtered.length!==0;
- grid.innerHTML=filtered.map(d=>{
-  const done=data.completed.includes(d.id);
-  return `<article class="card drill-card ${done?"done":""}">
-   <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
-    <span class="pill ${d.difficulty==="Advanced"?"blue":d.difficulty==="Beginner"?"lime":""}">${d.difficulty}</span>
-    <span class="small">${d.minutes} min</span>
-   </div>
-   <div class="drill-title">${escapeHTML(d.name)}</div>
-   <div class="drill-desc">${escapeHTML(SPORT_META[d.sport].description)}</div>
-   <div class="drill-desc">Focus on good technique. Work at a controlled pace and take breaks when needed.</div>
-   <div class="drill-bottom">
-    <span class="pill lime">⚡ ${d.xp} XP</span>
-    <button class="btn ${done?"":"primary"}" onclick="toggleDrill('${d.id}')">${done?"✓ Completed":"Complete drill"}</button>
-   </div>
-   ${done?'<div class="small" style="color:var(--lime)">Added to your completed drills.</div>':""}
-  </article>`;
- }).join("");
-}
-
-function toggleDrill(id){
- if(data.completed.includes(id)){
-  data.completed=data.completed.filter(item=>item!==id);
-  showToast("Drill marked incomplete.");
- }else{
-  data.completed.push(id);
-  const drill=DRILLS.find(d=>d.id===id);
-  showToast("Drill completed! +"+(drill?drill.xp:0)+" XP");
+function guide(d){
+ const n=d.name.toLowerCase(),s=d.sport;
+ let steps,tips,goal;
+ if(s==="Baseball"||s==="Softball"){
+  if(/hitting|batting|tee|bunt|pitch recognition|at-bat|slap-hit|line-drive|soft toss/.test(n)){
+   steps=["Get into a balanced batting stance with your feet comfortable and eyes on the ball.","Use a stable tee or a partner's gentle toss in a clear practice area.","Track the ball, swing smoothly, and focus on contact and the intended direction.","Reset your stance and repeat without rushing."];
+   tips="Keep your head steady, maintain balance, and focus on control before power. Wear a batting helmet when appropriate.";
+   goal="Complete 10 controlled swings and focus on consistent contact.";
+  }else if(/throw|release|relay|long-toss|pitch/.test(n)){
+   steps=["Warm up your shoulder and arm with gentle movements.","Stand balanced and face a safe, clear target.","Make a smooth throw toward the target and finish under control.","Reset and repeat, increasing distance only when comfortable."];
+   tips="Prioritize accuracy and comfortable mechanics over power. Stop if your arm hurts.";
+   goal="Make 10 controlled throws toward your target.";
+  }else{
+   steps=["Start in a ready athletic stance with knees comfortably bent.","Watch the ball and move your feet to get into position.","Use controlled hands and feet to field, catch, or complete the movement.","Reset and repeat from a slightly different direction when appropriate."];
+   tips="Stay balanced, watch the ball, and communicate clearly with teammates.";
+   goal="Complete 10 clean repetitions with good form.";
+  }
+ }else if(s==="Basketball"){
+  if(/dribbl|crossover|ball control/.test(n)){
+   steps=["Stand balanced with knees slightly bent.","Use your fingertips to dribble at a comfortable height.","Keep the ball close while moving it in the direction the drill requires.","Repeat with both hands, gradually increasing speed while staying in control."];
+   tips="Keep your head up when possible and develop control with both hands.";
+   goal="Complete 30 controlled dribbles or 10 repetitions on each side.";
+  }else if(/shoot|layup|free-throw|finish|rebound|box-out/.test(n)){
+   steps=["Start balanced with the ball under control.","Practice the shot, layup, or positioning movement slowly first.","Aim at a consistent target and finish balanced.","Retrieve the ball safely and repeat."];
+   tips="Use repeatable technique and safe spacing around other players.";
+   goal="Complete 10 focused attempts or repetitions.";
+  }else{
+   steps=["Start in a balanced athletic stance.","Practice the footwork or ball movement slowly.","Repeat with a clear target, pass, or direction in mind.","Increase pace only when you can maintain control."];
+   tips="Focus on footwork, awareness, and good decisions rather than rushing.";
+   goal="Complete 10 quality repetitions.";
+  }
+ }else if(s==="Football"){
+  if(/route|receiver|release|curl|slant|comeback|dig/.test(n)){
+   steps=["Start in a balanced stance at your starting marker.","Run the route at a controlled pace and follow its intended path.","At the turning point, lower your hips and change direction under control.","Finish the route, reset, and repeat."];
+   tips="Make precise cuts, keep your feet under you, and build speed gradually.";
+   goal="Run the route five times with consistent timing and direction.";
+  }else if(/catch|ball security|hand-eye|deep-ball/.test(n)){
+   steps=["Get balanced and track the ball.","Bring your hands to the ball and secure it.","Protect the ball before turning or moving.","Reset and repeat with safe, accurate throws."];
+   tips="Secure possession before moving. Never throw toward someone who is not ready.";
+   goal="Complete 10 clean catches or ball-security repetitions.";
+  }else{
+   steps=["Start in the correct athletic stance for the movement.","Practice the footwork or assignment slowly.","Repeat with control and finish balanced.","Reset and check your technique."];
+   tips="Contact drills and tackling should only be practiced with a qualified coach and appropriate equipment.";
+   goal="Complete 10 controlled repetitions. For team tactics, walk through the assignment with a coach.";
+  }
+ }else if(s==="Soccer"){
+  if(/dribbl|cone|sole roll|ball control/.test(n)){
+   steps=["Set up cones or markers in a clear area.","Use small touches to move the ball through the course.","Change direction while keeping the ball close.","Repeat using both feet and gradually increase speed."];
+   tips="Keep your head up between touches and prioritize close control.";
+   goal="Complete three trips through the course without losing control.";
+  }else if(/pass|cross|through-ball|combination|give-and-go|set-piece|switching/.test(n)){
+   steps=["Choose a clear target or partner.","Plant your non-kicking foot beside the ball and use the appropriate part of your foot.","Pass toward your target with controlled pace.","Move to the next position and repeat."];
+   tips="Look up before passing and communicate with your partner.";
+   goal="Complete 10 accurate passes.";
+  }else{
+   steps=["Set up in a safe practice space with a ball.","Practice the named movement slowly with good balance.","Repeat while keeping the ball under control.","Increase speed gradually when your technique stays consistent."];
+   tips="Focus on control, awareness, and using both feet when appropriate.";
+   goal="Complete 10 focused repetitions.";
+  }
+ }else if(s==="Volleyball"){
+  if(/serve/.test(n)){
+   steps=["Stand behind the service line with a balanced stance.","Hold the ball comfortably in front of you.","Toss or position the ball according to the serve and strike it with controlled contact.","Aim for a large target area first, then gradually improve placement."];
+   tips="Prioritize a repeatable toss and safe shoulder mechanics. Stop if your shoulder hurts.";
+   goal="Complete 10 controlled serves toward your chosen target.";
+  }else if(/setting|overhead/.test(n)){
+   steps=["Move your feet under the ball and get balanced.","Shape your hands above your forehead with fingers relaxed.","Use your legs and hands together to direct the ball toward a target.","Reset and repeat, avoiding prolonged or painful contact."];
+   tips="Move your feet first and use a soft, controlled touch.";
+   goal="Complete 10 accurate sets toward a target.";
+  }else if(/block|defen|dig|coverage|read|backcourt/.test(n)){
+   steps=["Start in a balanced ready position with knees bent.","Watch the ball and prepare to move in the expected direction.","Move under control and use the appropriate defensive technique.","Reset quickly and repeat in both directions."];
+   tips="Communicate with teammates, stay balanced, and avoid diving into other players.";
+   goal="Complete 10 controlled defensive repetitions.";
+  }else{
+   steps=["Begin in a balanced athletic stance.","Practice the movement slowly, focusing on footwork and timing.","Repeat with a partner or target when appropriate.","Increase pace gradually while maintaining control."];
+   tips="Focus on communication, court awareness, and consistent technique.";
+   goal="Complete 10 quality repetitions.";
+  }
+ }else if(s==="Hockey"){
+  if(/skating|glide|stops|turns|crossovers|transition/.test(n)){
+   steps=["Wear appropriate skating protective equipment and practice in a clear, approved area.","Begin with slow, balanced movements and knees comfortably bent.","Practice the intended skating movement without rushing.","Stop safely, reset, and repeat in both directions when appropriate."];
+   tips="Use proper protective equipment and follow rink rules. Beginners should learn with qualified supervision.";
+   goal="Complete five controlled repetitions in each direction.";
+  }else if(/shot|shoot|one-timer|scoring/.test(n)){
+   steps=["Wear appropriate hockey protective equipment and use a safe shooting area.","Position the puck and stick for the shot being practiced.","Make a controlled motion toward an unoccupied net or approved target.","Reset and repeat, focusing on placement rather than maximum force."];
+   tips="Make sure the shooting lane is clear and everyone nearby is ready.";
+   goal="Take 10 controlled shots at your chosen target.";
+  }else if(/pass|receiv|breakout/.test(n)){
+   steps=["Start balanced with your stick on the ice and eyes up.","Send the puck along the ice toward a partner or safe target.","Cushion the incoming puck with your stick to control it.","Move to the next position and repeat."];
+   tips="Keep your stick under control and communicate before passing.";
+   goal="Complete 10 accurate passes or controlled receptions.";
+  }else{
+   steps=["Wear suitable protective gear and choose a safe practice area.","Start in a balanced stance with knees bent and stick under control.","Practice the movement slowly and watch your spacing.","Reset and repeat at a pace that keeps you in control."];
+   tips="Follow rink safety rules, keep your stick controlled, and practice contact skills only with qualified coaching.";
+   goal="Complete 10 controlled repetitions.";
+  }
  }
- saveData();
- renderAll();
+ if(d.difficulty==="Advanced")tips+=" This is a challenging variation. Build up gradually and prioritize technique.";
+ if(d.difficulty==="Intermediate")tips+=" Increase speed or complexity only after the basic movement feels consistent.";
+ return{steps,tips,goal};
 }
-
-function renderStats(targetId){
- const total=data.completed.length;
- const xp=getXP();
- const minutes=DRILLS.filter(d=>data.completed.includes(d.id)).reduce((sum,d)=>sum+d.minutes,0);
- document.getElementById(targetId).innerHTML=[
-  ["⚡","Total XP",xp],
-  ["✓","Drills completed",total+"/160"],
-  ["⏱","Training minutes",minutes]
- ].map(([icon,label,value])=>`<div class="card"><div class="muted">${icon} ${label}</div><div class="stat">${value}</div></div>`).join("");
+function openDrill(id){
+ const d=DRILLS.find(x=>x.id===id);if(!d)return;currentDetail=d;const g=guide(d);
+ document.getElementById("detailsport").textContent=SPORTS[d.sport].icon+" "+d.sport.toUpperCase()+" TRAINING";
+ document.getElementById("detailtitle").textContent=d.name;
+ document.getElementById("detailmeta").textContent=d.difficulty+" • "+d.minutes+" minutes • "+d.xp+" XP";
+ document.getElementById("detailsteps").innerHTML=g.steps.map(x=>"<li>"+esc(x)+"</li>").join("");
+ document.getElementById("detailtips").textContent=g.tips;document.getElementById("detailgoal").textContent=g.goal;
+ document.getElementById("completebutton").textContent=data.completed.includes(id)?"✓ Completed — undo":"✓ Mark completed";
+ document.getElementById("drillmodal").hidden=false;document.body.style.overflow="hidden";
 }
-function renderHeader(){
- document.getElementById("header-xp").textContent="⚡ "+getXP()+" XP";
+function closeDrill(){document.getElementById("drillmodal").hidden=true;document.body.style.overflow="";currentDetail=null}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrill()});
+function toggleDrill(id){
+ if(data.completed.includes(id)){data.completed=data.completed.filter(x=>x!==id);toast("Drill marked incomplete")}
+ else{data.completed.push(id);let d=DRILLS.find(x=>x.id===id);toast("Completed! +"+d.xp+" XP")}
+ save();renderAll();
 }
-function renderQuickStats(){
- const completed=data.completed.length;
- document.getElementById("quick-stats").innerHTML=`
-  <div class="card"><div class="muted">⚡ Total XP</div><div class="stat">${getXP()}</div><p>Earn XP as you train</p></div>
-  <div class="card"><div class="muted">✓ Drills done</div><div class="stat">${completed}</div><p>Out of 160 available drills</p></div>
-  <div class="card"><div class="muted">🎯 Current level</div><div class="stat" style="font-size:23px">${getLevel().level.name}</div><p>Keep working toward your next level</p></div>`;
+function completeCurrent(){if(!currentDetail)return;toggleDrill(currentDetail.id);document.getElementById("completebutton").textContent=data.completed.includes(currentDetail.id)?"✓ Completed — undo":"✓ Mark completed"}
+function renderDrills(){
+ let search=document.getElementById("search").value.toLowerCase().trim(),dif=document.getElementById("difficulty").value,comp=document.getElementById("completion").value;
+ let arr=DRILLS.filter(d=>d.sport===currentSport&&d.name.toLowerCase().includes(search)&&(dif==="all"||d.difficulty===dif)&&(comp==="all"||(comp==="completed"&&data.completed.includes(d.id))||(comp==="incomplete"&&!data.completed.includes(d.id))));
+ document.getElementById("sportheading").textContent=SPORTS[currentSport].icon+" "+currentSport+" drills";
+ document.getElementById("count").textContent=arr.length+" of 40 drills";
+ document.getElementById("noresults").hidden=arr.length>0;
+ document.getElementById("drillgrid").innerHTML=arr.map(d=>{let done=data.completed.includes(d.id);return `<article class="card drill-card ${done?"done":""}">
+ <div style="display:flex;justify-content:space-between;gap:8px"><span class="pill ${d.difficulty==="Beginner"?"lime":d.difficulty==="Advanced"?"blue":""}">${d.difficulty}</span><span class="small">${d.minutes} min</span></div>
+ <button class="btn drill-title" onclick="openDrill('${d.id}')">${esc(d.name)} · View instructions</button>
+ <p class="small">${d.sport} practice • Tap the name for steps and tips.</p>
+ <div class="drill-bottom"><span class="pill lime">⚡ ${d.xp} XP</span><button class="btn ${done?"":"primary"}" onclick="toggleDrill('${d.id}')">${done?"✓ Completed":"Complete"}</button></div></article>`}).join("");
+}
+function renderQuick(){
+ document.getElementById("headerxp").textContent=xp()+" XP";
+ document.getElementById("quickstats").innerHTML=`<div class="card"><p>Total XP</p><div class="stat">${xp()}</div></div><div class="card"><p>Drills completed</p><div class="stat">${data.completed.length}/280</div></div><div class="card"><p>Current level</p><div class="stat">${level()[2]} ${level()[0]}</div></div>`;
 }
 function renderProgress(){
- renderStats("progress-stats");
- const {level,next,index,xp}=getLevel();
- const currentMin=level.min;
- const nextMin=next?next.min:level.min;
- const percent=next?Math.min(100,Math.round((xp-currentMin)/(nextMin-currentMin)*100)):100;
- document.getElementById("progress-overview").innerHTML=`
-  <div class="card">
-   <div class="eyebrow">Current level</div>
-   <h2>${level.icon} ${level.name}</h2>
-   <p>${xp} total XP earned</p>
-   <div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div>
-   <p>${next?Math.max(0,next.min-xp)+" XP until "+next.name:"You reached the highest level!"}</p>
-  </div>
-  <div class="grid" style="margin-top:14px">
-   ${Object.keys(SPORT_META).map(sport=>{
-    const all=DRILLS.filter(d=>d.sport===sport);
-    const done=all.filter(d=>data.completed.includes(d.id)).length;
-    return `<div class="card"><h3>${SPORT_META[sport].icon} ${sport}</h3><div class="stat">${done}/40</div><div class="progress-track"><div class="progress-fill" style="width:${done/40*100}%"></div></div><button class="btn" onclick="chooseSport('${sport}')">Train ${sport}</button></div>`;
-   }).join("")}
-  </div>`;
- document.getElementById("progress-levels").innerHTML=`
-  <div class="card"><h2>XP levels</h2><p>Earn XP by completing drills. Advanced drills reward more XP.</p>
-  ${LEVELS.map((item,i)=>`<div class="level-row"><div class="level-icon">${item.icon}</div><div><strong>${item.name}</strong><div class="small">${item.min.toLocaleString()} XP required</div></div><span class="pill ${level.name===item.name?"lime":""}">${xp>=item.min?"Unlocked":"Locked"}</span></div>`).join("")}
-  </div>`;
- const completed=DRILLS.filter(d=>data.completed.includes(d.id));
- document.getElementById("progress-completed").innerHTML=completed.length?`
-  <div class="card"><h2>Completed drills (${completed.length})</h2>
-  ${completed.map(d=>`<div class="team-line"><div><strong>${SPORT_META[d.sport].icon} ${escapeHTML(d.name)}</strong><div class="small">${d.sport} • ${d.difficulty}</div></div><span class="pill lime">+${d.xp} XP</span></div>`).join("")}
-  </div>`:'<div class="empty">No completed drills yet. Head to Training and finish your first drill!</div>';
- document.querySelectorAll("[data-progress]").forEach(btn=>btn.classList.toggle("active",btn.dataset.progress===currentProgress));
- ["overview","levels","completed"].forEach(name=>{
-  document.getElementById("progress-"+name).hidden=name!==currentProgress;
- });
+ document.getElementById("progressstats").innerHTML=`<div class="card"><p>Total XP</p><div class="stat">${xp()}</div></div><div class="card"><p>Completed</p><div class="stat">${data.completed.length}</div></div><div class="card"><p>Current level</p><div class="stat">${level()[0]}</div></div>`;
+ let l=level(),idx=LEVELS.indexOf(l),next=LEVELS[idx+1],pct=next?Math.min(100,Math.round((xp()-l[1])/(next[1]-l[1])*100)):100;
+ document.getElementById("poverview").innerHTML=`<div class="card"><h2>${l[2]} ${l[0]}</h2><p>${xp()} XP earned</p><div class="progressbar"><div class="fill" style="width:${pct}%"></div></div><p>${next?next[1]-xp()+" XP until "+next[0]:"You've reached Legend!"}</p></div>
+ <div class="grid" style="margin-top:13px">${Object.keys(SPORTS).map(s=>{let n=DRILLS.filter(d=>d.sport===s&&data.completed.includes(d.id)).length;return `<div class="card"><h3>${SPORTS[s].icon} ${s}</h3><div class="stat">${n}/40</div><div class="progressbar"><div class="fill" style="width:${n/40*100}%"></div></div><button class="btn" onclick="chooseSport('${s}')">Train ${s}</button></div>`}).join("")}</div>`;
+ document.getElementById("plevels").innerHTML=`<div class="card"><h2>XP levels</h2>${LEVELS.map(a=>`<div class="line"><div>${a[2]} <strong>${a[0]}</strong><div class="small">${a[1]} XP required</div></div><span class="pill ${xp()>=a[1]?"lime":""}">${xp()>=a[1]?"Unlocked":"Locked"}</span></div>`).join("")}</div>`;
+ let completed=DRILLS.filter(d=>data.completed.includes(d.id));
+ document.getElementById("pcompleted").innerHTML=completed.length?`<div class="card"><h2>Completed drills (${completed.length})</h2>${completed.map(d=>`<div class="line"><div>${SPORTS[d.sport].icon} <strong>${esc(d.name)}</strong><div class="small">${d.sport}</div></div><span class="pill lime">+${d.xp} XP</span></div>`).join("")}</div>`:'<div class="empty">No completed drills yet. Start training to earn XP.</div>';
+ ["overview","levels","completed"].forEach(t=>document.getElementById("p"+t).hidden=t!==progressTab);
+ document.querySelectorAll("[data-ptab]").forEach(b=>b.classList.toggle("active",b.dataset.ptab===progressTab));
 }
-document.querySelectorAll("[data-progress]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  currentProgress=btn.dataset.progress;
-  renderProgress();
- });
-});
-
+document.querySelectorAll("[data-ptab]").forEach(b=>b.onclick=()=>{progressTab=b.dataset.ptab;renderProgress()});
 function renderProfile(){
- document.getElementById("athlete-name").value=data.name||"";
- document.getElementById("favorite-sport").value=data.favorite||"Baseball";
- document.getElementById("profile-name").textContent=data.name?data.name+"'s athlete profile":"Your athlete profile";
- document.getElementById("profile-detail").textContent="Favorite sport: "+(data.favorite||"Baseball")+" • Level: "+getLevel().level.name;
- document.getElementById("profile-level").textContent=getLevel().level.icon+" "+getLevel().level.name;
- const done=DRILLS.filter(d=>data.completed.includes(d.id)).length;
- document.getElementById("profile-stats").innerHTML=`
-  <div class="card"><div class="muted">Total XP</div><div class="stat">${getXP()}</div></div>
-  <div class="card"><div class="muted">Drills completed</div><div class="stat">${done}</div></div>
-  <div class="card"><div class="muted">Drills available</div><div class="stat">160</div></div>`;
- document.querySelectorAll("[data-profile]").forEach(btn=>btn.classList.toggle("active",btn.dataset.profile===currentProfile));
- ["info","favorite","settings"].forEach(name=>{
-  document.getElementById("profile-"+name).hidden=name!==currentProfile;
- });
+ document.getElementById("athletename").value=data.name||"";
+ document.getElementById("favoritesport").value=data.favorite;
+ document.getElementById("profilename").textContent=data.name?data.name+"'s profile":"Your athlete profile";
+ document.getElementById("profiledetail").textContent="Favorite sport: "+data.favorite+" • Level: "+level()[0];
+ document.getElementById("profilestats").innerHTML=`<div class="card"><p>Total XP</p><div class="stat">${xp()}</div></div><div class="card"><p>Drills completed</p><div class="stat">${data.completed.length}</div></div><div class="card"><p>Level</p><div class="stat">${level()[0]}</div></div>`;
+ document.getElementById("favoritesportbuttons").innerHTML=Object.keys(SPORTS).map(s=>`<button class="btn" onclick="chooseSport('${s}')">${SPORTS[s].icon} ${s}</button>`).join("");
+ ["info","favorite","settings"].forEach(t=>document.getElementById("p"+t).hidden=t!==profileTab);
+ document.querySelectorAll("[data-ptab-profile]").forEach(b=>b.classList.toggle("active",b.dataset.ptabProfile===profileTab));
 }
-document.querySelectorAll("[data-profile]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  currentProfile=btn.dataset.profile;
-  renderProfile();
- });
-});
-document.getElementById("profile-form").addEventListener("submit",event=>{
- event.preventDefault();
- data.name=document.getElementById("athlete-name").value.trim().slice(0,40);
- data.favorite=document.getElementById("favorite-sport").value;
- currentSport=data.favorite;
- document.querySelectorAll("[data-sport]").forEach(btn=>btn.classList.toggle("active",btn.dataset.sport===currentSport));
- saveData();
- renderAll();
- showToast("Athlete profile saved!");
-});
-document.getElementById("reset-progress").addEventListener("click",()=>{
- if(confirm("Reset all completed drills and XP? This cannot be undone.")){
-  data.completed=[];
-  saveData();
-  renderAll();
-  showToast("Training progress reset.");
- }
-});
+document.querySelectorAll("[data-ptab-profile]").forEach(b=>b.onclick=()=>{profileTab=b.dataset.ptabProfile;renderProfile()});
+document.getElementById("profileform").onsubmit=e=>{e.preventDefault();data.name=document.getElementById("athletename").value.trim();data.favorite=document.getElementById("favoritesport").value;currentSport=data.favorite;save();renderAll();toast("Profile saved")};
+document.getElementById("reset").onclick=()=>{if(confirm("Reset all completed drills and XP?")){data.completed=[];save();renderAll();toast("Progress reset")}};
 
-document.querySelectorAll("[data-league]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  currentLeague=btn.dataset.league;
-  document.querySelectorAll("[data-league]").forEach(b=>b.classList.toggle("active",b===btn));
-  loadScores();
- });
-});
-document.getElementById("refresh-scores").addEventListener("click",loadScores);
-
+document.querySelectorAll("[data-league]").forEach(b=>b.onclick=()=>{currentLeague=b.dataset.league;document.querySelectorAll("[data-league]").forEach(x=>x.classList.toggle("active",x===b));loadScores()});
 async function loadScores(){
- const league=LEAGUES[currentLeague];
- document.getElementById("score-heading").textContent=league.name+" Scores";
- document.getElementById("score-status").textContent="Loading scores…";
- document.getElementById("scoreboard").innerHTML='<div class="empty">Fetching scoreboard…</div>';
+ const l=LEAGUES[currentLeague];if(!l)return;
+ document.getElementById("scoretitle").textContent=l.name+" Scores";
+ document.getElementById("scorestatus").textContent="Loading scores...";
+ document.getElementById("scoreboard").innerHTML='<div class="empty">Loading scoreboard…</div>';
  try{
-  const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/"+league.path+"/scoreboard");
-  if(!response.ok)throw new Error("Score feed unavailable");
-  const result=await response.json();
-  const events=result.events||[];
-  if(!events.length){
-   document.getElementById("score-status").textContent="No games returned right now.";
-   document.getElementById("scoreboard").innerHTML='<div class="empty">No games are available in this feed right now. Try again later.</div>';
-   return;
-  }
-  document.getElementById("score-status").textContent=events.length+" games listed";
-  document.getElementById("scoreboard").innerHTML=events.map(event=>{
-   const competition=event.competitions&&event.competitions[0];
-   const competitors=competition&&competition.competitors||[];
-   const home=competitors.find(t=>t.homeAway==="home")||competitors[0]||{};
-   const away=competitors.find(t=>t.homeAway==="away")||competitors[1]||{};
-   const status=event.status&&event.status.type&&event.status.type.shortDetail||"Scheduled";
-   const homeName=home.team&&home.team.displayName||"Home";
-   const awayName=away.team&&away.team.displayName||"Away";
-   return `<div class="score-game">
-    <div><div class="score-teams">${escapeHTML(awayName)}</div><div class="score-teams">${escapeHTML(homeName)}</div><div class="small">${escapeHTML(status)}</div></div>
-    <div class="score-value">${escapeHTML(away.score??"—")}<br>${escapeHTML(home.score??"—")}</div>
-   </div>`;
+  const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/"+l.path+"/scoreboard");
+  if(!response.ok)throw Error("Scoreboard unavailable");
+  const result=await response.json(),events=result.events||[];
+  if(!events.length){document.getElementById("scorestatus").textContent="No games returned right now.";document.getElementById("scoreboard").innerHTML='<div class="empty">No games are listed right now. This league may be out of season, or its feed may not be available. Try again later.</div>';return}
+  document.getElementById("scorestatus").textContent=events.length+" games listed";
+  document.getElementById("scoreboard").innerHTML=events.map(ev=>{
+   let teams=ev.competitions?.[0]?.competitors||[],away=teams.find(t=>t.homeAway==="away")||teams[0]||{},home=teams.find(t=>t.homeAway==="home")||teams[1]||{};
+   let status=ev.status?.type?.shortDetail||"Scheduled";
+   return `<div class="line"><div><strong>${esc(away.team?.displayName||"Away")}</strong><br><strong>${esc(home.team?.displayName||"Home")}</strong><div class="small">${esc(status)}</div></div><div style="text-align:right;font-size:20px;font-weight:bold">${esc(away.score??"—")}<br>${esc(home.score??"—")}</div></div>`;
   }).join("");
- }catch(error){
-  document.getElementById("score-status").textContent="Could not load scores.";
-  document.getElementById("scoreboard").innerHTML='<div class="empty">The scoreboard could not be loaded. Check your internet connection or try again later.</div>';
+ }catch(e){
+  document.getElementById("scorestatus").textContent="Could not load scores.";
+  document.getElementById("scoreboard").innerHTML='<div class="empty">This scoreboard feed is unavailable right now. Check your connection or try another league.</div>';
  }
 }
-
-function renderAll(){
- renderHeader();
- renderQuickStats();
- renderDrills();
- renderProgress();
- renderProfile();
-}
+function renderAll(){renderQuick();renderDrills();renderProgress();renderProfile()}
+document.querySelectorAll("[data-sport]").forEach(b=>b.classList.toggle("active",b.dataset.sport===currentSport));
 renderAll();
 </script>
 </body>
