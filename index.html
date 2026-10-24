@@ -4,542 +4,481 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillForge | Train Smarter</title>
+<title>SkillForge | Train Your Game</title>
 <style>
-:root{--blue:#1458d4;--deep:#0b1e3b;--bg:#f3f6fb;--card:#fff;--text:#17243b;--muted:#68768c;--border:#e1e8f2}
+:root {
+  --bg:#f4f7fc;--card:#fff;--text:#15223b;--muted:#68758c;
+  --blue:#245bdb;--border:#e1e7f0;--green:#14845b;--red:#c0392b;
+}
+body.dark {
+  --bg:#101827;--card:#1a2639;--text:#f3f6ff;--muted:#aab7cc;
+  --blue:#76a0ff;--border:#344159;--green:#5bd6a2;--red:#ff8b83;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);transition:.2s}
-body.dark{--bg:#101827;--card:#1b293d;--text:#f1f5ff;--muted:#b2bfd3;--border:#34445b;--deep:#091222}
-header{background:var(--deep);color:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:24px;font-weight:900;letter-spacing:-1px}.logo span{color:#65a1ff}
-button,select,input{font:inherit}
-button{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:700}
-.primary{background:var(--blue);color:white}.secondary{background:var(--border);color:var(--text)}
-header button{background:#fff;color:#12315b}
-main{max-width:1150px;margin:auto;padding:24px 16px}
-h1{font-size:clamp(27px,5vw,42px);margin:5px 0 10px}
-h2{margin:0 0 14px}h3{margin:5px 0 10px}
-p{line-height:1.5}.muted{color:var(--muted)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:22px 0}
-.stat{background:var(--card);padding:17px;border:1px solid var(--border);border-radius:14px}
-.stat strong{display:block;font-size:26px;margin-bottom:5px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:8px 0 18px}
-nav button{white-space:nowrap;background:var(--card);color:var(--text);border:1px solid var(--border)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{background:#173d91;color:white;padding:22px max(20px,calc((100% - 1100px)/2));}
+header h1{margin:0;font-size:28px}
+header p{margin:6px 0 0;color:#dbe6ff}
+main{max-width:1100px;margin:auto;padding:22px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+nav button,.secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700}
+.primary{background:var(--blue);color:white}
 nav button.active{background:var(--blue);color:white}
-.sport,.drill{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
-.sport{cursor:pointer}.sport:hover,.drill:hover{border-color:var(--blue)}
-.emoji{font-size:30px}.tag{font-size:12px;background:#e8f0ff;color:#164cb4;border-radius:20px;padding:5px 9px;display:inline-block;margin:3px 0}
-body.dark .tag{background:#233e68;color:#bcd4ff}
-.progress{height:9px;background:var(--border);border-radius:10px;overflow:hidden;margin:10px 0}
-.progress div{height:100%;background:var(--blue);width:0}
-input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);margin:6px 0 13px}
-label{display:block;font-weight:700;font-size:14px;margin-top:7px}
-.checkrow{display:flex;align-items:center;gap:9px;margin:8px 0}
-.checkrow input{width:auto;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:19px;margin-bottom:15px}
+.card h2,.card h3{margin-top:0}
+.muted{color:var(--muted);line-height:1.5}
+.big{font-size:29px;font-weight:800}
+label{display:block;margin:12px 0 6px;font-weight:700}
+input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1}
 .hidden{display:none!important}
-.notice{padding:12px;border-radius:10px;background:var(--border);margin:10px 0}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-footer{text-align:center;padding:30px;color:var(--muted)}
-.small{font-size:13px}.drill{margin-bottom:10px}.drill h3{font-size:17px}
-#message{white-space:pre-wrap}
-@media(max-width:500px){header{padding:14px}.card{padding:15px}main{padding:16px 12px}.logo{font-size:21px}}
+.status{padding:12px;border-radius:9px;background:var(--bg);border:1px solid var(--border);overflow-wrap:anywhere}
+.error{color:var(--red)}.success{color:var(--green)}
+.drill{padding:13px 0;border-bottom:1px solid var(--border)}
+.drill:last-child{border-bottom:0}
+.drill button{float:right}
+small{color:var(--muted)}
+footer{text-align:center;padding:25px;color:var(--muted)}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">SKILL<span>FORGE</span></div>
-  <div class="actions">
-    <span id="userLabel" class="small"></span>
-    <button onclick="showTab('settings')">⚙ Settings</button>
-    <button id="logoutBtn" class="hidden" onclick="logout()">Log out</button>
-  </div>
+  <h1>⚡ SkillForge</h1>
+  <p>Train smarter. Build skills. Elevate your game.</p>
 </header>
 
 <main>
-  <section id="welcome">
-    <div class="card">
-      <span class="tag">YOUR TRAINING STARTS HERE</span>
-      <h1>Train smarter.<br>Play stronger.</h1>
-      <p class="muted">Build skills, complete drills, earn XP, and track your progress across your favorite sports.</p>
-      <div class="stats">
-        <div class="stat"><strong>7</strong><span class="muted">Sports</span></div>
-        <div class="stat"><strong>280</strong><span class="muted">Drill slots</span></div>
-        <div class="stat"><strong>∞</strong><span class="muted">Ways to improve</span></div>
-      </div>
+  <div class="card">
+    <strong>Connection status</strong>
+    <p id="connection" class="muted">Checking website setup...</p>
+    <p id="message" class="status" role="status">Welcome to SkillForge.</p>
+  </div>
+
+  <section id="auth" class="card">
+    <h2>Your account</h2>
+    <p class="muted">Create an account or sign in to save your training progress.</p>
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="At least 6 characters" autocomplete="current-password">
+    <div class="row" style="margin-top:14px">
+      <button class="primary" id="loginBtn">Log in</button>
+      <button class="secondary" id="signupBtn">Create account</button>
     </div>
-    <div class="grid">
-      <div class="card">
-        <h2>Create account</h2>
-        <p class="muted small">Create an account to save your progress across devices.</p>
-        <label for="signupName">Your name</label>
-        <input id="signupName" placeholder="Your name" autocomplete="name">
-        <label for="signupEmail">Email</label>
-        <input id="signupEmail" type="email" placeholder="you@example.com" autocomplete="email">
-        <label for="signupPassword">Password</label>
-        <input id="signupPassword" type="password" placeholder="At least 6 characters" autocomplete="new-password">
-        <button class="primary" style="width:100%" onclick="signup()">Create account</button>
-      </div>
-      <div class="card">
-        <h2>Welcome back</h2>
-        <p class="muted small">Already have a SkillForge account? Log in here.</p>
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email">
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password">
-        <button class="primary" style="width:100%" onclick="login()">Log in</button>
-      </div>
-    </div>
-    <div id="authMessage" class="notice hidden"></div>
+    <button class="secondary" id="skipBtn" style="margin-top:10px;width:100%">Explore without an account</button>
+    <p class="muted">If email confirmation is enabled in Supabase, you may need to confirm your email before logging in.</p>
   </section>
 
   <section id="app" class="hidden">
-    <div class="card">
-      <span class="tag">YOUR ATHLETE DASHBOARD</span>
-      <h1 id="greeting">Let's get to work.</h1>
-      <p class="muted">Small improvements every day add up. Pick a sport and get started.</p>
-    </div>
     <nav>
-      <button class="active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
-      <button data-tab="sports" onclick="showTab('sports')">My Sports</button>
-      <button data-tab="drills" onclick="showTab('drills')">Drills</button>
-      <button data-tab="scores" onclick="showTab('scores')">Scores</button>
-      <button data-tab="progress" onclick="showTab('progress')">Progress</button>
-      <button data-tab="settings" onclick="showTab('settings')">Settings</button>
+      <button class="active" data-tab="dashboard">Dashboard</button>
+      <button data-tab="sports">Sports & drills</button>
+      <button data-tab="progress">My progress</button>
+      <button data-tab="settings">Settings</button>
     </nav>
 
-    <section id="tab-dashboard">
-      <div class="stats">
-        <div class="stat"><strong id="xpStat">0</strong><span class="muted">Total XP</span></div>
-        <div class="stat"><strong id="levelStat">1</strong><span class="muted">Level</span></div>
-        <div class="stat"><strong id="completedStat">0</strong><span class="muted">Drills done</span></div>
-        <div class="stat"><strong id="streakStat">0</strong><span class="muted">Practice days</span></div>
-      </div>
+    <section id="dashboard" class="tab">
       <div class="card">
-        <h2>Overall progress</h2>
-        <div class="progress"><div id="overallBar"></div></div>
-        <p id="overallText" class="muted">Choose sports to personalize your training.</p>
+        <h2 id="welcome">Welcome to SkillForge!</h2>
+        <p class="muted">Small improvements every day add up. Pick a sport and start training.</p>
+        <button class="primary" data-goto="sports">Find a drill</button>
       </div>
-      <h2>Your sports</h2>
-      <div id="dashboardSports" class="grid"></div>
-      <div class="card">
-        <h2>Quick start</h2>
-        <p class="muted">Choose a sport to view drills and their instructions.</p>
-        <button class="primary" onclick="showTab('drills')">Browse my drills →</button>
+      <div class="grid">
+        <div class="card"><p class="muted">XP earned</p><div class="big" id="xp">0</div></div>
+        <div class="card"><p class="muted">Drills completed</p><div class="big" id="completedCount">0</div></div>
+        <div class="card"><p class="muted">Sports selected</p><div class="big" id="sportCount">7</div></div>
       </div>
+      <div class="card"><h3>Quick start</h3><p class="muted">Choose a sport, open a drill, and mark it complete when you finish.</p></div>
     </section>
 
-    <section id="tab-sports" class="hidden">
+    <section id="sports" class="tab hidden">
       <div class="card">
-        <h2>Choose your sports</h2>
-        <p class="muted">Select the sports you play. You can change these whenever you want.</p>
-        <div id="sportChoices" class="grid"></div>
-        <button class="primary" onclick="saveSports()">Save my sports</button>
-      </div>
-    </section>
-
-    <section id="tab-drills" class="hidden">
-      <div class="card">
-        <h2>Training drills</h2>
+        <h2>Sports & drills</h2>
         <label for="sportSelect">Choose a sport</label>
-        <select id="sportSelect" onchange="renderDrills()"></select>
-        <label for="difficultySelect">Difficulty</label>
-        <select id="difficultySelect" onchange="renderDrills()">
-          <option value="All">All difficulties</option>
-          <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
-        </select>
-        <p id="drillSummary" class="muted"></p>
+        <select id="sportSelect"></select>
+        <label for="drillSearch">Find a drill</label>
+        <input id="drillSearch" placeholder="Search drills...">
       </div>
-      <div id="drillList"></div>
-    </section>
-
-    <section id="tab-scores" class="hidden">
       <div class="card">
-        <h2>Live sports scores</h2>
-        <p class="muted">Scoreboards are provided by ESPN. Availability varies by sport and season.</p>
-        <label for="leagueSelect">League</label>
-        <select id="leagueSelect" onchange="loadScores()">
-          <option value="baseball/mlb">MLB</option>
-          <option value="football/nfl">NFL</option>
-          <option value="basketball/nba">NBA</option>
-          <option value="hockey/nhl">NHL</option>
-          <option value="soccer/usa.1">MLS</option>
-          <option value="soccer/eng.1">Premier League</option>
-          <option value="football/college-football">College Football</option>
-          <option value="basketball/mens-college-basketball">College Basketball</option>
-          <option value="baseball/college-baseball">College Baseball</option>
-          <option value="softball/college-softball">College Softball</option>
-          <option value="hockey/mens-college-hockey">College Hockey</option>
-          <option value="volleyball/womens-college-volleyball">College Volleyball</option>
-        </select>
-        <button class="primary" onclick="loadScores()">Refresh scores</button>
-      </div>
-      <div id="scoresList"></div>
-    </section>
-
-    <section id="tab-progress" class="hidden">
-      <div class="card">
-        <h2>Your progress</h2>
-        <p id="progressIntro" class="muted"></p>
-        <div id="progressSports"></div>
+        <h3 id="drillHeading">Training drills</h3>
+        <div id="drillList"></div>
       </div>
     </section>
 
-    <section id="tab-settings" class="hidden">
+    <section id="progress" class="tab hidden">
       <div class="card">
-        <h2>Appearance</h2>
-        <label for="themeSetting">Theme</label>
-        <select id="themeSetting" onchange="updateSetting('theme',this.value)">
-          <option value="light">Light</option><option value="dark">Dark</option><option value="system">System default</option>
+        <h2>My progress</h2>
+        <p class="muted">Your completed drills and XP appear here.</p>
+        <p>Completed drills: <strong id="progressCompleted">0</strong></p>
+        <p>Total XP: <strong id="progressXP">0</strong></p>
+        <button id="resetBtn" class="secondary">Reset local progress</button>
+      </div>
+    </section>
+
+    <section id="settings" class="tab hidden">
+      <div class="card">
+        <h2>Settings</h2>
+        <label for="displayName">Display name</label>
+        <input id="displayName" placeholder="Your name">
+        <label for="favoriteSport">Favorite sport</label>
+        <select id="favoriteSport"></select>
+        <label for="theme">Appearance</label>
+        <select id="theme">
+          <option value="light">Light mode</option>
+          <option value="dark">Dark mode</option>
         </select>
-        <label for="textSetting">Text size</label>
-        <select id="textSetting" onchange="updateSetting('textSize',this.value)">
-          <option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option>
-        </select>
-        <label class="checkrow"><input id="contrastSetting" type="checkbox" onchange="updateSetting('highContrast',this.checked)"> Higher contrast</label>
-        <label class="checkrow"><input id="motionSetting" type="checkbox" onchange="updateSetting('reduceMotion',this.checked)"> Reduce animations</label>
+        <label for="reminderTime">Preferred practice reminder time</label>
+        <input id="reminderTime" type="time" value="17:00">
+        <p class="muted">This saves your preferred time in your settings. It does not send notifications yet.</p>
+        <button id="saveSettings" class="primary">Save settings</button>
+        <button id="logoutBtn" class="secondary">Log out</button>
       </div>
       <div class="card">
-        <h2>Practice reminders</h2>
-        <p class="muted">Choose any time and the days you want to practice.</p>
-        <label class="checkrow"><input id="reminderEnabled" type="checkbox" onchange="updateSetting('reminders',this.checked)"> Enable reminders while the site is open</label>
-        <label for="reminderTime">Reminder time</label>
-        <input id="reminderTime" type="time" value="18:00" onchange="updateSetting('reminderTime',this.value)">
-        <label for="reminderType">Reminder type</label>
-        <select id="reminderType" onchange="updateSetting('reminderType',this.value)">
-          <option value="practice">Practice reminder</option><option value="streak">Streak reminder</option><option value="both">Both</option>
-        </select>
-        <p><strong>Choose days:</strong></p>
-        <div id="reminderDays">
-          <label class="checkrow"><input type="checkbox" value="1"> Monday</label>
-          <label class="checkrow"><input type="checkbox" value="2"> Tuesday</label>
-          <label class="checkrow"><input type="checkbox" value="3"> Wednesday</label>
-          <label class="checkrow"><input type="checkbox" value="4"> Thursday</label>
-          <label class="checkrow"><input type="checkbox" value="5"> Friday</label>
-          <label class="checkrow"><input type="checkbox" value="6"> Saturday</label>
-          <label class="checkrow"><input type="checkbox" value="0"> Sunday</label>
-        </div>
-        <button class="primary" onclick="saveReminderDays()">Save reminder days</button>
-        <button class="secondary" onclick="requestNotifications()">Enable browser notifications</button>
-        <p class="muted small">Reminder notifications work only when this website is open. Browser notification permission may be required.</p>
-      </div>
-      <div class="card">
-        <h2>Account</h2>
-        <p id="accountEmail" class="muted"></p>
-        <button class="secondary" onclick="logout()">Log out</button>
+        <h3>Database diagnostics</h3>
+        <p id="dbDetails" class="muted">Checking configuration...</p>
       </div>
     </section>
   </section>
-  <div id="message" class="notice hidden"></div>
 </main>
-<footer>SKILLFORGE · Train smarter. Play stronger.</footer>
+<footer>SkillForge · Practice with purpose.</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+"use strict";
+
+/* STEP 2: Replace these two placeholders with your Supabase details. */
 https://mkvkcclotsfqfvqqxksm.supabase.co/rest/v1/
 sb_publishable_b8Qkg6QOE634rpQu0CRE6Q_U7_FkYwy
- Baseball:{emoji:"⚾",drills:[
- "Tee Work","Soft Toss","Batting Practice","One-Hand Batting","Contact Point Drill","Opposite Field Hitting","Bunting Practice","Load and Stride","Dry Swings","Reaction Hitting",
- "Ground Ball Fielding","Forehand Grounders","Backhand Grounders","Ready Position","Quick Hands","Double Play Feeds","Slow Roller Fielding","Charging the Ball","Short Hop Practice","Fielding Footwork",
- "Long Toss","Kneeling Throws","Crow Hop Throws","Accuracy Throws","Quick Release","Throwing Mechanics","Wrist Snap","Target Throws","Relay Throws","Pickoff Footwork",
- "Base Running Starts","First-to-Third Reads","Sliding Technique","Lead-Off Practice","Stealing Reads","Rounding Bases","Home-to-First Sprint","Tag-Up Reads","Reaction Starts","Agility Ladder"
- ]},
- Softball:{emoji:"🥎",drills:[
- "Tee Hitting","Soft Toss","Front Toss","Contact Hitting","Opposite Field Hitting","Bunting","Slap Hitting Footwork","Bat Speed Swings","Load and Stride","Two-Strike Hitting",
- "Ground Ball Fielding","Backhand Fielding","Forehand Fielding","Quick Hands","Short Hops","Charging Slow Rollers","Double Play Feeds","Ready Position","Glove-to-Hand Transfer","Fielding Footwork",
- "Throwing Mechanics","Wrist Snap Throws","Accuracy Throws","Quick Release","Crow Hop Throws","Long Toss","Relay Throws","Target Throws","Footwork Around Bases","Catching Pop Flies",
- "Base Running Starts","Sliding Practice","Rounding Bases","Stealing Reads","Tag-Up Reads","Home-to-First Sprint","Agility Ladder","Reaction Starts","Lead-Off Practice","Sprint Intervals"
- ]},
- Basketball:{emoji:"🏀",drills:[
- "Stationary Dribbling","Crossover Dribbles","Between-the-Legs Dribbles","Behind-the-Back Dribbles","Weak-Hand Dribbling","Cone Dribbling","Change of Pace","Retreat Dribble","Two-Ball Dribbling","Full-Court Control",
- "Form Shooting","Free Throws","Spot Shooting","Midrange Pull-Ups","Three-Point Shooting","Catch-and-Shoot","Off-the-Dribble Shooting","Bank Shots","Layups Right Hand","Layups Left Hand",
- "Mikan Drill","Reverse Layups","Euro Step Footwork","Jump Stops","Pivot Practice","Triple Threat Moves","Defensive Slides","Closeout Footwork","Rebounding Position","Box-Out Practice",
- "Chest Pass Accuracy","Bounce Pass Accuracy","Overhead Pass","Wall Passing","Pick-and-Roll Reads","Fast Break Finishing","Lateral Agility","Sprint and Stop","Reaction Drills","Conditioning Runs"
- ]},
- Football:{emoji:"🏈",drills:[
- "Three-Point Stance","Explosive Starts","10-Yard Acceleration","Cone Sprints","Lateral Shuffle","Backpedal Technique","Change of Direction","T-Drill Footwork","Reaction Starts","Short Shuttle",
- "Route Running","Slant Routes","Out Routes","Comeback Routes","Curl Routes","Release Footwork","Catching Fundamentals","High-Point Catches","Sideline Toe Taps","Over-the-Shoulder Catches",
- "Spiral Passing","Short Passing Accuracy","Intermediate Passing","Dropback Footwork","Pocket Movement","Target Passing","Throwing on the Run","Quick Release","Ball Security","Hand-Off Technique",
- "Stance and Start","Mirror Footwork","Flag Pulling Technique","Safe Blocking Footwork","Tackling Form on Pads","Pursuit Angles","Backpedal and Break","Coverage Drops","Agility Ladder","Conditioning Intervals"
- ]},
- Soccer:{emoji:"⚽",drills:[
- "Inside-Foot Passing","Wall Passes","One-Touch Passing","Two-Touch Passing","Long Passing","Switching Play","First Touch","Receiving on the Move","Passing Through Gates","Give-and-Go",
- "Inside Cuts","Outside Cuts","Sole Rolls","Stepovers","Body Feints","Cone Dribbling","Change of Pace","Weak-Foot Dribbling","Shielding the Ball","Close Control",
- "Instep Shooting","Placement Shooting","Weak-Foot Shooting","One-on-One Finishing","First-Time Finishing","Volleys Technique","Penalty Practice","Finishing After a Sprint","Curved Runs","Shooting Accuracy",
- "Defensive Stance","Jockeying","Lateral Movement","Interceptions","Tracking Runners","Heading Technique","Throw-In Technique","Goalkeeper Handling","Agility Ladder","Sprint Intervals"
- ]},
- Volleyball:{emoji:"🏐",drills:[
- "Wall Forearm Passes","Partner Passing","Platform Control","Shuffle Passing","Serve Receive","Target Passing","Move-and-Pass","Low Defensive Stance","Reaction Digging","Passing Accuracy",
- "Wall Setting","Partner Setting","High Sets","Quick Sets","Back Sets","Setting Footwork","Jump Setting","Setter Release","Target Setting","Emergency Setting",
- "Standing Float Serve","Jump Float Serve","Serving Accuracy","Short Serves","Deep Corner Serves","Toss Consistency","Serve Routine","Target Zone Serving","Serve Receive Reads","Overhand Serving",
- "Approach Footwork","Arm Swing Mechanics","Block Footwork","Block Jump Timing","Transition Footwork","Tip Coverage","Roll Shots","Hitting Approach","Lateral Agility","Jump Technique"
- ]},
- Hockey:{emoji:"🏒",drills:[
- "Stationary Stickhandling","Wide Dribbles","Tight Dribbles","Cone Stickhandling","Puck Protection","Toe Drags","Pull-and-Release","Head-Up Stickhandling","Quick Hands","Change of Direction",
- "Forehand Passing","Backhand Passing","Wall Passes","One-Touch Passing","Pass Reception","Saucer Pass Technique","Passing Through Gates","Give-and-Go","Moving Passes","Target Passing",
- "Forehand Wrist Shot","Backhand Shot","Snapshot Technique","Shooting Accuracy","Quick Release","Shot Placement","Shooting in Motion","One-Timer Footwork","Rebound Practice","Deception Moves",
- "Forward Stride Technique","Backward Skating","Crossover Footwork","Tight Turns","Stopping Technique","Edge Control","Acceleration Starts","Lateral Movement","Reaction Agility","Conditioning Intervals"
- ]}
+const SPORTS = {
+  "Baseball": [
+    "Throwing accuracy","Catching fundamentals","Ground-ball fielding",
+    "Fly-ball tracking","Batting stance","Soft toss hitting","Tee-work consistency",
+    "Baserunning starts","Base stealing footwork","Infield ready position"
+  ],
+  "Basketball": [
+    "Stationary dribbling","Crossover control","Layup footwork","Form shooting",
+    "Free throws","Chest passing","Bounce passing","Defensive slides",
+    "Rebounding footwork","Weak-hand dribbling"
+  ],
+  "Football": [
+    "Catching fundamentals","Route footwork","Quarterback throwing form",
+    "Ball security","Lateral movement","Backpedal technique","Change of direction",
+    "Snap practice","Hand-eye coordination","Acceleration starts"
+  ],
+  "Soccer": [
+    "Inside-foot passing","First touch","Dribbling control","Weak-foot practice",
+    "Shooting technique","Juggling","Defensive positioning","Short passing",
+    "Change of direction","Ball control under pressure"
+  ],
+  "Tennis": [
+    "Forehand technique","Backhand technique","Serve toss","Split step",
+    "Volley control","Footwork patterns","Racket control","Target practice",
+    "Recovery steps","Consistent rallying"
+  ],
+  "Volleyball": [
+    "Forearm passing","Setting technique","Serving accuracy","Approach footwork",
+    "Blocking footwork","Ready position","Overhead passing","Court movement",
+    "Target serving","Reaction practice"
+  ],
+  "Track & Field": [
+    "Sprint starts","Running posture","Arm drive","Acceleration practice",
+    "Pacing awareness","Dynamic warm-up","Stride rhythm","Relay handoff practice",
+    "Balance drills","Cool-down routine"
+  ]
 };
 
-const appState = {
- user:null, profile:null, selectedSports:["Baseball"], completed:[],
- xp:0, practiceDays:[], settings:{
- theme:"light",textSize:"medium",highContrast:false,reduceMotion:false,
- sound:false,reminders:false,reminderTime:"18:00",
- reminderDays:[0,1,2,3,4,5,6],reminderType:"both"
- }
+const INSTRUCTIONS = {
+  "Throwing accuracy":"Use a safe open space and a suitable target. Start close, focus on control, and gradually increase distance.",
+  "Catching fundamentals":"Use a suitable ball. Keep your eyes on it, present your hands, and secure the catch before resetting.",
+  "Ground-ball fielding":"Start in an athletic position. Track the ball, move your feet, and practice fielding with control.",
+  "Fly-ball tracking":"Practice tracking a gently tossed ball in a safe open area. Communicate clearly if training with a partner.",
+  "Batting stance":"Practice a balanced stance, relaxed grip, and eyes level. Use a safe batting area.",
+  "Free throws":"Use a comfortable stance, consistent routine, and controlled follow-through.",
+  "Stationary dribbling":"Keep your head up and practice controlled dribbles with each hand.",
+  "Inside-foot passing":"Pass a soccer ball toward a target with the inside of your foot, focusing on accuracy.",
+  "Dynamic warm-up":"Start with comfortable, controlled movements to prepare for practice."
 };
 
-let db=null, activeTab="dashboard", reminderTimer=null;
-const $=id=>document.getElementById(id);
-const sportsNames=Object.keys(SPORTS);
-const validDB=()=>SUPABASE_URL.startsWith("https://") && SUPABASE_KEY.length>10 && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_KEY.includes("YOUR_");
+const $ = id => document.getElementById(id);
+const placeholderConfig =
+  SUPABASE_URL.includes("YOUR_SUPABASE") ||
+  SUPABASE_KEY.includes("YOUR_SUPABASE") ||
+  SUPABASE_KEY.includes("YOUR_SUPABASE_PUBLISHABLE");
 
-function notify(msg){
- $("message").textContent=msg;
- $("message").classList.remove("hidden");
-}
-function authNotify(msg){
- $("authMessage").textContent=msg;
- $("authMessage").classList.remove("hidden");
-}
-function hideMessages(){
- $("message").classList.add("hidden");
- $("authMessage").classList.add("hidden");
-}
-function totalDrills(){return appState.selectedSports.reduce((n,s)=>n+SPORTS[s].drills.length,0)}
-function completedForSport(s){return SPORTS[s].drills.filter((_,i)=>appState.completed.includes(s+"::"+i)).length}
-function allCompleted(){return appState.completed.length}
-function totalXP(){return appState.xp || allCompleted()*25}
-function level(){return Math.floor(totalXP()/250)+1}
-function streak(){return appState.practiceDays.length}
-function today(){return new Date().toISOString().slice(0,10)}
+let supabase = null;
+let user = null;
+let activeTab = "dashboard";
+let data = { completed: [], xp: 0, name: "", favorite: "Baseball", theme: "light", reminderTime: "17:00" };
 
-async function signup(){
- hideMessages();
- if(!db){authNotify("First add your Supabase Project URL and publishable key in the code. I can help you find them.");return}
- const name=$("signupName").value.trim(),email=$("signupEmail").value.trim(),password=$("signupPassword").value;
- if(!name||!email||password.length<6){authNotify("Enter your name, a valid email, and a password with at least 6 characters.");return}
- const {data,error}=await db.auth.signUp({email,password,options:{data:{name}}});
- if(error){authNotify(error.message);return}
- if(data.session){appState.user=data.user;appState.profile={name};await loadProfile();openApp()}
- else authNotify("Account created! Check your email if confirmation is required, then log in.")
+function message(text, type="") {
+  $("message").textContent = text;
+  $("message").className = "status " + type;
 }
-async function login(){
- hideMessages();
- if(!db){authNotify("First add your Supabase Project URL and publishable key in the code.");return}
- const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
- const {data,error}=await db.auth.signInWithPassword({email,password});
- if(error){authNotify(error.message);return}
- appState.user=data.user;await loadProfile();openApp()
+function configIsValid() {
+  return !placeholderConfig &&
+    SUPABASE_URL.startsWith("https://") &&
+    SUPABASE_URL.includes(".supabase.co") &&
+    SUPABASE_KEY.length > 20;
 }
-async function logout(){
- if(db)await db.auth.signOut();
- appState.user=null;appState.profile=null;
- $("app").classList.add("hidden");$("welcome").classList.remove("hidden");
- $("logoutBtn").classList.add("hidden");$("userLabel").textContent="";
- if(reminderTimer)clearInterval(reminderTimer);
+function setConnection(text, type="") {
+  $("connection").textContent = text;
+  $("connection").className = type;
+  $("dbDetails").textContent = text;
 }
-async function loadProfile(){
- if(!appState.user)return;
- const {data,error}=await db.from("skillforge_profiles").select("*").eq("user_id",appState.user.id).maybeSingle();
- if(error){notify("Couldn't load your profile: "+error.message);return}
- if(data){
-  appState.profile=data;
-  appState.selectedSports=(data.selected_sports||[]).filter(s=>SPORTS[s]);
-  appState.completed=data.completed||[];
-  appState.practiceDays=data.practice_days||[];
-  appState.settings={...appState.settings,...(data.settings||{})};
-  appState.xp=appState.completed.length*25;
- }else{
-  appState.profile={name:appState.user.user_metadata?.name||""};
-  await saveProfile()
- }
+function showApp(name="") {
+  $("auth").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  $("welcome").textContent = name ? "Welcome, " + name + "!" : "Welcome to SkillForge!";
+  render();
 }
-async function saveProfile(){
- if(!db||!appState.user)return;
- const payload={
-  user_id:appState.user.id,
-  name:appState.profile?.name||appState.user.user_metadata?.name||"",
-  favorite:appState.selectedSports[0]||"Baseball",
-  selected_sports:appState.selectedSports,
-  completed:appState.completed,
-  practice_days:appState.practiceDays,
-  settings:appState.settings,
-  updated_at:new Date().toISOString()
- };
- const {error}=await db.from("skillforge_profiles").upsert(payload,{onConflict:"user_id"});
- if(error)notify("Save failed: "+error.message)
+function showTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll(".tab").forEach(el => el.classList.add("hidden"));
+  $(tab).classList.remove("hidden");
+  document.querySelectorAll("nav button[data-tab]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
+  });
+  if (tab === "sports") renderDrills();
 }
-function openApp(){
- $("welcome").classList.add("hidden");$("app").classList.remove("hidden");
- $("logoutBtn").classList.remove("hidden");
- $("userLabel").textContent=appState.user.email;
- $("accountEmail").textContent=appState.user.email;
- $("greeting").textContent="Let's get to work"+(appState.profile?.name?", "+appState.profile.name:"")+".";
- renderAll();showTab("dashboard");applySettings();startReminderChecker()
+function saveLocal() {
+  try { localStorage.setItem("skillforge_progress", JSON.stringify(data)); }
+  catch (e) { console.warn("Local saving unavailable", e); }
 }
-function showTab(tab){
- activeTab=tab;
- if(tab!=="settings"&&tab!=="scores"&&tab!=="progress"&&tab!=="sports"&&tab!=="drills"&&tab!=="dashboard")tab="dashboard";
- ["dashboard","sports","drills","scores","progress","settings"].forEach(t=>{
-  $("tab-"+t).classList.toggle("hidden",t!==tab)
- });
- document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
- if(tab==="sports")renderSportChoices();
- if(tab==="drills")renderDrills();
- if(tab==="progress")renderProgress();
- if(tab==="scores")loadScores()
+function loadLocal() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("skillforge_progress") || "null");
+    if (saved && typeof saved === "object") data = { ...data, ...saved };
+  } catch (e) { console.warn("Could not read local progress", e); }
 }
-function renderAll(){
- renderStats();renderDashboardSports();renderSportChoices();fillSportSelect();renderDrills();renderProgress();fillSettings()
+function render() {
+  $("xp").textContent = data.xp;
+  $("completedCount").textContent = data.completed.length;
+  $("sportCount").textContent = Object.keys(SPORTS).length;
+  $("progressCompleted").textContent = data.completed.length;
+  $("progressXP").textContent = data.xp;
+  $("displayName").value = data.name || "";
+  $("favoriteSport").value = data.favorite || "Baseball";
+  $("theme").value = data.theme || "light";
+  $("reminderTime").value = data.reminderTime || "17:00";
+  document.body.classList.toggle("dark", data.theme === "dark");
+  renderDrills();
 }
-function renderStats(){
- $("xpStat").textContent=totalXP();
- $("levelStat").textContent=level();
- $("completedStat").textContent=allCompleted();
- $("streakStat").textContent=streak();
- const total=totalDrills(),done=appState.selectedSports.reduce((n,s)=>n+completedForSport(s),0);
- $("overallBar").style.width=(total?done/total*100:0)+"%";
- $("overallText").textContent=appState.selectedSports.length?`${done} of ${total} drills completed across your selected sports.`:"Select sports to personalize your dashboard."
+function fillSports() {
+  const options = Object.keys(SPORTS).map(s => `<option value="${s}">${s}</option>`).join("");
+  $("sportSelect").innerHTML = options;
+  $("favoriteSport").innerHTML = options;
 }
-function renderDashboardSports(){
- const box=$("dashboardSports");
- if(!appState.selectedSports.length){box.innerHTML='<div class="card"><h3>No sports selected yet</h3><button class="primary" onclick="showTab(\\'sports\\')">Choose sports</button></div>';return}
- box.innerHTML=appState.selectedSports.map(s=>`<div class="sport" onclick="openSportDrills('${s}')"><div class="emoji">${SPORTS[s].emoji}</div><h3>${s}</h3><p class="muted">${completedForSport(s)} of 40 drills complete</p><div class="progress"><div style="width:${completedForSport(s)/40*100}%"></div></div><span class="tag">View drills →</span></div>`).join("")
+function renderDrills() {
+  if (!$("drillList")) return;
+  const sport = $("sportSelect").value || "Baseball";
+  const search = $("drillSearch").value.trim().toLowerCase();
+  $("drillHeading").textContent = sport + " drills";
+  const drills = Array.from({length:40}, (_,i) => {
+    const base = SPORTS[sport][i % SPORTS[sport].length];
+    return { id: sport + "-" + (i+1), name: i < SPORTS[sport].length ? base : base + " — Level " + (Math.floor(i / SPORTS[sport].length)+1) };
+  }).filter(d => d.name.toLowerCase().includes(search));
+  $("drillList").innerHTML = drills.map(d => {
+    const done = data.completed.includes(d.id);
+    return `<div class="drill"><strong>${d.name}</strong>
+      <p class="muted">${INSTRUCTIONS[d.name.split(" — ")[0]] || "Focus on good technique, control, and consistency. Warm up first and practice in a safe space."}</p>
+      <button class="${done ? "secondary" : "primary"}" data-drill="${d.id}" ${done ? "disabled" : ""}>${done ? "Completed ✓" : "Mark complete +10 XP"}</button>
+      <div style="clear:both"></div></div>`;
+  }).join("");
+  if (!drills.length) $("drillList").textContent = "No drills match that search.";
 }
-function renderSportChoices(){
- $("sportChoices").innerHTML=sportsNames.map(s=>`<label class="sport"><div class="checkrow"><input type="checkbox" value="${s}" ${appState.selectedSports.includes(s)?"checked":""}> <span class="emoji">${SPORTS[s].emoji}</span></div><h3>${s}</h3><p class="muted small">40 training drills</p></label>`).join("")
-}
-async function saveSports(){
- const selected=[...$("sportChoices").querySelectorAll("input:checked")].map(x=>x.value);
- if(!selected.length){notify("Choose at least one sport.");return}
- appState.selectedSports=selected;
- if(!selected.includes($("sportSelect").value))$("sportSelect").value=selected[0];
- await saveProfile();renderAll();notify("Your sports have been saved!")
-}
-function fillSportSelect(){
- const select=$("sportSelect");
- const old=select.value;
- select.innerHTML=(appState.selectedSports.length?appState.selectedSports:sportsNames).map(s=>`<option>${s}</option>`).join("");
- if(appState.selectedSports.includes(old))select.value=old
-}
-function openSportDrills(s){
- fillSportSelect();$("sportSelect").value=s;showTab("drills");renderDrills()
-}
-function renderDrills(){
- const sport=$("sportSelect").value;
- if(!SPORTS[sport]){$("drillList").innerHTML='<div class="card">Select a sport first.</div>';return}
- const difficulty=$("difficultySelect").value;
- const drills=SPORTS[sport].drills;
- $("drillSummary").textContent=`${sport}: ${completedForSport(sport)} of ${drills.length} completed. Complete a drill to earn 25 XP.`;
- $("drillList").innerHTML=drills.map((name,i)=>{
-  const key=sport+"::"+i,done=appState.completed.includes(key);
-  const diff=i<14?"Beginner":i<28?"Intermediate":"Advanced";
-  if(difficulty!=="All"&&difficulty!==diff)return "";
-  return `<div class="drill"><div class="actions" style="justify-content:space-between"><h3>${SPORTS[sport].emoji} ${i+1}. ${name}</h3><span class="tag">${diff}</span></div><p class="muted small">${drillInstruction(name,sport)}</p><button class="${done?"secondary":"primary"}" onclick="toggleDrill('${sport}',${i})">${done?"✓ Completed — undo":"Mark complete +25 XP"}</button></div>`
- }).join("")
-}
-function drillInstruction(name,sport){
- return `Focus on good technique and control. ${name} is a ${sport.toLowerCase()} training exercise. Start slowly, repeat with correct form, and increase speed only when you feel comfortable. Take breaks and use a safe practice area.`
-}
-async function toggleDrill(sport,i){
- const key=sport+"::"+i;
- if(appState.completed.includes(key))appState.completed=appState.completed.filter(k=>k!==key);
- else{
-  appState.completed.push(key);
-  const d=today();
-  if(!appState.practiceDays.includes(d))appState.practiceDays.push(d);
- }
- appState.xp=appState.completed.length*25;
- await saveProfile();renderAll();showTab("drills");notify("Progress saved!")
-}
-function renderProgress(){
- const total=totalDrills(),done=appState.selectedSports.reduce((n,s)=>n+completedForSport(s),0);
- $("progressIntro").textContent=`You've completed ${done} of ${total} drills in your selected sports and earned ${totalXP()} XP.`;
- $("progressSports").innerHTML=appState.selectedSports.length?appState.selectedSports.map(s=>`<div class="card"><div class="actions" style="justify-content:space-between"><h3>${SPORTS[s].emoji} ${s}</h3><strong>${completedForSport(s)}/40</strong></div><div class="progress"><div style="width:${completedForSport(s)/40*100}%"></div></div></div>`).join(""):"Choose sports to see your progress."
-}
-function fillSettings(){
- $("themeSetting").value=appState.settings.theme||"light";
- $("textSetting").value=appState.settings.textSize||"medium";
- $("contrastSetting").checked=!!appState.settings.highContrast;
- $("motionSetting").checked=!!appState.settings.reduceMotion;
- $("reminderEnabled").checked=!!appState.settings.reminders;
- $("reminderTime").value=appState.settings.reminderTime||"18:00";
- $("reminderType").value=appState.settings.reminderType||"both";
- document.querySelectorAll("#reminderDays input").forEach(c=>c.checked=(appState.settings.reminderDays||[]).includes(Number(c.value)))
-}
-async function updateSetting(key,value){
- appState.settings[key]=value;applySettings();await saveProfile()
-}
-async function saveReminderDays(){
- appState.settings.reminderDays=[...document.querySelectorAll("#reminderDays input:checked")].map(c=>Number(c.value));
- await saveProfile();notify("Reminder days saved.")
-}
-function applySettings(){
- const theme=appState.settings.theme;
- const dark=theme==="dark"||(theme==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);
- document.body.classList.toggle("dark",dark);
- document.body.style.fontSize=({small:"14px",medium:"16px",large:"19px"})[appState.settings.textSize]||"16px";
- document.body.style.filter=appState.settings.highContrast?"contrast(1.15)":"";
- document.documentElement.style.scrollBehavior=appState.settings.reduceMotion?"auto":"smooth";
-}
-async function requestNotifications(){
- if(!("Notification" in window)){notify("This browser doesn't support notifications.");return}
- const permission=await Notification.requestPermission();
- notify(permission==="granted"?"Notifications enabled. Keep SkillForge open for reminders.":"Notifications were not enabled. You can change this in your browser settings.")
-}
-function startReminderChecker(){
- if(reminderTimer)clearInterval(reminderTimer);
- let lastFired="";
- reminderTimer=setInterval(()=>{
-  const s=appState.settings;if(!s.reminders)return;
-  const now=new Date(),day=now.getDay();
-  const time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-  const key=today()+"-"+time;
-  if(time===s.reminderTime&&(s.reminderDays||[]).includes(day)&&lastFired!==key){
-   lastFired=key;
-   if("Notification" in window&&Notification.permission==="granted"){
-    new Notification("SkillForge practice reminder",{body:s.reminderType==="streak"?"Keep your practice habit going!":"It's time to work on your skills!"})
-   }else notify("SkillForge reminder: It's time to practice!")
+async function syncProfile() {
+  if (!supabase || !user) return;
+  try {
+    const payload = {
+      user_id: user.id,
+      name: data.name || "",
+      favorite: data.favorite || "Baseball",
+      selected_sports: Object.keys(SPORTS),
+      completed: data.completed,
+      settings: { theme: data.theme, reminderTime: data.reminderTime },
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await supabase.from("skillforge_profiles").upsert(payload, { onConflict: "user_id" });
+    if (error) throw error;
+    message("Your progress and settings have been saved.", "success");
+  } catch (e) {
+    console.error("Profile save error:", e);
+    message("Signed in, but database saving failed: " + e.message, "error");
   }
- },15000)
 }
-async function loadScores(){
- const league=$("leagueSelect").value;
- const box=$("scoresList");box.innerHTML='<div class="card">Loading scores…</div>';
- try{
-  const url="https://site.api.espn.com/apis/site/v2/sports/"+league+"/scoreboard";
-  const response=await fetch(url);
-  if(!response.ok)throw new Error("Scoreboard unavailable");
-  const data=await response.json();
-  const events=data.events||[];
-  if(!events.length){box.innerHTML='<div class="card">No games are currently listed for this league. Try another league or check again later.</div>';return}
-  box.innerHTML=events.map(e=>{
-   const comp=e.competitions?.[0],teams=comp?.competitors||[];
-   const status=e.status?.type?.shortDetail||"Scheduled";
-   return `<div class="card"><h3>${e.name||"Game"}</h3><p>${teams.map(t=>`${t.team?.displayName||"Team"} — ${t.score??"—"}`).join("<br>")}</p><p class="muted small">${status}</p></div>`
-  }).join("")
- }catch(e){box.innerHTML='<div class="card">Could not load scores right now. Check your connection or try again later.</div>'}
-}
-async function init(){
- if(!validDB()){
-  $("authMessage").textContent="Website code is installed, but Supabase still needs to be connected using your project URL and publishable key.";
-  $("authMessage").classList.remove("hidden");
-  return
- }
- db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
- const {data}=await db.auth.getSession();
- if(data.session){appState.user=data.session.user;await loadProfile();openApp()}
- db.auth.onAuthStateChange(async(event,session)=>{
-  if(event==="SIGNED_OUT"){appState.user=null;$("app").classList.add("hidden");$("welcome").classList.remove("hidden")}
-  else if(session&&event==="SIGNED_IN"&&!appState.profile){
-   appState.user=session.user;await loadProfile();openApp()
+async function loadProfile() {
+  if (!supabase || !user) return;
+  try {
+    const { data: profile, error } = await supabase
+      .from("skillforge_profiles").select("*").eq("user_id", user.id).maybeSingle();
+    if (error) throw error;
+    if (profile) {
+      data.name = profile.name || "";
+      data.favorite = profile.favorite || "Baseball";
+      data.completed = Array.isArray(profile.completed) ? profile.completed : [];
+      data.xp = data.completed.length * 10;
+      if (profile.settings) {
+        data.theme = profile.settings.theme || "light";
+        data.reminderTime = profile.settings.reminderTime || "17:00";
+      }
+      saveLocal();
+    } else {
+      await syncProfile();
+    }
+  } catch (e) {
+    console.error("Profile load error:", e);
+    message("Could not load saved profile: " + e.message, "error");
   }
- })
 }
+async function authAction(kind) {
+  if (!supabase) {
+    message("Supabase is not connected yet. Replace the two configuration placeholders in the code first.", "error");
+    return;
+  }
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if (!email || !password) {
+    message("Enter both your email and password.", "error");
+    return;
+  }
+  if (password.length < 6) {
+    message("Use a password with at least 6 characters.", "error");
+    return;
+  }
+  $("loginBtn").disabled = true;
+  $("signupBtn").disabled = true;
+  message(kind === "signup" ? "Creating your account..." : "Logging in...");
+  try {
+    const result = kind === "signup"
+      ? await supabase.auth.signUp({ email, password })
+      : await supabase.auth.signInWithPassword({ email, password });
+    if (result.error) throw result.error;
+    if (kind === "signup" && !result.data.session) {
+      message("Account request received. Check your email for a confirmation link, then log in.", "success");
+      return;
+    }
+    user = result.data.user;
+    if (!user) throw new Error("No user was returned. Check your Supabase authentication settings.");
+    await loadProfile();
+    showApp(data.name);
+    message("You are signed in.", "success");
+  } catch (e) {
+    console.error("Authentication error:", e);
+    message("Account/login error: " + e.message, "error");
+  } finally {
+    $("loginBtn").disabled = false;
+    $("signupBtn").disabled = false;
+  }
+}
+async function saveSettings() {
+  data.name = $("displayName").value.trim();
+  data.favorite = $("favoriteSport").value;
+  data.theme = $("theme").value;
+  data.reminderTime = $("reminderTime").value || "17:00";
+  saveLocal();
+  render();
+  if (user) await syncProfile();
+  else message("Settings saved on this device. Log in to sync them to your account.", "success");
+}
+async function logout() {
+  if (supabase) {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      message("Logout error: " + error.message, "error");
+      return;
+    }
+  }
+  user = null;
+  $("app").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  message("You have logged out.");
+}
+function init() {
+  fillSports();
+  loadLocal();
+  $("sportSelect").value = data.favorite || "Baseball";
+  if (configIsValid() && window.supabase) {
+    try {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      setConnection("Supabase client initialized. Checking authentication...", "success");
+      supabase.auth.getSession().then(async ({data: result, error}) => {
+        if (error) {
+          setConnection("Authentication check failed: " + error.message, "error");
+          return;
+        }
+        if (result.session) {
+          user = result.session.user;
+          await loadProfile();
+          showApp(data.name);
+          message("Your saved session was restored.", "success");
+        } else {
+          setConnection("Supabase connected. You can create an account or log in.", "success");
+        }
+      }).catch(e => {
+        setConnection("Supabase error: " + e.message, "error");
+      });
+    } catch (e) {
+      setConnection("Could not initialize Supabase: " + e.message, "error");
+    }
+  } else {
+    setConnection("Demo mode: Supabase URL/key are missing or invalid. The site and local progress still work.", "error");
+  }
+  $("loginBtn").addEventListener("click", () => authAction("login"));
+  $("signupBtn").addEventListener("click", () => authAction("signup"));
+  $("skipBtn").addEventListener("click", () => {
+    showApp(data.name);
+    message("Demo mode: progress saves on this device only.");
+  });
+  document.querySelectorAll("nav button[data-tab]").forEach(btn => {
+    btn.addEventListener("click", () => showTab(btn.dataset.tab));
+  });
+  document.querySelectorAll("[data-goto]").forEach(btn => {
+    btn.addEventListener("click", () => showTab(btn.dataset.goto));
+  });
+  $("sportSelect").addEventListener("change", renderDrills);
+  $("drillSearch").addEventListener("input", renderDrills);
+  $("drillList").addEventListener("click", async e => {
+    const btn = e.target.closest("button[data-drill]");
+    if (!btn) return;
+    const id = btn.dataset.drill;
+    if (data.completed.includes(id)) return;
+    data.completed.push(id);
+    data.xp += 10;
+    saveLocal();
+    render();
+    message("Drill completed! You earned 10 XP.", "success");
+    if (user) await syncProfile();
+  });
+  $("saveSettings").addEventListener("click", saveSettings);
+  $("theme").addEventListener("change", () => {
+    document.body.classList.toggle("dark", $("theme").value === "dark");
+  });
+  $("logoutBtn").addEventListener("click", logout);
+  $("resetBtn").addEventListener("click", async () => {
+    if (!confirm("Reset all your completed drills and XP?")) return;
+    data.completed = [];
+    data.xp = 0;
+    saveLocal();
+    render();
+    if (user) await syncProfile();
+    else message("Local progress reset.", "success");
+  });
+  render();
+}
+window.addEventListener("error", e => {
+  console.error("Website error:", e.message);
+  const box = $("message");
+  if (box) message("Website script error: " + e.message, "error");
+});
+window.addEventListener("unhandledrejection", e => {
+  console.error("Unexpected error:", e.reason);
+  message("Unexpected error: " + (e.reason?.message || String(e.reason)), "error");
+});
 init();
 </script>
 </body>
