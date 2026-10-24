@@ -4,402 +4,843 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101510">
 <title>SkillForge | Train Your Game</title>
 <style>
-:root{--bg:#f3f6fc;--card:#fff;--text:#18243b;--muted:#69758a;--blue:#245bdb;--border:#e0e6f0;--green:#16845d}
-body.dark{--bg:#101827;--card:#1b273a;--text:#f5f7ff;--muted:#b1bdd0;--blue:#7198ff;--border:#344158;--green:#5cdda6}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{background:#173d91;color:white;padding:23px max(20px,calc((100% - 1050px)/2))}
-header h1{margin:0;font-size:29px}
-header p{margin:7px 0 0;color:#dce7ff}
-main{max-width:1050px;margin:auto;padding:22px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-button{padding:11px 15px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px}
-button:disabled{opacity:.6;cursor:wait}
-.primary{background:var(--blue);color:white}
-.secondary,nav button{background:var(--card);color:var(--text);border:1px solid var(--border)}
-nav button.active{background:var(--blue);color:white}
-label{display:block;font-weight:bold;margin:12px 0 6px}
-input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.row>*{flex:1}
-.muted{color:var(--muted);line-height:1.5}
-.big{font-size:30px;font-weight:bold}
-.status{padding:12px;background:var(--bg);border-radius:8px;overflow-wrap:anywhere}
-.success{color:var(--green)}
-.error{color:#c43b35}
-.hidden{display:none!important}
-.drill{padding:14px 0;border-bottom:1px solid var(--border)}
-.drill:last-child{border-bottom:0}
-.drill p{margin:8px 0;color:var(--muted);line-height:1.5}
-.drill button{margin:5px 0}
-footer{text-align:center;padding:25px;color:var(--muted)}
+:root {
+  --bg:#0c100d; --card:#151b16; --card2:#1d261e;
+  --text:#f5f7f4; --muted:#a4afa4; --accent:#b6ff35;
+  --border:#303a30; --danger:#ff7777;
+}
+body.light {
+  --bg:#f1f5ef; --card:#fff; --card2:#e7eee3;
+  --text:#182018; --muted:#617061; --accent:#528c0b;
+  --border:#d7e0d4; --danger:#c33434;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.5;
+}
+button,input,select {font:inherit}
+button {cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:2px solid var(--accent);outline-offset:3px;
+}
+header {
+  background:linear-gradient(120deg,#172419,#263a20);
+  border-bottom:1px solid #34452e;padding:22px 5%;
+}
+.header-inner {
+  max-width:1150px;margin:auto;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;
+}
+.brand {font-size:27px;font-weight:900;letter-spacing:-1px}
+.brand span {color:var(--accent)}
+.tagline {margin:3px 0 0;color:#bdcbb7;font-size:13px}
+.pill {
+  border:1px solid #4c6242;border-radius:30px;padding:7px 12px;
+  color:var(--accent);font-size:12px;font-weight:bold;white-space:nowrap;
+}
+main {max-width:1150px;margin:auto;padding:24px 20px 110px}
+.hero {
+  position:relative;overflow:hidden;border:1px solid var(--border);
+  border-radius:22px;padding:36px 30px;margin-bottom:22px;
+  background:radial-gradient(ellipse at 90% 20%,#425a254d,transparent 48%),
+             linear-gradient(125deg,#1b281b,#101510);
+}
+.hero:after {
+  content:"SF";position:absolute;right:22px;bottom:-62px;
+  font-size:190px;font-weight:900;color:#b6ff350b;pointer-events:none;
+}
+.eyebrow {
+  color:var(--accent);font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;font-weight:900;
+}
+h1,h2,h3,p {margin-top:0}
+.hero h1 {
+  font-size:clamp(35px,6vw,65px);line-height:1.02;
+  letter-spacing:-2px;max-width:650px;margin:15px 0;
+}
+.hero h1 span {color:var(--accent)}
+.hero p {color:#c1cbbd;max-width:550px}
+.hero-actions {display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.btn {
+  border:1px solid var(--border);border-radius:10px;padding:11px 15px;
+  background:var(--card2);color:var(--text);font-weight:800;
+}
+.btn.primary {background:var(--accent);color:#14200c;border-color:var(--accent)}
+.btn:hover {filter:brightness(1.08);transform:translateY(-1px)}
+.btn:disabled {opacity:.55;cursor:default;transform:none}
+.section-head {
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin:28px 0 14px;
+}
+.section-head h2 {font-size:22px;margin:0}
+.muted {color:var(--muted)}
+.small {font-size:13px}
+.grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card {
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:20px;min-width:0;
+}
+.stat-label {color:var(--muted);font-size:13px}
+.stat-number {font-size:32px;font-weight:900;letter-spacing:-1px;margin:3px 0}
+.stat-number span {font-size:13px;color:var(--accent);letter-spacing:0}
+.progress-track {
+  height:8px;background:var(--border);border-radius:20px;
+  overflow:hidden;margin:12px 0 7px;
+}
+.progress-fill {height:100%;width:0;background:var(--accent);transition:width .2s}
+.sport-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sport-card {
+  text-align:left;min-height:135px;display:flex;flex-direction:column;
+  justify-content:space-between;background:var(--card);color:var(--text);
+  border:1px solid var(--border);border-radius:15px;padding:16px;
+}
+.sport-card:hover,.sport-card.selected {
+  border-color:var(--accent);background:var(--card2)
+}
+.sport-icon {font-size:29px}
+.sport-card strong {font-size:16px}
+.sport-card small {color:var(--muted);margin-top:4px}
+nav {
+  display:flex;gap:8px;flex-wrap:wrap;margin:22px 0;
+  border-bottom:1px solid var(--border);padding-bottom:14px;
+}
+nav button {
+  border:1px solid var(--border);border-radius:9px;padding:10px 14px;
+  background:var(--card);color:var(--muted);font-weight:bold;
+}
+nav button.active {background:var(--accent);color:#14200c;border-color:var(--accent)}
+.page.hidden,.hidden {display:none!important}
+.controls {
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;
+}
+label {display:block;font-size:13px;font-weight:bold;margin:12px 0 6px}
+input,select {
+  width:100%;padding:12px;border:1px solid var(--border);
+  border-radius:9px;background:var(--bg);color:var(--text);
+}
+input[type=checkbox] {width:auto;accent-color:var(--accent)}
+.drill-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.drill-card {
+  border:1px solid var(--border);background:var(--card);
+  border-radius:14px;padding:17px;display:flex;flex-direction:column;
+}
+.drill-top {display:flex;justify-content:space-between;gap:8px;align-items:start}
+.drill-card h3 {font-size:17px;margin:8px 0}
+.drill-card p {color:var(--muted);font-size:13px;flex:1;margin-bottom:13px}
+.tag {
+  display:inline-block;border:1px solid var(--border);border-radius:20px;
+  padding:4px 8px;color:var(--muted);font-size:11px;white-space:nowrap;
+}
+.drill-actions {display:flex;gap:8px;flex-wrap:wrap}
+.drill-actions .btn {font-size:12px;padding:9px 10px}
+.done-tag {color:var(--accent);font-size:12px;font-weight:bold}
+.timer-display {font-size:48px;font-weight:900;text-align:center;margin:16px 0}
+.timer-actions {display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.settings-grid {display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.setting {margin-bottom:14px}
+.setting p {font-size:13px;color:var(--muted)}
+.notice {
+  padding:12px 14px;border-radius:10px;background:var(--card2);
+  color:var(--muted);font-size:13px;margin-bottom:15px;
+}
+.toast {
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#14200c;padding:12px 18px;
+  border-radius:12px;font-weight:bold;box-shadow:0 8px 25px #0005;
+  z-index:10;max-width:90%;text-align:center;
+}
+footer {text-align:center;padding:25px;color:var(--muted);font-size:12px}
+@media(max-width:760px) {
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sport-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero {padding:28px 21px}
+  .hero:after {font-size:130px;right:0}
+  .drill-grid {grid-template-columns:1fr}
+  .settings-grid {grid-template-columns:1fr}
+}
+@media(max-width:480px) {
+  main {padding:16px 13px 100px}
+  header {padding:18px 15px}
+  .brand {font-size:23px}
+  .pill {font-size:10px;padding:6px 8px}
+  .card {padding:15px}
+  .controls {grid-template-columns:1fr}
+  nav {
+    position:fixed;bottom:0;left:0;right:0;z-index:5;
+    background:var(--bg);padding:9px 7px;
+    border-top:1px solid var(--border);border-bottom:0;
+    justify-content:space-around;gap:4px;margin:0;
+  }
+  nav button {padding:10px 8px;font-size:11px;flex:1}
+  .hero h1 {font-size:39px}
+  .stat-number {font-size:27px}
+  .sport-card {padding:13px;min-height:120px}
+}
 </style>
 </head>
 <body>
 <header>
-<h1>⚡ SkillForge</h1>
-<p>Train smarter. Build skills. Elevate your game.</p>
+  <div class="header-inner">
+    <div>
+      <div class="brand">⚡ SKILL<span>FORGE</span></div>
+      <p class="tagline">Train smarter. Build skills. Elevate your game.</p>
+    </div>
+    <div class="pill">YOUR TRAINING HUB</div>
+  </div>
 </header>
 
 <main>
-<div class="card">
-<strong>Website status</strong>
-<p id="status" class="status">SkillForge is loading...</p>
-</div>
+  <section class="hero">
+    <div class="eyebrow">Your next level starts here</div>
+    <h1>TRAIN SMARTER.<br><span>PLAY BETTER.</span></h1>
+    <p>Build your skills, stack your XP, and become a better athlete one session at a time.</p>
+    <div class="hero-actions">
+      <button class="btn primary" data-go="sports">Explore drills →</button>
+      <button class="btn" data-go="progress">View my progress</button>
+    </div>
+  </section>
 
-<section id="loginPage" class="card">
-<h2>Welcome to SkillForge</h2>
-<p class="muted">Sign in to your account or explore the training website.</p>
-<label for="email">Email</label>
-<input id="email" type="email" placeholder="you@example.com" autocomplete="email">
-<label for="password">Password</label>
-<input id="password" type="password" placeholder="At least 6 characters" autocomplete="current-password">
-<div class="row" style="margin-top:15px">
-<button id="loginBtn" class="primary" type="button">Log in</button>
-<button id="signupBtn" class="secondary" type="button">Create account</button>
-</div>
-<button id="exploreBtn" class="secondary" type="button" style="width:100%;margin-top:10px">Explore without an account</button>
-</section>
+  <div id="toast" class="toast hidden" role="status"></div>
 
-<section id="app" class="hidden">
-<nav>
-<button type="button" data-page="dashboard" class="active">Dashboard</button>
-<button type="button" data-page="sports">Sports & drills</button>
-<button type="button" data-page="progress">My progress</button>
-<button type="button" data-page="settings">Settings</button>
-</nav>
+  <nav aria-label="Main navigation">
+    <button class="active" data-page="dashboard">⌂ Home</button>
+    <button data-page="sports">🏆 Drills</button>
+    <button data-page="progress">📈 Progress</button>
+    <button data-page="settings">⚙ Settings</button>
+  </nav>
 
-<section id="dashboard" class="page">
-<div class="card">
-<h2 id="welcome">Welcome to SkillForge!</h2>
-<p class="muted">Build your skills one practice at a time. Choose a sport and start training today.</p>
-<button type="button" class="primary" data-open="sports">Find a drill</button>
-</div>
-<div class="grid">
-<div class="card"><p class="muted">XP earned</p><div class="big" id="xp">0</div></div>
-<div class="card"><p class="muted">Drills completed</p><div class="big" id="completed">0</div></div>
-<div class="card"><p class="muted">Available sports</p><div class="big">7</div></div>
-</div>
-<div class="card"><h3>Keep improving</h3><p class="muted">Choose drills that match your sport and practice safely with good technique.</p></div>
-</section>
+  <section id="dashboard" class="page">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Athlete dashboard</div>
+        <h2 id="welcome">Welcome to SkillForge</h2>
+      </div>
+      <span class="pill" id="levelBadge">LEVEL 1</span>
+    </div>
 
-<section id="sports" class="page hidden">
-<div class="card">
-<h2>Sports & drills</h2>
-<label for="sport">Choose your sport</label>
-<select id="sport"></select>
-<label for="search">Search drills</label>
-<input id="search" placeholder="Search by drill name...">
-</div>
-<div class="card"><h3 id="drillTitle">Training drills</h3><div id="drillList"></div></div>
-</section>
+    <div class="grid">
+      <div class="card">
+        <div class="stat-label">Total XP</div>
+        <div class="stat-number" id="xpStat">0 <span>XP</span></div>
+        <div class="muted small">Earn 10 XP per drill</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Drills completed</div>
+        <div class="stat-number" id="doneStat">0</div>
+        <div class="muted small">Every rep counts</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Level progress</div>
+        <div class="stat-number" id="levelStat">Level 1</div>
+        <div class="progress-track"><div id="levelBar" class="progress-fill"></div></div>
+        <div class="muted small" id="levelText">0 / 100 XP to next level</div>
+      </div>
+    </div>
 
-<section id="progress" class="page hidden">
-<div class="card">
-<h2>My progress</h2>
-<p class="muted">Your training progress is saved on this device. Sign in with Supabase to sync it to your account.</p>
-<p>Drills completed: <strong id="progressCount">0</strong></p>
-<p>XP earned: <strong id="progressXP">0</strong></p>
-<div style="height:12px;background:var(--border);border-radius:10px;overflow:hidden">
-<div id="progressBar" style="height:100%;width:0%;background:var(--blue)"></div>
-</div>
-<p class="muted" id="progressText">Keep practicing!</p>
-<button type="button" class="secondary" id="resetBtn">Reset progress</button>
-</div>
-</section>
+    <div class="section-head">
+      <h2>Choose your sport</h2>
+      <span class="muted small">7 sports · More skills</span>
+    </div>
+    <div class="sport-grid" id="sportCards"></div>
 
-<section id="settings" class="page hidden">
-<div class="card">
-<h2>Settings</h2>
-<label for="displayName">Display name</label>
-<input id="displayName" placeholder="Enter your name">
-<label for="favorite">Favorite sport</label>
-<select id="favorite"></select>
-<label for="theme">Appearance</label>
-<select id="theme"><option value="light">Light mode</option><option value="dark">Dark mode</option></select>
-<label for="reminder">Preferred practice time</label>
-<input id="reminder" type="time" value="17:00">
-<p class="muted">This saves your preferred time but does not send notifications.</p>
-<button type="button" class="primary" id="saveBtn">Save settings</button>
-<button type="button" class="secondary" id="logoutBtn">Log out</button>
-</div>
-</section>
-</section>
+    <div class="section-head"><h2>Today's training</h2></div>
+    <div class="card">
+      <div class="eyebrow">Keep showing up</div>
+      <h3>Small improvements add up.</h3>
+      <p class="muted">Choose a drill, focus on good technique, and mark it complete when you finish.</p>
+      <button class="btn primary" data-go="sports">Start today's training →</button>
+    </div>
+  </section>
+
+  <section id="sports" class="page hidden">
+    <div class="section-head">
+      <div><div class="eyebrow">Training library</div><h2>Sports & drills</h2></div>
+      <span class="pill" id="resultsCount">0 drills</span>
+    </div>
+    <div class="card">
+      <label for="sportSelect">Choose your sport</label>
+      <select id="sportSelect"></select>
+      <div class="controls">
+        <div>
+          <label for="search">Search drills</label>
+          <input id="search" placeholder="Try batting, passing, speed...">
+        </div>
+        <div>
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty">
+            <option value="all">All levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+      </div>
+      <p class="muted small">Warm up first. Practice in a safe area and use appropriate equipment.</p>
+    </div>
+    <div id="drillList" class="drill-grid"></div>
+  </section>
+
+  <section id="progress" class="page hidden">
+    <div class="section-head">
+      <div><div class="eyebrow">Your performance</div><h2>My progress</h2></div>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="stat-label">Total XP</div><div class="stat-number" id="progressXP">0</div></div>
+      <div class="card"><div class="stat-label">Completed drills</div><div class="stat-number" id="progressDone">0</div></div>
+      <div class="card"><div class="stat-label">Current level</div><div class="stat-number" id="progressLevel">1</div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Next level</h3>
+      <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+      <p class="muted" id="progressText">Complete your first drill to get started.</p>
+    </div>
+    <div class="card">
+      <h3>My training goal</h3>
+      <p class="muted">Set a target for how many drills you want to complete.</p>
+      <label for="goal">Drills goal</label>
+      <select id="goal">
+        <option value="5">5 drills</option>
+        <option value="10">10 drills</option>
+        <option value="20">20 drills</option>
+        <option value="30">30 drills</option>
+        <option value="50">50 drills</option>
+      </select>
+      <div class="progress-track"><div id="goalBar" class="progress-fill"></div></div>
+      <p id="goalText" class="muted">0 of 10 drills</p>
+    </div>
+    <div class="card">
+      <h3>Recently completed</h3>
+      <div id="history" class="muted">Your completed drills will appear here.</div>
+    </div>
+  </section>
+
+  <section id="settings" class="page hidden">
+    <div class="section-head">
+      <div><div class="eyebrow">Make it yours</div><h2>Settings</h2></div>
+    </div>
+    <div class="card">
+      <div class="settings-grid">
+        <div class="setting">
+          <label for="displayName">Display name</label>
+          <input id="displayName" maxlength="30" placeholder="What should we call you?">
+        </div>
+        <div class="setting">
+          <label for="favorite">Favorite sport</label>
+          <select id="favorite"></select>
+        </div>
+        <div class="setting">
+          <label for="theme">Appearance</label>
+          <select id="theme">
+            <option value="dark">Dark — Pro</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <div class="setting">
+          <label for="reminder">Preferred practice time</label>
+          <input id="reminder" type="time" value="17:00">
+          <p>This is a preference only; it will not send notifications.</p>
+        </div>
+      </div>
+      <button class="btn primary" id="saveSettings">Save settings</button>
+    </div>
+    <div class="card">
+      <h3>Data & privacy</h3>
+      <div class="notice">Your progress is saved in this browser on this device. It will not automatically sync to other devices.</div>
+      <button class="btn" id="exportData">Export my progress</button>
+      <button class="btn" id="resetProgress" style="color:var(--danger)">Reset all progress</button>
+    </div>
+  </section>
 </main>
-<footer>SkillForge · Practice with purpose.</footer>
+<footer>SKILLFORGE · PRACTICE WITH PURPOSE.</footer>
 
-<!-- Supabase is optional for exploring the website. -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 "use strict";
 
-/* Replace these with your real Supabase project details. */
-https://mkvkcclotsfqfvqqxksm.supabase.co/rest/v1/
-sb_publishable_b8Qkg6QOE634rpQu0CRE6Q_U7_FkYwy
-  
 const SPORTS = {
-"Baseball":["Batting stance","Tee work","Soft toss hitting","Throwing accuracy","Catching fundamentals","Ground-ball fielding","Fly-ball tracking","Baserunning","Base stealing footwork","Infield ready position"],
-"Basketball":["Stationary dribbling","Crossover control","Layup footwork","Form shooting","Free throws","Chest passing","Bounce passing","Defensive slides","Rebounding footwork","Weak-hand dribbling"],
-"Football":["Catching fundamentals","Route footwork","Throwing technique","Ball security","Lateral movement","Backpedal technique","Change of direction","Hand-eye coordination","Acceleration starts","Footwork practice"],
-"Soccer":["Inside-foot passing","First touch","Dribbling control","Weak-foot practice","Shooting technique","Juggling","Defensive positioning","Short passing","Change of direction","Ball control"],
-"Tennis":["Forehand technique","Backhand technique","Serve toss","Split step","Volley control","Footwork patterns","Racket control","Target practice","Recovery steps","Consistent rallying"],
-"Volleyball":["Forearm passing","Setting technique","Serving accuracy","Approach footwork","Blocking footwork","Ready position","Overhead passing","Court movement","Target serving","Reaction practice"],
-"Track & Field":["Sprint starts","Running posture","Arm drive","Acceleration practice","Pacing awareness","Dynamic warm-up","Stride rhythm","Relay handoffs","Balance drills","Cool-down routine"]
+  "Baseball": {
+    icon:"⚾",
+    drills:[
+      ["Batting stance","Practice a balanced stance, relaxed grip, and level eyes. Hold your position for 10 seconds, then reset.","Beginner",5],
+      ["Tee work","Set a tee at a comfortable height. Take controlled swings and focus on solid contact in a safe batting area.","Beginner",10],
+      ["Soft toss hitting","With a partner and proper space, track gentle tosses and swing under control. Use a suitable batting net.","Intermediate",10],
+      ["Throwing accuracy","Start close to a suitable target. Make controlled throws and focus on direction before increasing distance.","Beginner",10],
+      ["Catching fundamentals","Track a partner's gentle toss, present your glove, and secure each catch before resetting.","Beginner",8],
+      ["Ground-ball fielding","Start in an athletic position, move your feet, and field slow ground balls with control.","Beginner",10],
+      ["Fly-ball tracking","In a clear space, practice tracking easy, high tosses. Call the ball and move under control.","Intermediate",10],
+      ["Baserunning","Practice running through first base and slowing down safely beyond the bag.","Beginner",8],
+      ["Base stealing footwork","Practice balanced leads and quick first steps without sliding on hard ground.","Intermediate",8],
+      ["Infield ready position","Practice a balanced ready position, small preparation hop, and first step in each direction.","Beginner",8],
+      ["One-hand glove work","Practice receiving slow, easy grounders with good glove presentation.","Intermediate",8],
+      ["Wrist and grip control","Use a light training ball to practice a comfortable grip and controlled wrist movement.","Beginner",5],
+      ["Short-hop reactions","Have a partner roll easy balls from a short distance. Focus on soft hands and body position.","Intermediate",8],
+      ["Target throwing challenge","Complete 10 controlled throws toward a large target from a comfortable distance.","Intermediate",10],
+      ["Bat speed mechanics","Practice slow, technically sound dry swings before using a bat and ball.","Intermediate",8],
+      ["Crossover first step","From a ready position, practice a quick first step to either side, then reset.","Intermediate",6],
+      ["Two-strike approach","Practice a balanced stance and controlled swing decisions with imaginary pitches.","Advanced",8],
+      ["Hitting zone awareness","Identify high, middle, and low target zones with a tee. Use safe, controlled swings.","Intermediate",10],
+      ["Outfield drop step","Practice opening your hips and taking a controlled first step backward.","Intermediate",8],
+      ["Recovery footwork","After a fielding movement, practice returning to a balanced ready position.","Beginner",6]
+    ]
+  },
+  "Basketball": {
+    icon:"🏀",
+    drills:[
+      ["Stationary dribbling","Keep your head up and practice controlled dribbles with each hand.","Beginner",5],
+      ["Crossover control","Move the ball smoothly from hand to hand while staying balanced.","Beginner",8],
+      ["Layup footwork","Practice the correct two-step rhythm on each side without rushing.","Beginner",8],
+      ["Form shooting","Start close to the basket. Focus on balance, elbow alignment, and follow-through.","Beginner",10],
+      ["Free throws","Use the same routine, balanced stance, and controlled follow-through for every shot.","Beginner",10],
+      ["Chest passing","Pass toward a partner's chest with two hands and step toward the target.","Beginner",8],
+      ["Bounce passing","Aim the bounce roughly two-thirds of the way to your partner.","Beginner",8],
+      ["Defensive slides","Stay balanced, move laterally, and avoid crossing your feet.","Intermediate",8],
+      ["Rebounding footwork","Practice finding position and making a balanced two-foot jump in a clear space.","Intermediate",8],
+      ["Weak-hand dribbling","Practice slow, controlled dribbles with your less comfortable hand.","Beginner",8],
+      ["Figure-eight dribbling","Move the ball around and between your legs at a comfortable pace.","Intermediate",8],
+      ["Cone dribbling","Dribble around spaced markers while keeping control of the ball.","Intermediate",10],
+      ["Catch-and-shoot footwork","Practice catching an imaginary pass, setting your feet, and taking a balanced shot.","Intermediate",8],
+      ["Pivot practice","Plant one foot and practice front and reverse pivots without traveling.","Beginner",6],
+      ["Passing on the move","Walk or jog slowly while passing accurately to a partner.","Intermediate",10],
+      ["Closeout footwork","Approach an imaginary shooter under control, then settle into a defensive stance.","Intermediate",8],
+      ["Spot shooting","Choose several safe shooting spots and focus on repeatable form.","Intermediate",12],
+      ["Ball protection","Practice low dribbles and using your body position to protect the ball.","Intermediate",8],
+      ["Reaction dribbling","Have a partner call directions and move under control while dribbling.","Advanced",8],
+      ["Free-throw routine","Complete a consistent pre-shot routine and record your makes.","Intermediate",8]
+    ]
+  },
+  "Football": {
+    icon:"🏈",
+    drills:[
+      ["Catching fundamentals","Track the ball and receive it with relaxed hands. Begin with gentle, short passes.","Beginner",8],
+      ["Route footwork","Practice controlled starts, cuts, and changes of direction without a defender.","Beginner",8],
+      ["Throwing technique","Use a comfortable grip, balanced stance, and smooth throwing motion in an open area.","Beginner",8],
+      ["Ball security","Hold the ball securely against your body while walking and changing direction.","Beginner",5],
+      ["Lateral movement","Practice balanced side steps between two markers.","Beginner",6],
+      ["Backpedal technique","Take short, controlled steps backward in a clear space, then turn and jog forward.","Beginner",6],
+      ["Change of direction","Run between spaced markers and decelerate under control before each turn.","Intermediate",8],
+      ["Hand-eye coordination","Practice catching gentle throws from different comfortable angles.","Beginner",8],
+      ["Acceleration starts","From a stable stance, accelerate over a short distance and slow down safely.","Intermediate",8],
+      ["Footwork practice","Use spaced markers to practice controlled steps and balanced turns.","Beginner",8],
+      ["Three-point stance","Practice a stable stance and rising smoothly into an athletic position.","Beginner",5],
+      ["Release timing","Practice a clean, balanced start from the line without contact.","Intermediate",6],
+      ["Short-route precision","Run short, preplanned routes with sharp but controlled turns.","Intermediate",10],
+      ["Target passing","Throw to a large stationary target at a comfortable distance.","Intermediate",10],
+      ["Secure the catch","Practice catching gentle passes and bringing the ball securely to your body.","Beginner",8],
+      ["Mirror footwork","Mirror a partner's gentle side-to-side movements while maintaining balance.","Intermediate",8],
+      ["Cone acceleration","Accelerate between widely spaced markers and decelerate before stopping.","Intermediate",8],
+      ["Quarterback footwork","Practice balanced drop steps and setting your feet without rushing.","Intermediate",8],
+      ["Route tree walk-through","Walk through several route shapes, focusing on path and foot placement.","Beginner",10],
+      ["Reaction starts","Respond to a partner's verbal cue with a quick, controlled first step.","Intermediate",6]
+    ]
+  },
+  "Soccer": {
+    icon:"⚽",
+    drills:[
+      ["Inside-foot passing","Pass toward a target with the inside of your foot, focusing on accuracy.","Beginner",8],
+      ["First touch","Receive a gentle pass and guide the ball into open space with your first touch.","Beginner",8],
+      ["Dribbling control","Use small touches to keep the ball close while moving at a comfortable pace.","Beginner",8],
+      ["Weak-foot practice","Pass and dribble slowly with your less comfortable foot.","Beginner",8],
+      ["Shooting technique","Practice placing the ball toward a large target with a controlled approach.","Beginner",10],
+      ["Juggling","Start with a bounce if needed and aim for small, controlled touches.","Beginner",8],
+      ["Defensive positioning","Practice staying balanced between an imaginary attacker and the target.","Intermediate",8],
+      ["Short passing","Complete a series of short, accurate passes with a partner.","Beginner",10],
+      ["Change of direction","Dribble toward a marker, turn with control, and accelerate into open space.","Intermediate",8],
+      ["Ball control","Practice stopping, rolling, and guiding the ball with both feet.","Beginner",8],
+      ["Sole rolls","Roll the ball sideways under your foot and regain control.","Beginner",6],
+      ["Inside-outside touches","Alternate inside and outside touches while keeping the ball close.","Intermediate",8],
+      ["Passing gates","Pass through pairs of cones from several comfortable distances.","Intermediate",10],
+      ["First-touch direction","Receive a pass and direct your first touch toward a chosen side.","Intermediate",8],
+      ["Dribble slalom","Move through widely spaced cones with short touches and your head up.","Intermediate",10],
+      ["Instep passing","Practice a controlled pass using the laces area of your foot.","Intermediate",8],
+      ["Shielding technique","Practice placing your body between the ball and an imaginary opponent.","Intermediate",6],
+      ["Target shooting","Choose a large goal area and focus on controlled placement over power.","Intermediate",10],
+      ["Receiving on the move","Jog toward a gentle pass, receive it, and move into open space.","Intermediate",10],
+      ["Quick-feet warm-up","Use small, comfortable steps through a set of floor markers.","Beginner",5]
+    ]
+  },
+  "Tennis": {
+    icon:"🎾",
+    drills:[
+      ["Forehand technique","Practice a relaxed grip, balanced turn, and smooth shadow swing.","Beginner",8],
+      ["Backhand technique","Practice a controlled shadow swing with balanced footwork.","Beginner",8],
+      ["Serve toss","Practice tossing the ball consistently upward without hitting it.","Beginner",5],
+      ["Split step","Practice a small, balanced hop and landing before moving either direction.","Beginner",6],
+      ["Volley control","Practice short, controlled volley movements with a partner at a safe distance.","Beginner",8],
+      ["Footwork patterns","Move between spaced markers while staying balanced.","Beginner",8],
+      ["Racket control","Bounce a ball gently on the racket strings, alternating sides if comfortable.","Beginner",5],
+      ["Target practice","Aim controlled shots toward large, safe target areas on the court.","Intermediate",10],
+      ["Recovery steps","After a shadow swing, return to a balanced position near the center.","Beginner",6],
+      ["Consistent rallying","Rally gently with a partner, prioritizing consistency over power.","Intermediate",10],
+      ["Ready position","Practice a balanced stance with racket in front and eyes on the ball.","Beginner",5],
+      ["Forehand shadow steps","Combine a side step with a controlled forehand shadow swing.","Beginner",8],
+      ["Backhand target control","Aim gentle backhands toward a large target area.","Intermediate",10],
+      ["Service rhythm","Practice the service motion slowly without forcing the shoulder.","Beginner",6],
+      ["Side-to-side movement","Move between two markers and return to the center under control.","Intermediate",8],
+      ["Short-court rally","Rally at a comfortable pace over a shorter distance.","Beginner",10],
+      ["Ball tracking","Watch the ball closely and practice calling its direction before contact.","Beginner",6],
+      ["Approach footwork","Practice moving forward and settling into a balanced ready position.","Intermediate",8],
+      ["Cross-court placement","Aim gentle groundstrokes diagonally into a large target area.","Intermediate",10],
+      ["Cool-down routine","Walk easily and perform comfortable stretches after your session.","Beginner",5]
+    ]
+  },
+  "Volleyball": {
+    icon:"🏐",
+    drills:[
+      ["Forearm passing","Join your forearms, keep a stable platform, and pass a gentle toss toward a target.","Beginner",8],
+      ["Setting technique","Practice soft fingertip contact above your forehead with a suitable ball.","Beginner",8],
+      ["Serving accuracy","Use a comfortable standing serve and aim toward a large target area.","Beginner",10],
+      ["Approach footwork","Practice a controlled approach rhythm without jumping at full effort.","Beginner",6],
+      ["Blocking footwork","Practice balanced side steps along an imaginary net.","Beginner",8],
+      ["Ready position","Maintain a balanced stance and react to gentle, predictable tosses.","Beginner",5],
+      ["Overhead passing","Practice controlled overhead passes with a partner.","Beginner",8],
+      ["Court movement","Move between marked court positions while maintaining balance.","Intermediate",8],
+      ["Target serving","Choose a large target zone and focus on repeatable serving technique.","Intermediate",10],
+      ["Reaction practice","React to gentle tosses in different directions within a clear space.","Intermediate",8],
+      ["Wall passing","Pass a suitable ball gently toward a clear wall target.","Beginner",8],
+      ["Set and catch","Practice setting a gentle toss upward, then catching and resetting.","Beginner",6],
+      ["Platform angle","Practice changing your forearm platform angle to guide gentle passes.","Intermediate",8],
+      ["Three-step approach","Walk through the approach sequence slowly, focusing on rhythm.","Beginner",6],
+      ["Lateral shuffle","Shuffle between spaced markers and finish in a balanced stance.","Beginner",6],
+      ["Serve toss consistency","Practice a repeatable toss without rushing into the serve.","Beginner",5],
+      ["Partner passing","Complete controlled forearm passes with a partner, gradually increasing consistency.","Intermediate",10],
+      ["Setting to target","Aim gentle sets toward a large, stationary target.","Intermediate",8],
+      ["Defensive ready movement","Move from a ready position toward gentle rolls in different directions.","Intermediate",8],
+      ["Court communication","Practice calling the ball clearly during simple partner passing.","Beginner",8]
+    ]
+  },
+  "Track & Field": {
+    icon:"🏃",
+    drills:[
+      ["Sprint starts","Practice a balanced standing start and accelerate over a short distance.","Beginner",6],
+      ["Running posture","Jog comfortably with relaxed shoulders, an upright torso, and eyes forward.","Beginner",8],
+      ["Arm drive","Practice relaxed arm swings while standing, then during an easy jog.","Beginner",5],
+      ["Acceleration practice","Build speed gradually over a short, clear distance and slow down safely.","Intermediate",8],
+      ["Pacing awareness","Run or jog at an even, comfortable pace and notice how it feels.","Beginner",10],
+      ["Dynamic warm-up","Use comfortable walking lunges, leg swings, and easy movement to prepare for practice.","Beginner",6],
+      ["Stride rhythm","Practice relaxed, consistent strides at a comfortable running pace.","Beginner",8],
+      ["Relay handoffs","Walk through safe baton handoffs with a partner before increasing speed.","Beginner",8],
+      ["Balance drills","Practice standing balance and controlled single-leg holds near a stable support.","Beginner",5],
+      ["Cool-down routine","Walk easily after exercise and perform gentle, comfortable stretches.","Beginner",5],
+      ["Marching mechanics","Practice tall posture and controlled marching with coordinated arm movement.","Beginner",5],
+      ["High-knee marching","March with comfortable knee lifts while keeping your torso stable.","Beginner",5],
+      ["Ankling drill","Use short, gentle running steps to practice rhythm and foot placement.","Intermediate",5],
+      ["Flying strides","After warming up, build gradually to a comfortable faster pace and slow down safely.","Intermediate",8],
+      ["Running form check","Jog comfortably and check that your shoulders, hands, and face stay relaxed.","Beginner",8],
+      ["Cone shuttle","Move between spaced markers at a controlled pace, slowing before turns.","Intermediate",8],
+      ["Easy endurance run","Complete a comfortable, conversational-pace run appropriate for your fitness level.","Beginner",12],
+      ["Standing long jump technique","Practice a controlled arm swing and soft, balanced landing on a suitable surface.","Beginner",6],
+      ["Relay exchange zone","Walk through baton exchanges while each partner practices hand position and timing.","Intermediate",8],
+      ["Recovery walk","Walk at an easy pace until your breathing settles after training.","Beginner",5]
+    ]
+  }
 };
 
 const $ = id => document.getElementById(id);
-const KEY = "skillforge_v2_progress";
-let state = {name:"",favorite:"Baseball",theme:"light",reminder:"17:00",completed:[],xp:0};
-let db = null;
-let currentUser = null;
+const KEY = "skillforge_v3";
+let state = {
+  name:"", favorite:"Baseball", theme:"dark", reminder:"17:00",
+  goal:10, completed:[], history:[]
+};
+let timerInterval = null;
+let timerSeconds = 0;
+let toastTimeout = null;
 
-function say(text,type){
-  $("status").textContent = text;
-  $("status").className = "status " + (type || "");
-}
-function load(){
+function loadState(){
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || "null");
-    if(saved) state = Object.assign(state,saved);
+    if(saved && typeof saved === "object") state = {...state,...saved};
+    if(!Array.isArray(state.completed)) state.completed = [];
+    if(!Array.isArray(state.history)) state.history = [];
+    if(!SPORTS[state.favorite]) state.favorite = "Baseball";
+    if(![5,10,20,30,50].includes(Number(state.goal))) state.goal = 10;
+    state.goal = Number(state.goal);
   } catch(e) {}
 }
-function saveLocal(){
-  try { localStorage.setItem(KEY,JSON.stringify(state)); }
-  catch(e) { say("Your browser could not save local progress."); }
+function saveState(){
+  try {
+    localStorage.setItem(KEY,JSON.stringify(state));
+    return true;
+  } catch(e) {
+    notify("Browser storage is unavailable. Your changes may not persist.");
+    return false;
+  }
 }
-function makeOptions(id){
-  $(id).innerHTML = Object.keys(SPORTS).map(s =>
-    "<option value=\"" + s + "\">" + s + "</option>"
-  ).join("");
+function notify(message){
+  const t = $("toast");
+  t.textContent = message;
+  t.classList.remove("hidden");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(()=>t.classList.add("hidden"),2600);
+}
+function levelInfo(){
+  const xp = state.completed.length * 10;
+  return {xp,level:Math.floor(xp/100)+1,into:xp%100};
+}
+function applyTheme(){
+  document.body.classList.toggle("light",state.theme==="light");
+}
+function fillSelect(id, first){
+  $(id).innerHTML = (first || "") +
+    Object.keys(SPORTS).map(s=>`<option value="${s}">${s}</option>`).join("");
+}
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
 }
 function showPage(name){
+  if(!$ (name)) return;
   document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
   $(name).classList.remove("hidden");
   document.querySelectorAll("[data-page]").forEach(b=>
     b.classList.toggle("active",b.dataset.page===name)
   );
   if(name==="sports") renderDrills();
+  if(name==="progress") renderProgress();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-function enterApp(){
-  $("loginPage").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("welcome").textContent = state.name ? "Welcome, " + state.name + "!" : "Welcome to SkillForge!";
-  render();
-  showPage("dashboard");
+function renderSportCards(){
+  $("sportCards").innerHTML = Object.entries(SPORTS).map(([name,s])=>`
+    <button class="sport-card ${state.favorite===name?"selected":""}" data-sport-card="${escapeHTML(name)}">
+      <span class="sport-icon">${s.icon}</span>
+      <span><strong>${escapeHTML(name)}</strong><br>
+      <small>${s.drills.length} training drills</small></span>
+    </button>`).join("");
 }
-function render(){
-  $("xp").textContent = state.xp;
-  $("completed").textContent = state.completed.length;
-  $("progressCount").textContent = state.completed.length;
-  $("progressXP").textContent = state.xp;
-  $("progressBar").style.width = Math.min(100,state.completed.length/20*100) + "%";
-  $("progressText").textContent = state.completed.length + " drills completed. Keep practicing!";
-  $("displayName").value = state.name;
-  $("favorite").value = state.favorite;
-  $("sport").value = state.favorite;
-  $("theme").value = state.theme;
-  $("reminder").value = state.reminder;
-  document.body.classList.toggle("dark",state.theme==="dark");
-  renderDrills();
+function renderDashboard(){
+  const info = levelInfo();
+  $("welcome").textContent = state.name ? `Welcome back, ${state.name}!` : "Welcome to SkillForge";
+  $("xpStat").innerHTML = `${info.xp} <span>XP</span>`;
+  $("doneStat").textContent = state.completed.length;
+  $("levelBadge").textContent = `LEVEL ${info.level}`;
+  $("levelStat").textContent = `Level ${info.level}`;
+  $("levelBar").style.width = info.into + "%";
+  $("levelText").textContent = `${info.into} / 100 XP to next level`;
+  renderSportCards();
+}
+function allDrills(){
+  const list = [];
+  Object.entries(SPORTS).forEach(([sport,data])=>{
+    data.drills.forEach((d,i)=>{
+      list.push({
+        id:`${sport}-${i}`,sport,name:d[0],description:d[1],
+        difficulty:d[2],minutes:d[3],icon:data.icon
+      });
+    });
+  });
+  return list;
 }
 function renderDrills(){
-  if(!$("drillList")) return;
-  const sport = $("sport").value || "Baseball";
+  const sport = $("sportSelect").value || state.favorite;
   const search = $("search").value.toLowerCase().trim();
-  $("drillTitle").textContent = sport + " training";
-  const all = [];
-  for(let i=0;i<40;i++){
-    const base = SPORTS[sport][i % SPORTS[sport].length];
-    all.push({id:sport+"-"+i,name:i<SportsLength(sport)?base:base+" — Level "+(Math.floor(i/SportsLength(sport))+1)});
-  }
-  const filtered = all.filter(d=>d.name.toLowerCase().includes(search));
-  if(!filtered.length){$("drillList").textContent="No drills match your search.";return;}
-  $("drillList").innerHTML = filtered.map(d=>{
-    const done=state.completed.includes(d.id);
-    return "<div class=\"drill\"><strong>"+d.name+"</strong><p>"+instruction(d.name)+"</p><button type=\"button\" class=\""+(done?"secondary":"primary")+"\" data-drill=\""+d.id+"\" "+(done?"disabled":"")+">"+(done?"Completed ✓":"Mark complete · +10 XP")+"</button></div>";
-  }).join("");
-}
-function SportsLength(sport){return SPORTS[sport].length;}
-function instruction(name){
-  const tips = {
-    "Batting stance":"Practice a balanced stance, relaxed grip, and eyes level in a safe batting area.",
-    "Throwing accuracy":"Use a safe open space and a suitable target. Start close and focus on control.",
-    "Catching fundamentals":"Track the ball, present your hands, and secure the catch before resetting.",
-    "Ground-ball fielding":"Start in an athletic position, move your feet, and field the ball with control.",
-    "Free throws":"Use a consistent routine, balanced stance, and controlled follow-through.",
-    "Stationary dribbling":"Keep your head up and practice controlled dribbles with each hand.",
-    "Inside-foot passing":"Pass toward a target with the inside of your foot, focusing on accuracy.",
-    "Dynamic warm-up":"Use comfortable, controlled movements to prepare for practice."
-  };
-  const base = name.split(" — Level ")[0];
-  return tips[base] || "Focus on good technique, control, and consistency. Warm up first and practice in a safe space.";
-}
-async function auth(kind){
-  if(!db){
-    say("Account login is unavailable because Supabase is not connected. You can still explore the website.", "error");
+  const difficulty = $("difficulty").value;
+  const drills = SPORTS[sport].drills.map((d,i)=>({
+    id:`${sport}-${i}`,sport,name:d[0],description:d[1],
+    difficulty:d[2],minutes:d[3],icon:SPORTS[sport].icon
+  })).filter(d=>
+    (d.name+" "+d.description+" "+d.difficulty).toLowerCase().includes(search) &&
+    (difficulty==="all" || d.difficulty===difficulty)
+  );
+  $("resultsCount").textContent = `${drills.length} drills`;
+  if(!drills.length){
+    $("drillList").innerHTML = `<div class="card">No drills match. Try a different search or difficulty.</div>`;
     return;
   }
-  const email=$("email").value.trim();
-  const password=$("password").value;
-  if(!email||!password){say("Enter your email and password first.","error");return;}
-  if(password.length<6){say("Your password must be at least 6 characters.","error");return;}
-  $("loginBtn").disabled=true;$("signupBtn").disabled=true;
-  say(kind==="signup"?"Creating your account...":"Logging in...");
-  try{
-    const result=kind==="signup"
-      ? await db.auth.signUp({email,password})
-      : await db.auth.signInWithPassword({email,password});
-    if(result.error)throw result.error;
-    if(kind==="signup"&&!result.data.session){
-      say("Account created. Check your email for a confirmation link, then log in.","success");
-      return;
-    }
-    currentUser=result.data.user;
-    if(!currentUser)throw new Error("No user returned. Check Supabase authentication settings.");
-    await pullProfile();
-    enterApp();
-    say("You are signed in.","success");
-  }catch(e){say("Login error: "+e.message,"error");}
-  finally{$("loginBtn").disabled=false;$("signupBtn").disabled=false;}
+  $("drillList").innerHTML = drills.map(d=>{
+    const done = state.completed.includes(d.id);
+    return `<article class="drill-card">
+      <div class="drill-top">
+        <span class="tag">${escapeHTML(d.difficulty)}</span>
+        <span class="tag">◷ ${d.minutes} min</span>
+      </div>
+      <h3>${d.icon} ${escapeHTML(d.name)}</h3>
+      <p>${escapeHTML(d.description)}</p>
+      <div class="drill-actions">
+        <button class="btn" data-timer="${d.minutes}">⏱ Timer</button>
+        <button class="btn ${done?"":"primary"}" data-complete="${escapeHTML(d.id)}" ${done?"disabled":""}>
+          ${done?"Completed ✓":"Complete · +10 XP"}
+        </button>
+      </div>
+    </article>`;
+  }).join("");
 }
-async function pullProfile(){
-  if(!db||!currentUser)return;
-  try{
-    const r=await db.from("skillforge_profiles").select("*").eq("user_id",currentUser.id).maybeSingle();
-    if(r.error)throw r.error;
-    if(r.data){
-      const p=r.data;
-      state.name=p.name||"";
-      state.favorite=p.favorite||"Baseball";
-      state.completed=Array.isArray(p.completed)?p.completed:[];
-      state.xp=state.completed.length*10;
-      if(p.settings){
-        state.theme=p.settings.theme||"light";
-        state.reminder=p.settings.reminder||"17:00";
-      }
-      saveLocal();
-    }else await pushProfile();
-  }catch(e){say("Signed in, but loading saved progress failed: "+e.message,"error");}
+function renderProgress(){
+  const info = levelInfo();
+  $("progressXP").textContent = info.xp;
+  $("progressDone").textContent = state.completed.length;
+  $("progressLevel").textContent = info.level;
+  $("progressBar").style.width = info.into + "%";
+  $("progressText").textContent = `${info.into} / 100 XP toward level ${info.level+1}.`;
+  $("goal").value = String(state.goal);
+  const count = state.completed.length;
+  $("goalBar").style.width = Math.min(100,count/state.goal*100) + "%";
+  $("goalText").textContent = `${Math.min(count,state.goal)} of ${state.goal} drills completed` +
+    (count>=state.goal?" — Goal reached!":"");
+  const lookup = new Map(allDrills().map(d=>[d.id,d]));
+  const recent = [...state.history].reverse().slice(0,8);
+  $("history").innerHTML = recent.length ? recent.map(h=>{
+    const d = lookup.get(h.id);
+    return `<div class="drill">
+      <strong>${escapeHTML(d?d.name:h.name||h.id)}</strong>
+      <p>${escapeHTML(d?d.sport:"Training")} · +10 XP</p>
+    </div>`;
+  }).join("") : "Complete a drill to start your training history.";
 }
-async function pushProfile(){
-  if(!db||!currentUser)return;
-  try{
-    const r=await db.from("skillforge_profiles").upsert({
-      user_id:currentUser.id,
-      name:state.name,
-      favorite:state.favorite,
-      selected_sports:Object.keys(SPORTS),
-      completed:state.completed,
-      settings:{theme:state.theme,reminder:state.reminder},
-      updated_at:new Date().toISOString()
-    },{onConflict:"user_id"});
-    if(r.error)throw r.error;
-  }catch(e){say("Database save failed: "+e.message,"error");}
+function completeDrill(id){
+  if(state.completed.includes(id)) return;
+  const d = allDrills().find(x=>x.id===id);
+  if(!d) return;
+  state.completed.push(id);
+  state.history.push({id,name:d.name,date:new Date().toISOString()});
+  saveState();
+  renderDashboard();
+  renderDrills();
+  renderProgress();
+  notify(`Drill completed! +10 XP. Great work!`);
 }
-async function saveSettings(){
-  state.name=$("displayName").value.trim();
-  state.favorite=$("favorite").value;
-  state.theme=$("theme").value;
-  state.reminder=$("reminder").value||"17:00";
-  saveLocal();render();
-  if(currentUser)await pushProfile();
-  say(currentUser?"Settings saved to your account.":"Settings saved on this device.","success");
+function saveSettings(){
+  state.name = $("displayName").value.trim().slice(0,30);
+  state.favorite = $("favorite").value;
+  state.theme = $("theme").value;
+  state.reminder = $("reminder").value || "17:00";
+  saveState();
+  applyTheme();
+  $("sportSelect").value = state.favorite;
+  renderDashboard();
+  renderDrills();
+  notify("Settings saved!");
 }
-async function logout(){
-  if(db&&currentUser){
-    const r=await db.auth.signOut();
-    if(r.error){say("Logout failed: "+r.error.message,"error");return;}
+function stopTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+}
+function formatTime(s){
+  return `${Math.floor(s/60).toString().padStart(2,"0")}:${(s%60).toString().padStart(2,"0")}`;
+}
+function startTimer(minutes){
+  stopTimer();
+  timerSeconds = minutes*60;
+  const overlay = document.createElement("div");
+  overlay.id = "timerOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:#000b;z-index:20;display:grid;place-items:center;padding:20px";
+  overlay.innerHTML = `<div class="card" style="width:min(420px,100%);text-align:center">
+    <div class="eyebrow">Training timer</div>
+    <h2>Focus on your reps</h2>
+    <div id="timerDisplay" class="timer-display">${formatTime(timerSeconds)}</div>
+    <p id="timerMessage" class="muted">Ready when you are.</p>
+    <div class="timer-actions">
+      <button class="btn primary" id="timerStart">Start</button>
+      <button class="btn" id="timerPause">Pause</button>
+      <button class="btn" id="timerReset">Reset</button>
+      <button class="btn" id="timerClose">Close</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  function update(){
+    const el = $("timerDisplay");
+    if(el) el.textContent = formatTime(timerSeconds);
   }
-  currentUser=null;
-  $("app").classList.add("hidden");
-  $("loginPage").classList.remove("hidden");
-  say("You have logged out.");
+  $("timerStart").onclick = ()=>{
+    if(timerInterval) return;
+    $("timerMessage").textContent = "Timer running. Keep good technique.";
+    timerInterval = setInterval(()=>{
+      timerSeconds--;
+      update();
+      if(timerSeconds<=0){
+        stopTimer();
+        timerSeconds=0;update();
+        $("timerMessage").textContent="Time is up! Nice work.";
+        notify("Training timer complete!");
+      }
+    },1000);
+  };
+  $("timerPause").onclick = ()=>{
+    stopTimer();
+    $("timerMessage").textContent="Timer paused.";
+  };
+  $("timerReset").onclick = ()=>{
+    stopTimer();timerSeconds=minutes*60;update();
+    $("timerMessage").textContent="Timer reset.";
+  };
+  $("timerClose").onclick = ()=>{
+    stopTimer();overlay.remove();
+  };
+  overlay.onclick = e=>{if(e.target===overlay){stopTimer();overlay.remove();}};
+}
+function exportData(){
+  const data = JSON.stringify(state,null,2);
+  const blob = new Blob([data],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href=url;a.download="skillforge-progress.json";a.click();
+  URL.revokeObjectURL(url);
+  notify("Progress export started.");
+}
+function resetProgress(){
+  if(!confirm("Reset all completed drills, XP, and training history? This cannot be undone.")) return;
+  state.completed=[];state.history=[];
+  saveState();
+  renderDashboard();renderDrills();renderProgress();
+  notify("Progress reset.");
 }
 
 function start(){
-  load();
-  makeOptions("sport");
-  makeOptions("favorite");
-  $("sport").value=state.favorite;
+  loadState();
+  fillSelect("sportSelect");
+  fillSelect("favorite");
+  $("sportSelect").value=state.favorite;
   $("favorite").value=state.favorite;
+  $("displayName").value=state.name;
+  $("theme").value=state.theme;
+  $("reminder").value=state.reminder;
+  applyTheme();
 
-  /* Attach button actions first. Buttons still work if Supabase fails. */
-  $("loginBtn").addEventListener("click",()=>auth("login"));
-  $("signupBtn").addEventListener("click",()=>auth("signup"));
-  $("exploreBtn").addEventListener("click",()=>{
-    enterApp();
-    say("You're exploring in guest mode. Progress saves on this device.","success");
-  });
   document.querySelectorAll("[data-page]").forEach(b=>
     b.addEventListener("click",()=>showPage(b.dataset.page))
   );
-  document.querySelectorAll("[data-open]").forEach(b=>
-    b.addEventListener("click",()=>showPage(b.dataset.open))
+  document.querySelectorAll("[data-go]").forEach(b=>
+    b.addEventListener("click",()=>showPage(b.dataset.go))
   );
-  $("sport").addEventListener("change",renderDrills);
+  $("sportCards").addEventListener("click",e=>{
+    const b=e.target.closest("[data-sport-card]");
+    if(!b)return;
+    state.favorite=b.dataset.sportCard;
+    $("sportSelect").value=state.favorite;
+    $("favorite").value=state.favorite;
+    saveState();renderDashboard();renderDrills();showPage("sports");
+  });
+  $("sportSelect").addEventListener("change",renderDrills);
   $("search").addEventListener("input",renderDrills);
-  $("drillList").addEventListener("click",async e=>{
-    const b=e.target.closest("[data-drill]");
-    if(!b||state.completed.includes(b.dataset.drill))return;
-    state.completed.push(b.dataset.drill);
-    state.xp=state.completed.length*10;
-    saveLocal();render();
-    say("Drill completed! You earned 10 XP.","success");
-    if(currentUser)await pushProfile();
+  $("difficulty").addEventListener("change",renderDrills);
+  $("drillList").addEventListener("click",e=>{
+    const complete=e.target.closest("[data-complete]");
+    const timer=e.target.closest("[data-timer]");
+    if(complete) completeDrill(complete.dataset.complete);
+    if(timer) startTimer(Number(timer.dataset.timer));
   });
-  $("saveBtn").addEventListener("click",saveSettings);
+  $("saveSettings").addEventListener("click",saveSettings);
   $("theme").addEventListener("change",()=>{
-    document.body.classList.toggle("dark",$("theme").value==="dark");
+    document.body.classList.toggle("light",$("theme").value==="light");
   });
-  $("logoutBtn").addEventListener("click",logout);
-  $("resetBtn").addEventListener("click",async()=>{
-    if(!confirm("Reset your completed drills and XP?"))return;
-    state.completed=[];state.xp=0;saveLocal();render();
-    if(currentUser)await pushProfile();
-    say("Your progress has been reset.","success");
+  $("goal").addEventListener("change",()=>{
+    state.goal=Number($("goal").value);
+    saveState();renderProgress();
   });
+  $("resetProgress").addEventListener("click",resetProgress);
+  $("exportData").addEventListener("click",exportData);
 
-  render();
-  const valid = SUPABASE_URL.startsWith("https://") &&
-    SUPABASE_URL.includes(".supabase.co") &&
-    !SUPABASE_URL.includes("YOUR_") &&
-    !SUPABASE_KEY.includes("YOUR_") &&
-    SUPABASE_KEY.length>20;
-  if(valid && window.supabase){
-    try{
-      db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-      say("Supabase library loaded. Checking account connection...");
-      db.auth.getSession().then(async r=>{
-        if(r.error){say("Supabase error: "+r.error.message,"error");return;}
-        if(r.data.session){
-          currentUser=r.data.session.user;
-          await pullProfile();enterApp();
-          say("Signed in and ready.","success");
-        }else say("Supabase connected. You can log in or create an account.","success");
-      }).catch(e=>say("Supabase connection error: "+e.message,"error"));
-    }catch(e){say("Supabase setup error: "+e.message,"error");}
-  }else if(!valid){
-    say("Guest mode is ready. Add your Supabase URL and publishable key to enable accounts.");
-  }else{
-    say("Guest mode is ready, but the Supabase library did not load. Check your internet connection.");
-  }
+  renderDashboard();
+  renderDrills();
+  renderProgress();
 }
-
-try{
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",start);
-  }else{
-    start();
-  }
-}catch(e){
-  console.error(e);
-  const s=document.getElementById("status");
-  if(s)s.textContent="Website setup error: "+e.message;
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",start);
+}else{
+  start();
 }
 })();
 </script>
