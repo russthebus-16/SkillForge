@@ -1,1146 +1,610 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10131d">
 <title>SkillForge | Train Smarter</title>
 <style>
-:root{--bg:#08111f;--panel:#101d30;--panel2:#14243b;--line:#263a55;--text:#eef5ff;--muted:#9eb0c9;--blue:#55a6ff;--cyan:#51e0d0;--gold:#ffd166;--red:#ff7777}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#132945 0,#08111f 52%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
-button,input,select{font:inherit}
-button{cursor:pointer}
-.shell{max-width:1180px;margin:auto;padding:22px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:46px;height:46px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));border-radius:14px;color:#071321;font-size:24px;font-weight:900}
-.brand h1{font-size:23px;margin:0;letter-spacing:.4px}
-.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
-.level-chip{background:var(--panel);border:1px solid var(--line);padding:10px 14px;border-radius:14px;color:var(--gold);font-weight:800}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
-.stat,.panel,.sport-card,.drill-card,.workout-card,.score-card{background:linear-gradient(145deg,rgba(20,36,59,.97),rgba(13,26,44,.97));border:1px solid var(--line);border-radius:18px}
-.stat{padding:16px}
-.stat .label{color:var(--muted);font-size:12px}
-.stat .value{font-size:26px;font-weight:850;margin-top:6px}
-.progress-track{height:7px;background:#26364c;border-radius:9px;overflow:hidden;margin-top:10px}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .2s}
-.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.nav button,.filter-btn,.secondary,.primary,.danger{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:11px 15px;border-radius:12px;font-weight:750}
-.nav button.active,.filter-btn.active{background:var(--blue);border-color:var(--blue);color:#071321}
-.primary{background:var(--blue);color:#071321;border-color:var(--blue)}
-.secondary{color:var(--text)}
-.danger{color:var(--red)}
-button:hover{filter:brightness(1.12)}
-.page{display:none}
-.page.active{display:block}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 0 14px}
-.section-head h2{font-size:24px;margin:0}
-.section-head p{margin:6px 0 0;color:var(--muted)}
-.sport-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.sport-card{padding:17px;text-align:left;color:var(--text);min-height:135px;transition:transform .15s,border-color .15s}
-.sport-card:hover,.sport-card.selected{transform:translateY(-2px);border-color:var(--blue)}
-.sport-icon{font-size:29px}
-.sport-card h3{margin:10px 0 4px;font-size:16px}
-.sport-card p{margin:0;color:var(--muted);font-size:12px}
-.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
-.toolbar input,.toolbar select,.settings-grid input,.settings-grid select{background:#081525;border:1px solid var(--line);color:var(--text);padding:11px 12px;border-radius:10px;min-width:0}
-.toolbar input{flex:1;min-width:180px}
-.drill-grid,.workout-grid,.score-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.drill-card,.workout-card,.score-card{padding:17px}
-.tag{display:inline-block;font-size:11px;padding:5px 8px;border-radius:7px;background:#203956;color:#a9d4ff;font-weight:800}
-.drill-card h3,.workout-card h3,.score-card h3{margin:12px 0 7px;font-size:17px}
-.drill-card p,.workout-card p,.score-card p{color:var(--muted);font-size:13px;line-height:1.55}
-.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:12px 0}
-.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.card-actions button{flex:1}
-.empty{color:var(--muted);padding:22px;text-align:center;border:1px dashed var(--line);border-radius:14px}
-.panel{padding:18px;margin:14px 0}
-.timer-box{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.timer-number{font-size:38px;font-weight:900;font-variant-numeric:tabular-nums}
-.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.settings-grid label{display:grid;gap:7px;color:var(--muted);font-size:13px}
-.muted{color:var(--muted)}
-.score-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.score-value{font-size:26px;font-weight:900}
-.score-note{font-size:12px;color:var(--muted)}
-.footer{color:#7388a4;font-size:12px;text-align:center;padding:26px 0}
-.workout-filters{display:flex;gap:8px;flex-wrap:wrap}
-.small{font-size:12px}
-.history-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.history-row:last-child{border-bottom:0}
-@media(max-width:850px){.sport-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.drill-grid,.workout-grid,.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.shell{padding:13px}.drill-grid,.workout-grid,.score-grid{grid-template-columns:1fr}.brand h1{font-size:20px}.stat .value{font-size:22px}.settings-grid{grid-template-columns:1fr}.nav button{flex:1;padding:10px 8px;font-size:13px}}
-body.light-theme{background:#f2f6fc;color:#132238}
-body.light-theme .stat,body.light-theme .panel,body.light-theme .sport-card,body.light-theme .drill-card,body.light-theme .workout-card,body.light-theme .score-card{background:#fff;border-color:#ccd7e5}
-body.light-theme .nav button,body.light-theme .secondary{background:#fff;color:#24364c}
-body.light-theme .settings-grid input,body.light-theme .settings-grid select,body.light-theme .toolbar input,body.light-theme .toolbar select{background:#fff;color:#132238;border-color:#ccd7e5}
-body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-.settings-grid input[type=checkbox]{width:auto;min-width:0;accent-color:var(--blue)}
-.settings-grid label span{display:flex;align-items:center;gap:8px;color:var(--text)}
-body.light-theme .settings-grid label span{color:#24364c}
-</style></head>
-<body><div class="shell">
-<header class="topbar"><div class="brand"><div class="logo">SF</div><div><h1>SkillForge</h1><p>TRAIN SMARTER. GET BETTER. EVERY DAY.</p></div></div><div class="level-chip" id="levelChip">LEVEL 1 · ROOKIE</div></header>
-<section class="stats"><div class="stat"><div class="label">TOTAL XP</div><div class="value" id="xpStat">0</div><div class="progress-track"><div class="progress-fill" id="xpBar"></div></div></div><div class="stat"><div class="label">DRILLS COMPLETED</div><div class="value" id="completedStat">0</div></div><div class="stat"><div class="label">ACTIVE SPORTS</div><div class="value">7</div></div><div class="stat"><div class="label">TRAINING STREAK</div><div class="value" id="streakStat">0 days</div></div></section>
-<nav class="nav"><button class="active" data-page="training">🏆 Training</button><button data-page="workouts">💪 Workouts</button><button data-page="scores">📡 Live Scores</button><button data-page="progress">📈 Progress</button><button data-page="settings">⚙️ Settings</button></nav>
-<main>
-<section class="page active" id="page-training"><div class="section-head"><div><h2>Choose your sport</h2><p>Pick a sport, choose a drill, and build your skills.</p></div></div><div class="sport-grid" id="sportGrid"></div><div class="section-head"><div><h2 id="drillHeading">All drills</h2><p id="drillSubheading">Train your fundamentals and track your progress.</p></div></div><div class="toolbar"><select id="drillFocus"><option value="position">My position drills</option><option value="all">All drills</option></select><input id="drillSearch" placeholder="Search drills..."><select id="difficultyFilter"><option value="all">All difficulty levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><select id="categoryFilter"><option value="all">All categories</option><option>Skills</option><option>Speed</option><option>Strength</option><option>Conditioning</option><option>Game IQ</option></select></div><div class="drill-grid" id="drillGrid"></div></section>
-<section class="page" id="page-workouts"><div class="section-head"><div><h2>Workout builder</h2><p>Choose a workout that fits your sport, equipment, and schedule.</p></div></div><div class="toolbar"><select id="locationFilter"><option value="all">All locations</option><option>Home</option><option>Gym</option><option>Field</option></select><select id="workoutType"><option value="all">All workout types</option><option>Strength</option><option>Conditioning</option><option>Speed & Agility</option><option>Core</option><option>Sport-Specific</option></select><select id="workoutSport"><option value="all">All sports</option><option>Baseball</option><option>Basketball</option><option>Football</option><option>Soccer</option><option>Tennis</option><option>Volleyball</option><option>Track & Field</option></select><input id="workoutSearch" placeholder="Search workouts..."></div><div class="workout-grid" id="workoutGrid"></div><div class="panel"><div class="timer-box"><div><h3>⏱️ Training timer</h3><p class="muted small">Use this timer for drills, rest periods, or workout intervals.</p></div><div class="timer-number" id="timerDisplay">00:30</div><div class="card-actions"><button class="secondary" id="timerMinus">−10 sec</button><button class="primary" id="timerStart">Start</button><button class="secondary" id="timerReset">Reset</button><button class="secondary" id="timerPlus">+10 sec</button></div></div></div></section>
-<section class="page" id="page-scores"><div class="section-head"><div><h2>Live sports scores</h2><p>Check available ESPN scoreboards. Scores require an internet connection.</p></div><button class="primary" id="refreshScores">Refresh scores</button></div><div class="toolbar"><select id="scoreSport"><option value="baseball">MLB Baseball</option><option value="basketball">NBA Basketball</option><option value="football">NFL Football</option><option value="soccer">Soccer</option><option value="hockey">NHL Hockey</option><option value="collegefootball">College Football</option></select></div><div class="score-grid" id="scoreGrid"></div><p class="score-note" id="scoreStatus">Choose a league and refresh to load scores.</p></section>
-<section class="page" id="page-progress"><div class="section-head"><div><h2>Your progress</h2><p>Every completed activity helps you build consistency.</p></div></div><div class="panel"><h3>Activity history</h3><p class="muted small">Accidentally completed something? Use Undo to remove that activity and its XP.</p><div id="historyList"></div></div><div class="panel"><h3>Progress summary</h3><div id="progressSummary"></div></div></section>
-<section class="page" id="page-settings"><div class="section-head"><div><h2>Settings</h2><p>Customize SkillForge for your training.</p></div></div>
-<div class="panel"><h3>🏅 Athlete Profile</h3><div class="settings-grid"><label>Display name<input id="displayName" placeholder="Your name"></label><label>Favorite sport<select id="favoriteSport"><option>Baseball</option><option>Basketball</option><option>Football</option><option>Soccer</option><option>Tennis</option><option>Volleyball</option><option>Track & Field</option></select></label><label>Playing position<select id="positionSelect"><option value="">Choose your position</option></select></label><label>Experience level<select id="experienceLevel"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label></div></div>
-<div class="panel"><h3>🎨 Appearance & Accessibility</h3><div class="settings-grid"><label>Theme<select id="themeSelect"><option value="dark">Dark</option><option value="light">Light</option></select></label><label>Motion effects<select id="motionSelect"><option value="normal">Normal</option><option value="reduced">Reduced motion</option></select></label><label>Text size<select id="textSize"><option value="normal">Normal</option><option value="large">Large</option></select></label></div></div>
-<div class="panel"><h3>🎯 Training Goals</h3><div class="settings-grid"><label>Daily training goal (minutes)<input id="dailyGoal" type="number" min="5" max="240" value="30"></label><label>Weekly training days<select id="weeklyGoal"><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option><option value="7">7 days</option></select></label></div></div>
-<div class="panel"><h3>🧰 Available Equipment</h3><p class="muted small">Select what you can use. Workout suggestions can account for your available equipment.</p><div class="settings-grid" id="equipmentChoices"><label><span><input type="checkbox" value="None"> No equipment</span></label><label><span><input type="checkbox" value="Cones"> Cones</span></label><label><span><input type="checkbox" value="Ball"> Ball</span></label><label><span><input type="checkbox" value="Resistance bands"> Resistance bands</span></label><label><span><input type="checkbox" value="Dumbbells"> Dumbbells</span></label><label><span><input type="checkbox" value="Jump rope"> Jump rope</span></label><label><span><input type="checkbox" value="Gym equipment"> Gym equipment</span></label><label><span><input type="checkbox" value="Bat and glove"> Bat and glove</span></label></div></div>
-<div class="panel"><h3>🔔 Reminders & Recovery</h3><div class="settings-grid"><label>Training reminders<select id="reminders"><option value="off">Off</option><option value="on">On while site is open</option></select></label><label>Rest-day preference<select id="restPreference"><option value="balanced">Balanced</option><option value="more">More recovery</option><option value="active">Active recovery</option></select></label></div></div>
-<div class="panel"><h3>🔊 Sound Effects</h3><div class="settings-grid"><label>Timer and completion sounds<select id="soundEffects"><option value="yes">On</option><option value="no">Off</option></select></label></div></div>
-<div class="panel"><h3>🔐 Data & Privacy</h3><p class="muted small">Your progress and preferences are stored in this browser on this device. Export a backup before clearing data.</p><div class="card-actions"><button class="secondary" id="exportData">Export my data</button><button class="secondary" id="clearHistory">Clear activity history</button><button class="danger" id="resetProgress">Reset all progress</button></div></div>
-<div class="card-actions"><button class="primary" id="saveSettings">Save settings</button></div>
-</section>
-</main><footer class="footer">SKILLFORGE · CONSISTENCY BUILDS SKILL</footer></div>
-<script>
-const sports=[
-{name:'Baseball',icon:'⚾',desc:'Hitting, fielding, throwing',drills:[['Tee-work rounds','Skills','Beginner',10,'Take controlled swings from a tee. Focus on balance, a steady head, and solid contact.'],['Ground-ball funnel','Skills','Beginner',10,'Practice getting in front of a gently rolled ground ball, fielding it with two hands, and moving smoothly into a throwing position.'],['Throwing accuracy','Skills','Beginner',10,'Make easy throws toward a large target. Focus on a comfortable motion and accuracy instead of maximum effort.'],['Outfield drop step','Speed','Intermediate',10,'Practice opening your hips and taking a controlled first step in either direction.'],['Base-running reads','Game IQ','Intermediate',10,'Walk through when to run, stop, or return to a base based on a coach or partner signal.'],['Batting stance routine','Skills','Beginner',8,'Practice a balanced stance, comfortable grip, and repeatable load without rushing.'],['Glove reaction drill','Skills','Intermediate',10,'Have a partner gently roll balls to either side and work on moving your feet into position.'],['Pitcher balance holds','Skills','Beginner',8,'Practice a balanced finish and controlled movement without throwing hard.'],['Catcher stance mobility','Skills','Beginner',8,'Practice comfortable squat-to-stand movement and gentle side steps.'],['Infield transfer','Skills','Intermediate',10,'Field a gentle ground ball, transfer the ball smoothly, and make an easy accurate throw.'],['Hitting timing drill','Skills','Intermediate',12,'Use soft toss or dry swings to practice timing and controlled contact.'],['Baseball game situations','Game IQ','Intermediate',10,'Talk through where the ball should go with different numbers of outs and runners on base.']]},
-{name:'Basketball',icon:'🏀',desc:'Handles, shooting, footwork',drills:[['Stationary ball handling','Skills','Beginner',10,'Dribble with each hand at a comfortable height, keeping your eyes up.'],['Form shooting','Skills','Beginner',10,'Practice close-range shots with balanced feet and a smooth follow-through.'],['Defensive slides','Speed','Intermediate',10,'Shuffle side to side with knees comfortably bent; avoid crossing your feet.'],['Cone change of direction','Skills','Intermediate',10,'Dribble around spaced cones and change speed while staying in control.'],['Passing accuracy','Skills','Beginner',8,'Pass to a wall target or partner using chest and bounce passes.'],['Layup footwork','Skills','Beginner',10,'Practice the correct two-step rhythm slowly on both sides before adding speed.'],['Rebound positioning','Game IQ','Intermediate',10,'Practice finding space and establishing safe position when a shot goes up.'],['Free-throw routine','Skills','Beginner',10,'Build a repeatable pre-shot routine and focus on a smooth release.'],['Point guard change of pace','Skills','Intermediate',10,'Alternate controlled slow and quick dribbles while keeping your head up.'],['Wing footwork','Skills','Intermediate',10,'Practice catching, squaring your feet, and making a controlled drive or pass.'],['Post pivot practice','Skills','Beginner',10,'Practice front and reverse pivots while protecting the ball without contact.'],['Basketball court awareness','Game IQ','Intermediate',10,'Scan the court and identify open teammates before deciding to pass, dribble, or shoot.']]},
-{name:'Football',icon:'🏈',desc:'Routes, footwork, reaction',drills:[['Cone footwork','Speed','Beginner',10,'Move through a wide cone pattern with controlled steps and good balance.'],['Passing mechanics','Skills','Beginner',10,'Practice a comfortable throwing motion with a partner at a safe distance.'],['Receiver route breaks','Skills','Intermediate',10,'Run short routes with controlled deceleration and clean changes of direction.'],['Hands and catching','Skills','Beginner',10,'Catch easy throws with hands positioned correctly and bring the ball in securely.'],['Backpedal and turn','Speed','Intermediate',10,'Backpedal a few steps, turn smoothly, and accelerate under control.'],['Quarterback footwork','Skills','Beginner',10,'Practice a balanced stance, controlled drop steps, and a stable throwing base.'],['Running back vision','Game IQ','Intermediate',10,'Use cones to represent lanes and practice identifying an open path.'],['Defensive reaction','Speed','Intermediate',10,'React to a partner pointing left or right and move with control.'],['Stance and first step','Skills','Beginner',8,'Practice a balanced stance and quick, controlled first step.'],['Route recognition','Game IQ','Intermediate',10,'Review route shapes and identify where a receiver should break.'],['Safe tackling footwork','Skills','Beginner',8,'Practice approach angles and balanced footwork without tackling or player contact.'],['Football conditioning','Conditioning','Intermediate',12,'Alternate comfortable movement drills with full recovery between rounds.']]},
-{name:'Soccer',icon:'⚽',desc:'Touch, passing, finishing',drills:[['Toe taps and foundations','Skills','Beginner',8,'Alternate gentle toe taps and inside-foot touches while keeping the ball close.'],['Passing against a wall','Skills','Beginner',10,'Pass with the inside of each foot and control the return.'],['Cone dribbling','Skills','Beginner',10,'Dribble through spaced cones using both feet and small touches.'],['First-touch control','Skills','Intermediate',10,'Receive gentle passes and direct the first touch into open space.'],['Shooting placement','Skills','Intermediate',10,'Take controlled shots toward large target areas, prioritizing placement.'],['Defensive side shuffle','Speed','Beginner',8,'Practice moving sideways while staying balanced and facing play.'],['Scan-turn-pass','Game IQ','Intermediate',10,'Look over both shoulders before receiving, then turn and pass accurately.'],['Goalkeeper set position','Skills','Beginner',10,'Practice a balanced ready position and catching gentle, easy throws.'],['Winger cone take-on','Skills','Intermediate',10,'Approach a cone, change pace and direction, then accelerate into space.'],['Striker movement','Game IQ','Intermediate',10,'Practice checking away from a marker and moving into an open passing lane.'],['Juggling progression','Skills','Beginner',10,'Start with one bounce between touches and build consistency at your own pace.'],['Soccer endurance intervals','Conditioning','Intermediate',15,'Alternate easy jogging and walking with enough recovery to maintain good form.']]},
-{name:'Tennis',icon:'🎾',desc:'Footwork, serve, consistency',drills:[['Split-step timing','Skills','Beginner',8,'Practice a small balanced hop as a partner signals a direction.'],['Forehand shadow swings','Skills','Beginner',10,'Practice a smooth forehand swing without a ball, finishing in balance.'],['Backhand shadow swings','Skills','Beginner',10,'Practice a controlled backhand motion and comfortable recovery step.'],['Serve toss practice','Skills','Beginner',10,'Repeat a comfortable toss and catch it at a consistent height.'],['Court movement','Speed','Intermediate',10,'Move between marked court positions using small adjustment steps.'],['Wall rally','Skills','Intermediate',12,'Rally gently against a wall, aiming for consistent contact and control.'],['Singles court positioning','Game IQ','Intermediate',10,'Practice returning to a balanced recovery position after a shadow shot.'],['Doubles communication','Game IQ','Beginner',8,'Walk through calling the ball and deciding who covers each area.'],['Forehand depth targets','Skills','Intermediate',12,'Aim controlled groundstrokes toward a large target near the back of the court.'],['Backhand footwork','Skills','Intermediate',10,'Use small side steps to set up a comfortable backhand.'],['Serve rhythm','Skills','Beginner',10,'Practice a repeatable serving routine without forcing power.'],['Tennis conditioning','Conditioning','Intermediate',12,'Alternate short court movements with relaxed recovery periods.']]},
-{name:'Volleyball',icon:'🏐',desc:'Passing, setting, jumping',drills:[['Ready-position movement','Skills','Beginner',8,'Practice a balanced ready stance and small shuffle steps.'],['Passing platform','Skills','Beginner',10,'Form a steady forearm platform and pass a gentle toss toward a target.'],['Setting hands','Skills','Beginner',10,'Practice hand position and controlled sets using a light ball if available.'],['Serving routine','Skills','Beginner',10,'Practice a consistent toss and controlled serve technique.'],['Approach footwork','Speed','Intermediate',10,'Walk through a controlled three- or four-step hitting approach.'],['Blocking footwork','Skills','Intermediate',10,'Practice lateral shuffle steps and a balanced, safe jump or no-jump reach.'],['Setter target accuracy','Skills','Intermediate',10,'Set a gentle ball toward a large target with consistent height.'],['Libero platform control','Skills','Intermediate',10,'Pass easy tosses and adjust the platform angle to direct the ball.'],['Outside hitter approach','Skills','Intermediate',10,'Practice a controlled approach rhythm and balanced landing.'],['Middle blocker movement','Speed','Intermediate',10,'Shuffle between marked positions and stay balanced.'],['Volleyball court communication','Game IQ','Beginner',8,'Practice calling the ball and deciding who takes a shared space.'],['Volleyball conditioning','Conditioning','Intermediate',12,'Alternate light court movement and recovery while keeping good technique.']]},
-{name:'Track & Field',icon:'🏃',desc:'Running, starts, mobility',drills:[['Running form drills','Skills','Beginner',10,'Practice relaxed arm swings, tall posture, and light controlled steps.'],['Acceleration starts','Speed','Intermediate',10,'Begin with comfortable short accelerations and walk back to recover.'],['Easy running intervals','Conditioning','Beginner',15,'Alternate easy jogging and walking at a pace that lets you speak comfortably.'],['Dynamic mobility','Skills','Beginner',8,'Move gently through leg swings, ankle mobility, and walking lunges.'],['Sprint arm action','Skills','Beginner',8,'Practice coordinated arm movement while standing or marching.'],['Hurdle walk-over rhythm','Skills','Beginner',8,'Step over low, safe markers slowly without jumping over high obstacles.'],['Long jump approach marks','Skills','Intermediate',10,'Practice a controlled approach run and consistent takeoff mark without maximal jumping.'],['Throwing footwork','Skills','Beginner',10,'Practice balance and movement using a soft ball or no implement.'],['Middle-distance pacing','Conditioning','Intermediate',15,'Run at an even, comfortable pace and recover with easy walking.'],['Distance running consistency','Conditioning','Beginner',15,'Build steady easy running time gradually, with walking breaks as needed.'],['Sprint start positions','Skills','Beginner',8,'Practice comfortable standing start positions and controlled first steps.'],['Track recovery routine','Conditioning','Beginner',10,'Walk easily and perform gentle mobility after training.']]}
-];
-const positionOptions={
-'Baseball':['Pitcher','Catcher','First Base','Second Base','Shortstop','Third Base','Outfielder','Hitter'],
-'Basketball':['Point Guard','Shooting Guard','Small Forward','Power Forward','Center'],
-'Football':['Quarterback','Running Back','Wide Receiver','Tight End','Offensive Line','Linebacker','Cornerback','Safety'],
-'Soccer':['Goalkeeper','Center Back','Fullback','Midfielder','Winger','Striker'],
-'Tennis':['Singles Player','Doubles Player','Serve Specialist','Baseline Player'],
-'Volleyball':['Setter','Outside Hitter','Middle Blocker','Opposite Hitter','Libero / Defensive Specialist'],
-'Track & Field':['Sprinter','Middle-Distance Runner','Distance Runner','Hurdler','Long Jumper','Thrower']
-};
-const positionDrillData={
-'Baseball':{
-'Pitcher':[['Pitcher balance holds','Skills','Beginner',8,'Practice a balanced finish and controlled movement without throwing hard.']],
-'Catcher':[['Catcher stance mobility','Skills','Beginner',8,'Practice comfortable squat-to-stand movement and gentle side steps.']],
-'First Base':[['First-base stretch footwork','Skills','Beginner',8,'Practice moving one foot toward a target while staying balanced.']],
-'Second Base':[['Double-play footwork walk-through','Skills','Intermediate',10,'Practice footwork and a smooth simulated transfer without rushing.']],
-'Shortstop':[['Short-hop glove work','Skills','Intermediate',10,'Use gentle, predictable ground balls and practice moving into a balanced fielding position.']],
-'Third Base':[['Reaction-ready stance','Skills','Beginner',8,'Practice an athletic ready stance and controlled first step.']],
-'Outfielder':[['Drop-step and crossover','Speed','Beginner',10,'Practice opening the hips and moving toward a cone in either direction.']],
-'Hitter':[['Strike-zone recognition','Game IQ','Beginner',8,'Have a partner call or toss soft balls and practice identifying balls and strikes.']]
-},
-'Basketball':{
-'Point Guard':[['Change-of-pace dribble','Skills','Intermediate',10,'Alternate slow and quick dribbles while keeping your head up.']],
-'Shooting Guard':[['Catch-and-shoot footwork','Skills','Intermediate',12,'Practice setting your feet after a catch and taking controlled shots.']],
-'Small Forward':[['Wing attack decisions','Game IQ','Intermediate',10,'From the wing, choose a controlled drive, pass, or jump shot based on a signal.']],
-'Power Forward':[['Box-out positioning','Skills','Beginner',10,'Practice finding safe position and balancing before a simulated rebound.']],
-'Center':[['Rebound timing','Skills','Beginner',10,'Track a gentle shot or toss and reach for the ball with balanced footwork.']]
-},
-'Football':{
-'Quarterback':[['Three-step drop footwork','Skills','Beginner',8,'Practice consistent steps and a balanced throwing base.']],
-'Running Back':[['Vision lane reads','Game IQ','Beginner',8,'Set up two cone lanes and react to a partner pointing toward the open lane.']],
-'Wide Receiver':[['Release footwork','Skills','Beginner',10,'Practice varied first steps and controlled changes of direction.']],
-'Tight End':[['Route-and-catch circuit','Skills','Intermediate',10,'Run a short route, turn toward a partner, and catch easy throws.']],
-'Offensive Line':[['Stance and first step','Skills','Beginner',8,'Practice a comfortable stance and a controlled first step without contact.']],
-'Linebacker':[['Read-step-react','Game IQ','Intermediate',10,'Read a partner’s run/pass signal and move into the correct open space.']],
-'Cornerback':[['Backpedal transition','Skills','Intermediate',10,'Backpedal a few steps, open your hips, and turn smoothly.']],
-'Safety':[['Angle pursuit lanes','Speed','Beginner',10,'Take controlled angles to cones based on a partner’s direction signal.']]
-},
-'Soccer':{
-'Goalkeeper':[['Set-position reactions','Skills','Beginner',10,'Start balanced and react to gentle throws from a partner.']],
-'Center Back':[['Backpedal and turn','Skills','Beginner',8,'Backpedal a few steps, open hips, and move toward a marked space.']],
-'Fullback':[['Overlap run timing','Game IQ','Intermediate',10,'Time a run around a partner and move into open space.']],
-'Midfielder':[['Scan-turn-pass','Skills','Intermediate',10,'Look over both shoulders, receive a gentle pass, turn, and pass accurately.']],
-'Winger':[['1v1 cone take-on','Skills','Beginner',10,'Use changes of pace and direction around cones without contact.']],
-'Striker':[['Finishing placement','Skills','Beginner',12,'Take controlled shots toward large target areas, prioritizing placement.']]
-},
-'Tennis':{
-'Singles Player':[['Deep-court target rally','Skills','Intermediate',12,'Rally toward a large target near the back of the court.']],
-'Doubles Player':[['Poach footwork walk-through','Game IQ','Intermediate',8,'Practice moving forward from the net area and returning to a balanced position.']],
-'Serve Specialist':[['Toss consistency','Skills','Beginner',10,'Repeat a comfortable toss and catch it at a consistent height.']],
-'Baseline Player':[['Forehand depth targets','Skills','Intermediate',12,'Rally toward a large target area near the back of the court.']]
-},
-'Volleyball':{
-'Setter':[['Set-to-target accuracy','Skills','Beginner',10,'Set a soft ball toward a large target with controlled movement.']],
-'Outside Hitter':[['Approach rhythm','Skills','Beginner',8,'Practice a controlled three- or four-step approach and balanced landing.']],
-'Middle Blocker':[['Lateral block footwork','Skills','Beginner',8,'Practice shuffle and crossover steps between two marked positions.']],
-'Opposite Hitter':[['Right-side approach','Skills','Beginner',8,'Practice a balanced approach rhythm and controlled landing.']],
-'Libero / Defensive Specialist':[['Platform angle control','Skills','Beginner',10,'Pass gentle tosses and direct them toward a large target.']]
-},
-'Track & Field':{
-'Sprinter':[['Start-position practice','Skills','Beginner',8,'Practice comfortable standing starts and controlled first steps.']],
-'Middle-Distance Runner':[['Even-pace intervals','Conditioning','Intermediate',15,'Alternate comfortable running and walking while keeping your pace steady.']],
-'Distance Runner':[['Easy-run pacing','Conditioning','Beginner',15,'Keep the pace conversational and take walking breaks when needed.']],
-'Hurdler':[['Lead-leg mobility walk-through','Skills','Beginner',8,'Practice slow step-overs using low, safe markers.']],
-'Long Jumper':[['Run-up mark consistency','Skills','Beginner',10,'Practice a controlled approach run and consistent mark without maximal jumping.']],
-'Thrower':[['Standing throw footwork','Skills','Beginner',10,'Use a soft ball or no implement to practice balance and movement.']]
+:root {
+  --bg:#10131d;
+  --panel:#191e2b;
+  --panel2:#202738;
+  --text:#f4f6fb;
+  --muted:#a2adc1;
+  --accent:#9cf45b;
+  --accent2:#c5ff9c;
+  --border:#30394c;
+  --danger:#ff7777;
+  --shadow:0 12px 30px #0002;
 }
-};
-function getPositionDrills(){let st={...defaultSettings(),...(state.settings||{})};let sport=st.favoriteSport,pos=st.position;return (positionDrillData[sport]&&positionDrillData[sport][pos]||[]).map((d,i)=>({id:'position-'+sport+'-'+pos+'-'+i,sport,name:d[0],category:d[1],difficulty:d[2],minutes:d[3],description:d[4],xp:15,position:pos}));}
+* {box-sizing:border-box}
+body {
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.5;
+}
+button,input,select {font:inherit}
+button {cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:2px solid var(--accent);outline-offset:3px;
+}
+header {
+  padding:22px max(18px,calc((100% - 1150px)/2));
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  background:#10131df2;position:sticky;top:0;z-index:5;
+}
+.brand {font-weight:900;font-size:23px;letter-spacing:-1px}
+.brand span {color:var(--accent)}
+.tagline {font-size:12px;color:var(--muted)}
+main {max-width:1150px;margin:auto;padding:25px 18px 80px}
+.hero {
+  padding:30px;border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(120deg,#202b3a,#18251c);
+  margin-bottom:23px;
+}
+.eyebrow {color:var(--accent);font-weight:bold;font-size:12px;letter-spacing:2px}
+h1 {font-size:clamp(30px,6vw,49px);line-height:1.08;margin:10px 0}
+h2 {font-size:23px;margin:0 0 15px}
+h3 {font-size:17px;margin:0 0 8px}
+p {margin:7px 0}
+.muted {color:var(--muted)}
+.stats {display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:25px}
+.stat,.card,.section-box {
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:16px;padding:17px;
+}
+.stat strong {font-size:27px;display:block;color:var(--accent)}
+.stat span {font-size:12px;color:var(--muted)}
+section {margin-top:28px}
+.section-head {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.sport-card {text-align:left;min-height:105px}
+.sport-card.active {border-color:var(--accent);background:#263324}
+.sport-emoji {font-size:28px;display:block;margin-bottom:5px}
+.card {min-width:0}
+.card p {font-size:14px}
+.card .meta {font-size:12px;color:var(--muted);margin:10px 0}
+.card .actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+button,.btn {
+  border:1px solid var(--border);background:var(--panel2);color:var(--text);
+  border-radius:10px;padding:10px 13px;font-weight:700;
+}
+button.primary,.primary {
+  background:var(--accent);color:#14200c;border-color:var(--accent);
+}
+button:hover {filter:brightness(1.1)}
+button:disabled {opacity:.45;cursor:not-allowed}
+button.danger {color:var(--danger)}
+.filters {
+  display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;
+}
+input,select {
+  min-width:0;max-width:100%;padding:11px;border-radius:10px;
+  border:1px solid var(--border);background:var(--panel2);color:var(--text);
+}
+.filters select {flex:1;min-width:140px}
+.badge {
+  display:inline-block;padding:4px 8px;border-radius:7px;
+  background:#2b3c2b;color:var(--accent);font-size:11px;font-weight:bold;
+}
+.progress-track {height:9px;border-radius:9px;background:#30394c;overflow:hidden;margin:10px 0}
+.progress-fill {height:100%;background:var(--accent);width:0%;transition:width .2s}
+.history-row {
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:13px 0;border-bottom:1px solid var(--border);
+}
+.history-row:last-child {border-bottom:0}
+.history-row small {display:block;color:var(--muted)}
+.empty {padding:25px;text-align:center;color:var(--muted)}
+footer {text-align:center;padding:25px;color:var(--muted);font-size:12px}
+.notice {color:var(--muted);font-size:12px;margin-top:12px}
+.hidden {display:none!important}
+@media(max-width:700px) {
+  .stats {grid-template-columns:repeat(2,1fr)}
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero {padding:22px}
+  header {padding:15px 18px}
+}
+@media(max-width:420px) {
+  .grid {grid-template-columns:1fr}
+  .history-row {align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">SKILL<span>FORGE</span></div>
+    <div class="tagline">BUILD YOUR GAME.</div>
+  </div>
+  <button id="resetBtn" title="Reset all saved progress">Reset</button>
+</header>
 
-const workoutData=[
-['Full-body basics','Strength','Home','All sports','20 min','2 rounds: 8–12 bodyweight squats, wall or knee push-ups, glute bridges, and bird-dogs. Rest as needed and focus on technique.'],
-['Pitcher movement and core','Sport-Specific','Home','Baseball','15 min','Warm up, then do controlled balance holds, gentle hip mobility, and bird-dogs. Avoid throwing hard when tired.'],
-['Catcher mobility and reactions','Sport-Specific','Home','Baseball','15 min','Do comfortable squat-to-stand movements, side steps, and gentle reaction catches. Stop if anything hurts.'],
-['Point guard handles','Sport-Specific','Home','Basketball','15 min','Cycle through stationary dribbles with each hand, controlled crossovers, and head-up movement.'],
-['Receiver route and hands','Sport-Specific','Home','Football','15 min','Practice short routes at a comfortable pace and catch easy throws from a partner.'],
-['Midfielder scan and pass','Sport-Specific','Home','Soccer','15 min','Practice shoulder checks, first touch, turning, and accurate short passes.'],
-['Singles tennis patterns','Sport-Specific','Home','Tennis','15 min','Practice split steps, shadow swings, and balanced recovery steps.'],
-['Setter touch and movement','Sport-Specific','Home','Volleyball','12 min','Practice gentle setting, footwork to a target, and balanced movement.'],
-['Sprinter acceleration basics','Sport-Specific','Home','Track & Field','15 min','Warm up thoroughly, then practice a few short controlled accelerations with full walking recovery.'],
-['Pitcher lower-body balance','Sport-Specific','Home','Baseball','18 min','Warm up, then do single-leg balance holds, glute bridges, and comfortable hip mobility.'],
-['Hitter timing and contact','Sport-Specific','Home','Baseball','20 min','Use dry swings or soft toss to work on timing, balance, and consistent contact.'],
-['Infield quick hands','Sport-Specific','Home','Baseball','15 min','Field gentle grounders, move your feet into position, and practice smooth transfers.'],
-['Outfield routes and first step','Sport-Specific','Home','Baseball','18 min','Practice drop steps, controlled routes to cones, and safe catching technique.'],
-['Basketball shooting form','Sport-Specific','Home','Basketball','20 min','Take comfortable close-range shots, focusing on balance, repeatable form, and follow-through.'],
-['Basketball guard skills','Sport-Specific','Home','Basketball','18 min','Practice both-hand dribbling, change of pace, passing, and controlled layup footwork.'],
-['Basketball wing footwork','Sport-Specific','Home','Basketball','18 min','Work through jump stops, pivots, wing catches, and controlled drives.'],
-['Basketball post fundamentals','Sport-Specific','Home','Basketball','18 min','Practice pivots, balanced catches, and controlled finishing footwork.'],
-['Football quarterback accuracy','Sport-Specific','Home','Football','18 min','Use easy throws toward a large target, focusing on a balanced stance and accuracy.'],
-['Football receiver release and routes','Sport-Specific','Home','Football','18 min','Practice varied first steps, short routes, and catching easy passes.'],
-['Football defensive back movement','Sport-Specific','Home','Football','18 min','Practice backpedaling, opening the hips, and controlled changes of direction.'],
-['Football running back footwork','Sport-Specific','Home','Football','18 min','Use cones for safe lane choices, controlled cuts, and balance.'],
-['Soccer striker finishing technique','Sport-Specific','Home','Soccer','20 min','Practice controlled shots toward large target areas and move into space after each shot.'],
-['Soccer defender positioning','Sport-Specific','Home','Soccer','18 min','Practice side-on stance, controlled shuffles, and moving toward marked spaces.'],
-['Soccer goalkeeper handling','Sport-Specific','Home','Soccer','18 min','Catch gentle throws, practice a balanced ready position, and return the ball accurately.'],
-['Soccer midfielder endurance and scanning','Sport-Specific','Home','Soccer','20 min','Combine easy movement, shoulder checks, receiving, turning, and passing.'],
-['Tennis serve rhythm','Sport-Specific','Home','Tennis','15 min','Practice the toss and shadow serve at a comfortable pace, prioritizing rhythm over power.'],
-['Tennis forehand consistency','Sport-Specific','Home','Tennis','20 min','Use easy rally balls and aim for consistent contact and balanced recovery.'],
-['Tennis backhand footwork','Sport-Specific','Home','Tennis','18 min','Practice side steps, setting up for a backhand, and returning to a ready position.'],
-['Tennis doubles communication','Sport-Specific','Home','Tennis','15 min','Walk through serving positions, calling the ball, and covering shared spaces.'],
-['Volleyball passing platform','Sport-Specific','Home','Volleyball','18 min','Use gentle tosses to practice a stable platform and accurate passes.'],
-['Volleyball serving routine','Sport-Specific','Home','Volleyball','18 min','Practice a consistent pre-serve routine, comfortable toss, and controlled serves.'],
-['Volleyball hitter approach timing','Sport-Specific','Home','Volleyball','15 min','Walk through approach timing and controlled landings without forcing jumps.'],
-['Volleyball blocking footwork','Sport-Specific','Home','Volleyball','15 min','Practice lateral movement and balanced reaching or low jumps.'],
-['Sprinter start and acceleration','Sport-Specific','Home','Track & Field','18 min','Warm up and practice a few short starts with full recovery between repetitions.'],
-['Distance runner easy aerobic session','Sport-Specific','Home','Track & Field','20 min','Run or jog at an easy conversational pace and add walking breaks as needed.'],
-['Hurdler mobility and rhythm','Sport-Specific','Home','Track & Field','18 min','Use low safe markers for slow step-over practice and gentle mobility.'],
-['Long jump approach practice','Sport-Specific','Home','Track & Field','18 min','Practice controlled approach runs and consistent marks without maximal jumping.'],
-['Thrower mobility and footwork','Sport-Specific','Home','Track & Field','18 min','Warm up, then practice comfortable balance and footwork using no implement or a soft ball.'],
-['Full-body mobility reset','Core','Home','All sports','12 min','Move comfortably through ankle mobility, hip circles, arm circles, and gentle stretches.'],
-['Low-impact cardio and coordination','Conditioning','Home','All sports','18 min','Alternate easy marching, side steps, and comfortable walking with rest breaks.'],
-['Agility cone basics','Speed & Agility','Home','All sports','15 min','Set cones with plenty of space and practice controlled forward, sideways, and backward movement.'],
-['Single-leg stability','Strength','Home','All sports','12 min','Do supported single-leg balance holds and controlled calf raises on each side.'],
-['Core and posture','Core','Home','All sports','15 min','Complete two comfortable rounds of bird-dogs, dead bugs, and short front planks.'],
-['Gym lower-body technique','Strength','Gym','All sports','25 min','With qualified supervision, use light resistance to practice controlled squats, step-ups, and hip hinges.'],
-['Gym pulling and posture','Strength','Gym','All sports','20 min','With supervision, use light resistance for rows and posture exercises with smooth technique.'],
-['Gym bike intervals','Conditioning','Gym','All sports','20 min','Cycle comfortably for one minute, then pedal easily for two minutes. Repeat at a sustainable effort.'],
-['Gym balance and core','Core','Gym','All sports','18 min','Use a mat for bird-dogs, dead bugs, and supported balance exercises.'],
-['Recovery walk and mobility','Conditioning','Home','All sports','15 min','Take an easy walk and finish with gentle, comfortable mobility movements.'],
-['Pre-practice dynamic warm-up','Speed & Agility','Home','All sports','10 min','Start easy with marching, arm circles, side steps, and gentle leg swings.'],
-['Quick-feet and reaction circuit','Speed & Agility','Home','All sports','15 min','Use a partner’s signals for short, controlled steps in different directions. Rest between rounds.'],
-['Basketball conditioning with the ball','Sport-Specific','Home','Basketball','18 min','Alternate comfortable dribbling patterns and walking recovery. Keep the ball under control.'],
-['Baseball pre-game movement','Sport-Specific','Home','Baseball','15 min','Combine dynamic warm-ups, easy throwing preparation, and controlled footwork.'],
-['Soccer first-touch circuit','Sport-Specific','Home','Soccer','18 min','Pass against a wall, control the return, and move into open space before the next pass.'],
-['Football all-position movement','Sport-Specific','Home','Football','15 min','Practice stance, controlled starts, and movement patterns without contact.'],
-['Tennis court movement circuit','Sport-Specific','Home','Tennis','15 min','Practice split steps, short side steps, and balanced recovery positions.'],
-['Volleyball ready-position circuit','Sport-Specific','Home','Volleyball','15 min','Practice ready position, gentle shuffles, and controlled passing or setting.'],
-  ['Extra workout: baseball throwing prep','Sport-Specific','Home','Baseball','12 min','Warm up your shoulders and arms with gentle movements. Practice comfortable throwing motions without forcing power.'],
+<main>
+  <div class="hero">
+    <div class="eyebrow">YOUR TRAINING STARTS HERE</div>
+    <h1>Train with purpose.<br><span style="color:var(--accent)">Get better daily.</span></h1>
+    <p class="muted">Choose your sport, focus on your position, and build your skills one session at a time.</p>
+    <div style="margin-top:19px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="primary" onclick="document.getElementById('drillsSection').scrollIntoView({behavior:'smooth'})">Explore drills</button>
+      <button onclick="document.getElementById('workoutsSection').scrollIntoView({behavior:'smooth'})">Find a workout</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><strong id="xpStat">0</strong><span>TOTAL XP</span></div>
+    <div class="stat"><strong id="doneStat">0</strong><span>ACTIVITIES COMPLETED</span></div>
+    <div class="stat"><strong id="levelStat">1</strong><span>TRAINING LEVEL</span></div>
+    <div class="stat"><strong id="streakStat">0</strong><span>DAY STREAK</span></div>
+  </div>
+
+  <section>
+    <div class="section-head"><h2>01 / Choose your sport</h2></div>
+    <div id="sportsGrid" class="grid"></div>
+  </section>
+
+  <section class="section-box" id="profileSection">
+    <div class="section-head"><h2>02 / Your athlete profile</h2></div>
+    <div class="filters">
+      <input id="athleteName" placeholder="Athlete name (optional)" maxlength="40">
+      <select id="positionSelect" aria-label="Playing position"></select>
+      <select id="levelSelect" aria-label="Experience level">
+        <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
+      </select>
+      <button class="primary" id="saveProfile">Save profile</button>
+    </div>
+    <p class="notice">Your profile and progress are saved in this browser on this device.</p>
+  </section>
+
+  <section id="drillsSection">
+    <div class="section-head">
+      <h2>03 / Position-specific drills</h2>
+      <span class="badge" id="drillCount">0 drills</span>
+    </div>
+    <div class="filters">
+      <select id="drillSportFilter" aria-label="Filter drills by sport"></select>
+      <select id="categoryFilter" aria-label="Filter drills by category">
+        <option value="All">All categories</option>
+        <option value="Skills">Skills</option><option value="Speed">Speed</option>
+        <option value="Strength">Strength</option><option value="Agility">Agility</option>
+      </select>
+      <input id="drillSearch" placeholder="Search drills..." aria-label="Search drills">
+    </div>
+    <div id="drillsGrid" class="grid"></div>
+  </section>
+
+  <section id="workoutsSection">
+    <div class="section-head"><h2>04 / Training workouts</h2></div>
+    <div class="filters">
+      <select id="workoutSport" aria-label="Workout sport"></select>
+      <select id="workoutType" aria-label="Workout type">
+        <option value="All">All workout types</option>
+        <option value="Skills">Skills</option><option value="Conditioning">Conditioning</option>
+        <option value="Strength">Strength</option><option value="Recovery">Recovery</option>
+      </select>
+      <input id="workoutSearch" placeholder="Search workouts..." aria-label="Search workouts">
+    </div>
+    <div id="workoutsGrid" class="grid"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>05 / Your progress</h2>
+      <button id="clearHistory" class="danger">Clear history</button>
+    </div>
+    <div class="section-box">
+      <div style="display:flex;justify-content:space-between;gap:12px">
+        <span>Next training level</span><strong id="levelProgressText">0 / 100 XP</strong>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="levelProgress"></div></div>
+      <p class="muted" id="progressCaption">Complete activities to earn XP.</p>
+      <div id="historyList"></div>
+    </div>
+  </section>
+  <footer>SKILLFORGE · Consistency builds confidence.</footer>
+</main>
+
+<script>
+const STORAGE_KEY = "skillforge_clean_v1";
+
+const sports = [
+  {name:"Baseball",emoji:"⚾",positions:["Hitter","Pitcher","Catcher","Infielder","Outfielder"]},
+  {name:"Basketball",emoji:"🏀",positions:["Point Guard","Shooting Guard","Small Forward","Power Forward","Center"]},
+  {name:"Football",emoji:"🏈",positions:["Quarterback","Running Back","Wide Receiver","Linebacker","Defensive Back","Lineman"]},
+  {name:"Soccer",emoji:"⚽",positions:["Forward","Midfielder","Defender","Goalkeeper"]},
+  {name:"Tennis",emoji:"🎾",positions:["Singles Player","Doubles Player"]},
+  {name:"Volleyball",emoji:"🏐",positions:["Setter","Outside Hitter","Middle Blocker","Libero","Opposite Hitter"]},
+  {name:"Track",emoji:"🏃",positions:["Sprinter","Distance Runner","Jumper","Thrower"]}
 ];
-let selectedSport='All';let state=loadState();let timerRemaining=30;let timerInterval=null;
-function loadState(){try{return JSON.parse(localStorage.getItem('skillforge_v2'))||{completed:[],history:[],settings:{}}}catch(e){return{completed:[],history:[],settings:{}}}}
-function saveState(){localStorage.setItem('skillforge_v2',JSON.stringify(state));renderStats();renderProgress()}
-function levelInfo(xp){let level=Math.floor(xp/100)+1;let names=['Rookie','Starter','Competitor','Athlete','Pro'];return{level,name:names[Math.min(level-1,names.length-1)],progress:xp%100}}
-function renderStats(){let xp=state.completed.reduce((n,x)=>n+(x.xp||10),0),info=levelInfo(xp);document.getElementById('xpStat').textContent=xp;document.getElementById('completedStat').textContent=state.completed.length;document.getElementById('xpBar').style.width=info.progress+'%';document.getElementById('levelChip').textContent='LEVEL '+info.level+' · '+info.name.toUpperCase();let days=[...new Set(state.completed.map(x=>x.date).filter(Boolean))].sort();let streak=0;let d=new Date();for(let i=0;i<days.length;i++){let key=d.toISOString().slice(0,10);if(days.includes(key)){streak++;d.setDate(d.getDate()-1)}else if(i===0&&days.includes(new Date(Date.now()-86400000).toISOString().slice(0,10))){d.setDate(d.getDate()-1);if(days.includes(d.toISOString().slice(0,10)))streak++;break}else break}document.getElementById('streakStat').textContent=streak+' days'}
-function allDrills(){let base=sports.flatMap(s=>s.drills.map((d,i)=>({id:s.name+'-'+i,sport:s.name,name:d[0],category:d[1],difficulty:d[2],minutes:d[3],description:d[4],xp:10})));return base}
-function isDone(id){return state.completed.some(c=>c.id===id)}
-function renderSports(){document.getElementById('sportGrid').innerHTML=`<button class="sport-card ${selectedSport==='All'?'selected':''}" onclick="selectSport('All')"><div class="sport-icon">🏆</div><h3>All Sports</h3><p>Explore every sport</p></button>`+sports.map(s=>`<button class="sport-card ${selectedSport===s.name?'selected':''}" onclick="selectSport('${s.name}')"><div class="sport-icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p></button>`).join('')}
-function selectSport(s){selectedSport=s;renderSports();renderDrills()}
-function renderDrills(){let q=document.getElementById('drillSearch').value.toLowerCase(),diff=document.getElementById('difficultyFilter').value,cat=document.getElementById('categoryFilter').value,focus=document.getElementById('drillFocus').value;let drills=allDrills();if(focus==='position'){let pd=getPositionDrills();if(pd.length)drills=pd.concat(drills)}if(selectedSport!=='All')drills=drills.filter(d=>d.sport===selectedSport);if(q)drills=drills.filter(d=>(d.name+' '+d.description+' '+d.sport+' '+(d.position||'')).toLowerCase().includes(q));if(diff!=='all')drills=drills.filter(d=>d.difficulty===diff);if(cat!=='all')drills=drills.filter(d=>d.category===cat);document.getElementById('drillHeading').textContent=selectedSport==='All'?'Training drills':selectedSport+' drills';let st=state.settings||{};document.getElementById('drillSubheading').textContent=st.position?'Position focus: '+st.position:'Choose a drill and build your skills.';document.getElementById('drillGrid').innerHTML=drills.length?drills.map(d=>`<article class="drill-card"><span class="tag">${d.sport}</span><h3>${d.name}</h3><p>${d.description}</p><div class="meta"><span>${d.category}</span><span>· ${d.difficulty}</span><span>· ${d.minutes} min</span><span>· ${d.xp} XP</span></div><div class="card-actions"><button class="${isDone(d.id)?'secondary':'primary'}" ${isDone(d.id)?'disabled':''} onclick="completeItem('${esc(d.id)}','${esc(d.name)}','${esc(d.sport)}',${d.xp})">${isDone(d.id)?'✓ Completed':'Complete drill'}</button></div></article>`).join(''):'<div class="empty">No drills match those filters. Try changing your search or settings.</div>'}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function completeItem(id,name,sport,xp){if(isDone(id))return;let today=new Date().toISOString().slice(0,10);let item={id,name,sport,xp,date:today,type:'Drill'};state.completed.push(item);state.history.unshift({...item,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});state.history=state.history.slice(0,100);saveState();renderDrills();renderWorkouts();playSound()}
-function undoItem(id){if(!confirm('Mark this activity as not completed? Its XP and completion record will be removed.'))return;let item=state.history.find(x=>x.id===id);state.completed=state.completed.filter(x=>x.id!==id);state.history=state.history.filter(x=>x.id!==id);saveState();renderDrills();renderWorkouts()}
-function renderWorkouts(){let loc=document.getElementById('locationFilter').value,type=document.getElementById('workoutType').value,sport=document.getElementById('workoutSport').value,q=document.getElementById('workoutSearch').value.toLowerCase();let list=workoutData.map((w,i)=>({id:'workout-'+i,name:w[0],type:w[1],location:w[2],sport:w[3],duration:w[4],description:w[5],xp:15}));if(loc!=='all')list=list.filter(w=>w.location===loc);if(type!=='all')list=list.filter(w=>w.type===type);if(sport!=='all')list=list.filter(w=>w.sport===sport||w.sport==='All sports');if(q)list=list.filter(w=>(w.name+' '+w.description+' '+w.sport).toLowerCase().includes(q));document.getElementById('workoutGrid').innerHTML=list.length?list.map(w=>`<article class="workout-card"><span class="tag">${w.type}</span><h3>${w.name}</h3><p>${w.description}</p><div class="meta"><span>📍 ${w.location}</span><span>· ${w.duration}</span><span>· ${w.sport}</span></div><div class="card-actions"><button class="${isDone(w.id)?'secondary':'primary'}" ${isDone(w.id)?'disabled':''} onclick="completeItem('${w.id}','${esc(w.name)}','${esc(w.sport)}',${w.xp})">${isDone(w.id)?'✓ Completed':'Complete workout'}</button></div></article>`).join(''):'<div class="empty">No workouts found. Try different filters.</div>'}
-function renderProgress(){let h=document.getElementById('historyList');if(!h)return;h.innerHTML=state.history.length?state.history.slice(0,50).map(x=>`<div class="history-row"><div><strong>${esc(x.name)}</strong><div class="muted small">${esc(x.sport||'Training')} · ${esc(x.date||'')} · +${x.xp||10} XP</div></div><button class="secondary" onclick="undoItem('${esc(x.id)}')">Undo</button></div>`).join(''):'<div class="empty">No activities yet. Complete a drill or workout to start tracking progress.</div>';document.getElementById('progressSummary').innerHTML=`<p>Total completed activities: <strong>${state.completed.length}</strong></p><p>Total XP earned: <strong>${state.completed.reduce((n,x)=>n+(x.xp||10),0)}</strong></p><p>Available workouts: <strong>${workoutData.length}</strong></p>`}
-function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+name));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));if(name==='progress')renderProgress();if(name==='workouts')renderWorkouts();if(name==='scores')fetchScores()}
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-const scoreUrls={baseball:'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard',basketball:'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',football:'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard',soccer:'https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard',hockey:'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard',collegefootball:'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard'};
-async function fetchScores(){let league=document.getElementById('scoreSport').value,grid=document.getElementById('scoreGrid'),status=document.getElementById('scoreStatus');grid.innerHTML='<div class="empty">Loading scores...</div>';status.textContent='Connecting to ESPN...';try{let r=await fetch(scoreUrls[league]);if(!r.ok)throw new Error('Could not load scoreboard');let data=await r.json();let events=data.events||[];if(!events.length){grid.innerHTML='<div class="empty">No games are listed right now for this league. Try refreshing later.</div>';status.textContent='Scoreboard updated.';return}grid.innerHTML=events.map(e=>{let c=e.competitions&&e.competitions[0],teams=c?.competitors||[],home=teams.find(t=>t.homeAway==='home')||teams[0]||{},away=teams.find(t=>t.homeAway==='away')||teams[1]||{},statusText=c?.status?.type?.shortDetail||e.status?.type?.shortDetail||'Scheduled';return `<article class="score-card"><div class="score-note">${esc(statusText)}</div><div class="score-head"><div><h3>${esc(away.team?.displayName||'Away')}</h3><div class="score-note">Away</div></div><div class="score-value">${esc(away.score||'–')}</div></div><div class="score-head"><div><h3>${esc(home.team?.displayName||'Home')}</h3><div class="score-note">Home</div></div><div class="score-value">${esc(home.score||'–')}</div></div></article>`}).join('');status.textContent='Scoreboard updated. Scores are provided by ESPN.'}catch(e){grid.innerHTML='<div class="empty">Could not load scores. Check your internet connection or try again later.</div>';status.textContent='Scoreboard unavailable right now.'}}
-document.getElementById('refreshScores').onclick=fetchScores;document.getElementById('scoreSport').addEventListener('change',fetchScores);
-function showTimer(){let m=Math.floor(timerRemaining/60),s=timerRemaining%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
-document.getElementById('timerStart').onclick=()=>{if(timerInterval){clearInterval(timerInterval);timerInterval=null;document.getElementById('timerStart').textContent='Start';return}document.getElementById('timerStart').textContent='Pause';timerInterval=setInterval(()=>{timerRemaining--;showTimer();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;timerRemaining=0;showTimer();document.getElementById('timerStart').textContent='Start';playSound();alert('Timer finished! Take a break or start your next round.')}},1000)};
-document.getElementById('timerReset').onclick=()=>{clearInterval(timerInterval);timerInterval=null;timerRemaining=30;showTimer();document.getElementById('timerStart').textContent='Start'};
-document.getElementById('timerPlus').onclick=()=>{timerRemaining+=10;showTimer()};
-document.getElementById('timerMinus').onclick=()=>{timerRemaining=Math.max(0,timerRemaining-10);showTimer()};
-function defaultSettings(){return{name:'',goal:30,favoriteSport:'Baseball',position:'',experience:'Beginner',theme:'dark',motion:'normal',textSize:'normal',weeklyGoal:'5',equipment:[],reminders:'off',restPreference:'balanced',soundEffects:'yes'}}
-function applyPreferences(){let st={...defaultSettings(),...(state.settings||{})};document.body.classList.toggle('light-theme',st.theme==='light');document.body.classList.toggle('reduce-motion',st.motion==='reduced');document.body.style.fontSize=st.textSize==='large'?'18px':''}
-function playSound(){if((state.settings||{}).soundEffects==='no')return;try{let C=window.AudioContext||window.webkitAudioContext;if(!C)return;let c=new C(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=660;g.gain.value=.05;o.start();o.stop(c.currentTime+.12);o.onended=()=>c.close()}catch(e){}}
-function readSettingsFromForm(){let equipment=[...document.querySelectorAll('#equipmentChoices input:checked')].map(x=>x.value);return{name:document.getElementById('displayName').value.trim(),goal:Math.max(5,Math.min(240,Number(document.getElementById('dailyGoal').value)||30)),favoriteSport:document.getElementById('favoriteSport').value,position:document.getElementById('positionSelect').value,experience:document.getElementById('experienceLevel').value,theme:document.getElementById('themeSelect').value,motion:document.getElementById('motionSelect').value,textSize:document.getElementById('textSize').value,weeklyGoal:document.getElementById('weeklyGoal').value,equipment,reminders:document.getElementById('reminders').value,restPreference:document.getElementById('restPreference').value,soundEffects:document.getElementById('soundEffects').value}}
-function updatePositionOptions(selected){let sport=document.getElementById('favoriteSport').value,sel=document.getElementById('positionSelect');sel.innerHTML='<option value="">Choose your position</option>'+(positionOptions[sport]||[]).map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');if(selected&&positionOptions[sport]?.includes(selected))sel.value=selected}
-document.getElementById('favoriteSport').addEventListener('change',()=>updatePositionOptions(''));
-document.getElementById('drillFocus').addEventListener('change',renderDrills);
-document.getElementById('drillSearch').addEventListener('input',renderDrills);
-document.getElementById('difficultyFilter').addEventListener('change',renderDrills);
-document.getElementById('categoryFilter').addEventListener('change',renderDrills);
-document.getElementById('locationFilter').addEventListener('change',renderWorkouts);
-document.getElementById('workoutType').addEventListener('change',renderWorkouts);
-document.getElementById('workoutSport').addEventListener('change',renderWorkouts);
-document.getElementById('workoutSearch').addEventListener('input',renderWorkouts);
-function fillSettings(){let st={...defaultSettings(),...(state.settings||{})};document.getElementById('displayName').value=st.name;document.getElementById('dailyGoal').value=st.goal;document.getElementById('favoriteSport').value=st.favoriteSport;updatePositionOptions(st.position);document.getElementById('experienceLevel').value=st.experience;document.getElementById('themeSelect').value=st.theme;document.getElementById('motionSelect').value=st.motion;document.getElementById('textSize').value=st.textSize;document.getElementById('weeklyGoal').value=st.weeklyGoal;document.getElementById('reminders').value=st.reminders;document.getElementById('restPreference').value=st.restPreference;document.getElementById('soundEffects').value=st.soundEffects;document.querySelectorAll('#equipmentChoices input').forEach(x=>x.checked=(st.equipment||[]).includes(x.value));applyPreferences()}
-document.getElementById('saveSettings').onclick=async()=>{state.settings=readSettingsFromForm();saveState();applyPreferences();renderDrills();renderWorkouts();alert('Settings saved! Your position-specific drills are ready.')};
-document.getElementById('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='skillforge-backup.json';a.click();URL.revokeObjectURL(url)};
-document.getElementById('clearHistory').onclick=()=>{if(confirm('Clear activity history and completed activities? This removes your activity records and XP.')){state.history=[];state.completed=[];saveState();renderDrills();renderWorkouts()}};
-document.getElementById('resetProgress').onclick=()=>{if(confirm('Reset all progress and settings? Export a backup first if you want to keep your data.')){state={completed:[],history:[],settings:{}};saveState();fillSettings();renderSports();renderDrills();renderWorkouts();renderProgress()}};
-let lastReminderKey='';function checkReminders(){let st=state.settings||{},now=new Date(),key=now.toDateString();if(st.reminders==='on'&&now.getHours()>=17&&lastReminderKey!==key){lastReminderKey=key;console.info('SkillForge reminder: time to consider your training goal.')}}setInterval(checkReminders,30000);
-function init(){fillSettings();selectedSport='All';renderSports();renderDrills();renderWorkouts();renderStats();renderProgress();showTimer()}
-init();
-</script></body></html>
-// ===== APPLICATION STATE =====
-const STORAGE_KEY = "skillforge_data_v1";
+
+const drills = [
+  ["Baseball","Hitter","Tee-work rounds","Skills","15 min","Work on consistent contact and balanced swings.","3 rounds of 10 controlled swings."],
+  ["Baseball","Hitter","Soft-toss tracking","Skills","10 min","Improve pitch tracking and hand-eye coordination.","3 rounds of 8 swings. Use safe spacing."],
+  ["Baseball","Hitter","Base-running starts","Speed","10 min","Practice quick, balanced starts.","5 controlled starts over a short distance."],
+  ["Baseball","Pitcher","Throwing mechanics dry reps","Skills","10 min","Practice smooth movement without throwing a ball.","3 rounds of 8 slow reps; ask a coach to check form."],
+  ["Baseball","Pitcher","Balance and landing","Agility","8 min","Build body control during pitching movements.","3 rounds of 6 controlled reps."],
+  ["Baseball","Catcher","Receiving footwork","Skills","10 min","Practice moving into a balanced receiving position.","3 rounds of 8 movements."],
+  ["Baseball","Catcher","Quick transfer practice","Skills","8 min","Practice clean hand transitions with a soft training ball.","3 rounds of 8 reps."],
+  ["Baseball","Infielder","Ground-ball footwork","Skills","12 min","Practice getting into position for ground balls.","3 rounds of 8 reps with a partner or rolled ball."],
+  ["Baseball","Infielder","Throwing accuracy","Skills","10 min","Focus on balanced throws toward a safe target.","3 rounds of 8 throws with a coach or partner."],
+  ["Baseball","Outfielder","Drop-step practice","Agility","8 min","Practice turning and moving toward a target.","3 rounds of 6 reps each side."],
+  ["Baseball","Outfielder","Catch-and-throw","Skills","12 min","Work on secure catches and accurate returns.","3 rounds of 6 throws."],
+
+  ["Basketball","Point Guard","Change-of-pace dribble","Skills","10 min","Practice changing speed while keeping control.","4 rounds of 30 seconds."],
+  ["Basketball","Point Guard","Passing targets","Skills","10 min","Improve passing accuracy and vision.","3 rounds of 10 passes."],
+  ["Basketball","Shooting Guard","Catch-and-shoot form","Skills","12 min","Practice balanced footwork and a consistent release.","3 rounds of 8 shots."],
+  ["Basketball","Shooting Guard","Defensive slides","Agility","8 min","Practice lateral movement with control.","4 rounds of 20 seconds."],
+  ["Basketball","Small Forward","Finishing footwork","Skills","10 min","Practice controlled steps toward the basket.","3 rounds of 6 each side."],
+  ["Basketball","Power Forward","Rebound positioning","Skills","10 min","Practice boxing out with safe, controlled movement.","3 rounds of 8 reps."],
+  ["Basketball","Center","Post footwork","Skills","10 min","Practice pivots and balanced positioning.","3 rounds of 8 reps."],
+
+  ["Football","Quarterback","Drop-back footwork","Skills","10 min","Practice balanced drops and movement without a throw.","3 rounds of 5 reps."],
+  ["Football","Quarterback","Short-target accuracy","Skills","12 min","Practice accurate throws at a safe target with supervision.","3 rounds of 6 throws."],
+  ["Football","Running Back","Ball security walk-through","Skills","8 min","Practice securely carrying a training football.","4 rounds of 30 seconds."],
+  ["Football","Running Back","Change-of-direction cones","Agility","10 min","Practice controlled cuts around cones.","4 rounds at a comfortable pace."],
+  ["Football","Wide Receiver","Route footwork","Skills","12 min","Practice crisp turns and controlled acceleration.","3 rounds of 4 routes."],
+  ["Football","Wide Receiver","Hands and tracking","Skills","10 min","Practice tracking and catching a soft ball.","3 rounds of 8 catches."],
+  ["Football","Linebacker","Reaction footwork","Agility","10 min","React to a partner's direction cues.","4 rounds of 20 seconds."],
+  ["Football","Defensive Back","Backpedal and turn","Agility","10 min","Practice smooth transitions and balance.","4 rounds of 15 seconds."],
+  ["Football","Lineman","Stance and first step","Skills","8 min","Practice a balanced stance and controlled first step.","3 rounds of 6 reps."],
+
+  ["Soccer","Forward","Finishing placement","Skills","12 min","Practice placing shots toward safe target zones.","3 rounds of 6 shots."],
+  ["Soccer","Forward","Acceleration starts","Speed","8 min","Practice controlled starts over a short distance.","5 reps with full recovery."],
+  ["Soccer","Midfielder","Passing accuracy","Skills","12 min","Practice passes to marked targets.","3 rounds of 10 passes."],
+  ["Soccer","Midfielder","Ball control circuit","Skills","10 min","Practice close control around cones.","4 rounds of 30 seconds."],
+  ["Soccer","Defender","Lateral footwork","Agility","8 min","Practice staying balanced while moving sideways.","4 rounds of 20 seconds."],
+  ["Soccer","Defender","Passing under pressure","Skills","10 min","Practice finding a teammate after a controlled turn.","3 rounds of 8 passes."],
+  ["Soccer","Goalkeeper","Ready-position footwork","Skills","8 min","Practice balanced movement between markers.","4 rounds of 20 seconds."],
+  ["Soccer","Goalkeeper","Reaction catches","Skills","10 min","Catch soft tosses from a partner.","3 rounds of 8 catches."],
+
+  ["Tennis","Singles Player","Forehand consistency","Skills","12 min","Practice a repeatable forehand swing.","3 rounds of 10 shots."],
+  ["Tennis","Singles Player","Split-step footwork","Agility","8 min","Practice balanced movement in response to a cue.","4 rounds of 20 seconds."],
+  ["Tennis","Doubles Player","Volley control","Skills","10 min","Practice compact volleys near the net.","3 rounds of 8 shots."],
+  ["Tennis","Doubles Player","Serve placement","Skills","12 min","Practice controlled serves toward target areas.","3 rounds of 6 serves."],
+
+  ["Volleyball","Setter","Setting accuracy","Skills","10 min","Practice controlled sets toward a target.","3 rounds of 10 reps."],
+  ["Volleyball","Outside Hitter","Approach footwork","Skills","10 min","Practice approach steps without jumping at full effort.","3 rounds of 6 reps."],
+  ["Volleyball","Middle Blocker","Block footwork","Agility","8 min","Practice lateral steps and balanced positioning.","3 rounds of 6 reps."],
+  ["Volleyball","Libero","Platform passing","Skills","10 min","Practice controlled passes to a target.","3 rounds of 10 reps."],
+  ["Volleyball","Opposite Hitter","Arm-swing form","Skills","8 min","Practice a controlled arm swing without a ball.","3 rounds of 8 reps."],
+
+  ["Track","Sprinter","Running form drills","Skills","10 min","Practice relaxed posture and coordinated arm movement.","4 rounds of 20 seconds."],
+  ["Track","Sprinter","Short acceleration","Speed","10 min","Practice smooth starts over a short distance.","4 reps with full recovery."],
+  ["Track","Distance Runner","Easy aerobic session","Conditioning","20 min","Build endurance at a comfortable conversational pace.","Keep the pace easy and steady."],
+  ["Track","Distance Runner","Running mobility","Recovery","8 min","Practice gentle ankle, hip and leg mobility.","2 rounds of comfortable movements."],
+  ["Track","Jumper","Takeoff footwork","Skills","10 min","Practice controlled approach steps without maximal jumps.","4 rounds of 4 reps."],
+  ["Track","Thrower","Movement sequence","Skills","10 min","Practice the movement sequence slowly without a implement.","3 rounds of 6 reps with coaching."]
+].map((d,i)=>({
+  id:"drill-"+i,sport:d[0],position:d[1],name:d[2],category:d[3],
+  duration:d[4],description:d[5],instructions:d[6],xp:20
+}));
+
+const workouts = [
+  {id:"workout-baseball",sport:"Baseball",name:"Baseball Skill Session",type:"Skills",duration:"25 min",xp:35,description:"A balanced session for hitting, fielding and coordination.",steps:["5 minutes of easy warm-up and mobility","10 minutes of tee work or controlled catch","5 minutes of footwork practice","5 minutes of easy cool-down"]},
+  {id:"workout-basketball",sport:"Basketball",name:"Court Skills",type:"Skills",duration:"25 min",xp:35,description:"Work on ball control, footwork and shooting form.",steps:["5 minutes of warm-up","8 minutes of dribbling","8 minutes of shooting form","4 minutes of defensive footwork"]},
+  {id:"workout-football",sport:"Football",name:"Football Fundamentals",type:"Skills",duration:"25 min",xp:35,description:"Practice position fundamentals at a controlled pace.",steps:["5 minutes of warm-up","8 minutes of position footwork","8 minutes of ball skills","4 minutes of cool-down"]},
+  {id:"workout-soccer",sport:"Soccer",name:"Ball Control Session",type:"Skills",duration:"25 min",xp:35,description:"Develop passing, control and movement.",steps:["5 minutes of warm-up","8 minutes of close ball control","8 minutes of passing","4 minutes of easy movement"]},
+  {id:"workout-tennis",sport:"Tennis",name:"Racquet Skills",type:"Skills",duration:"25 min",xp:35,description:"Work on control, footwork and shot consistency.",steps:["5 minutes of warm-up","8 minutes of controlled groundstrokes","8 minutes of footwork","4 minutes of cool-down"]},
+  {id:"workout-volleyball",sport:"Volleyball",name:"Volleyball Fundamentals",type:"Skills",duration:"25 min",xp:35,description:"Practice passing, setting and position movement.",steps:["5 minutes of warm-up","8 minutes of passing","8 minutes of setting or approach footwork","4 minutes of cool-down"]},
+  {id:"workout-track",sport:"Track",name:"Track Conditioning",type:"Conditioning",duration:"20 min",xp:35,description:"Build general fitness at a comfortable level.",steps:["5 minutes of easy warm-up","8 minutes of comfortable running or brisk walking","3 minutes of gentle mobility","4 minutes of cool-down"]},
+  {id:"workout-strength",sport:"All",name:"Full-Body Basics",type:"Strength",duration:"20 min",xp:30,description:"Build general strength with controlled bodyweight movements.",steps:["3 minutes of warm-up","2 rounds of 8 comfortable squats","2 rounds of 6 wall or incline push-ups","2 rounds of 10-second balance holds","3 minutes of cool-down"]},
+  {id:"workout-recovery",sport:"All",name:"Mobility and Recovery",type:"Recovery",duration:"12 min",xp:20,description:"Give your body time for gentle movement and recovery.",steps:["2 minutes of easy walking","3 minutes of gentle hip mobility","3 minutes of gentle shoulder mobility","4 minutes of relaxed stretching without forcing range"]},
+  {id:"workout-speed",sport:"All",name:"Agility Basics",type:"Conditioning",duration:"15 min",xp:25,description:"Practice coordination and direction changes at a safe pace.",steps:["4 minutes of warm-up","4 minutes of controlled side steps","4 minutes of cone movement at a comfortable pace","3 minutes of cool-down"]}
+];
 
 const defaultData = {
-  settings: {
-    name: "",
-    sport: "Baseball",
-    position: "Hitter",
-    level: "Beginner"
-  },
-  xp: 0,
-  history: [],
-  streak: 0,
-  lastTrainingDate: ""
+  settings:{name:"",sport:"Baseball",position:"Hitter",level:"Beginner"},
+  xp:0,history:[],streak:0,lastTrainingDate:""
 };
+
+function freshDefault() {
+  return JSON.parse(JSON.stringify(defaultData));
+}
 
 function loadData() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!saved || typeof saved !== "object") return structuredClone(defaultData);
-
+    if (!saved || typeof saved !== "object") return freshDefault();
     return {
-      ...structuredClone(defaultData),
+      ...freshDefault(),
       ...saved,
-      settings: {
-        ...defaultData.settings,
-        ...(saved.settings || {})
-      },
-      history: Array.isArray(saved.history) ? saved.history : [],
-      xp: Number(saved.xp) || 0,
-      streak: Number(saved.streak) || 0
+      settings:{...defaultData.settings,...(saved.settings||{})},
+      history:Array.isArray(saved.history)?saved.history:[],
+      xp:Math.max(0,Number(saved.xp)||0),
+      streak:Math.max(0,Number(saved.streak)||0)
     };
   } catch {
-    return structuredClone(defaultData);
+    return freshDefault();
   }
 }
 
 let appData = loadData();
-let activeWorkout = null;
-let quickTimerSeconds = 60;
-let quickTimerInterval = null;
-let activeTimerSeconds = 0;
-let activeTimerInterval = null;
-let activeStepIndex = 0;
-let activeWorkoutFinished = false;
+let selectedSport = appData.settings.sport || "Baseball";
 
 function saveData() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));
   } catch {
-    showToast("Unable to save. Check your browser storage.");
+    alert("Your browser could not save progress. Check your browser storage settings.");
   }
 }
 
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, character => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[character]);
+  return String(value).replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
 }
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.style.display = "block";
-  clearTimeout(showToast.timeout);
-  showToast.timeout = setTimeout(() => {
-    toast.style.display = "none";
-  }, 2600);
+function getSport(name) {
+  return sports.find(s=>s.name===name)||sports[0];
 }
 
-// ===== NAVIGATION =====
-function showPage(pageName) {
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.toggle("active", page.id === pageName);
+function fillSportSelect(select,includeAll=true) {
+  select.innerHTML=(includeAll?'<option value="All">All sports</option>':'')+
+    sports.map(s=>`<option value="${escapeHTML(s.name)}">${s.emoji} ${escapeHTML(s.name)}</option>`).join("");
+}
+
+function updatePositionOptions(position="") {
+  const sport=getSport(selectedSport);
+  const select=document.getElementById("positionSelect");
+  select.innerHTML=sport.positions.map(p=>`<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`).join("");
+  select.value=sport.positions.includes(position)?position:sport.positions[0];
+}
+
+function renderSports() {
+  document.getElementById("sportsGrid").innerHTML=sports.map(s=>`
+    <button class="card sport-card ${selectedSport===s.name?"active":""}" data-sport="${escapeHTML(s.name)}">
+      <span class="sport-emoji">${s.emoji}</span>
+      <strong>${escapeHTML(s.name)}</strong>
+      <p class="muted">${s.positions.length} playing positions</p>
+    </button>`).join("");
+
+  document.querySelectorAll("[data-sport]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      selectedSport=btn.dataset.sport;
+      appData.settings.sport=selectedSport;
+      updatePositionOptions();
+      appData.settings.position=document.getElementById("positionSelect").value;
+      saveData();
+      document.getElementById("drillSportFilter").value=selectedSport;
+      document.getElementById("workoutSport").value=selectedSport;
+      renderSports();
+      renderDrills();
+      renderWorkouts();
+    });
   });
-
-  document.querySelectorAll("nav button").forEach(button => {
-    button.classList.toggle("active", button.dataset.page === pageName);
-  });
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  if (pageName === "progress") renderProgress();
-  if (pageName === "home") renderDashboard();
 }
 
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => showPage(button.dataset.page));
-});
-
-// ===== SPORT SELECTORS =====
-function populateSportSelectors() {
-  const sportNames = Object.keys(SPORTS);
-
-  const workoutSport = document.getElementById("workoutSportFilter");
-  const drillSport = document.getElementById("drillSportFilter");
-  const favoriteSport = document.getElementById("favoriteSport");
-
-  workoutSport.innerHTML =
-    '<option value="All">All sports</option>' +
-    sportNames.map(sport =>
-      `<option value="${escapeHTML(sport)}">${escapeHTML(sport)}</option>`
-    ).join("") +
-    '<option value="General">General training</option>';
-
-  drillSport.innerHTML =
-    '<option value="All">All sports</option>' +
-    sportNames.map(sport =>
-      `<option value="${escapeHTML(sport)}">${escapeHTML(sport)}</option>`
-    ).join("");
-
-  favoriteSport.innerHTML = sportNames.map(sport =>
-    `<option value="${escapeHTML(sport)}">${SPORTS[sport].icon} ${escapeHTML(sport)}</option>`
-  ).join("");
+function isDone(id) {
+  return appData.history.some(item=>item.activityId===id);
 }
 
-function updatePositionOptions(selectedPosition) {
-  const sport = document.getElementById("favoriteSport").value;
-  const positions = SPORTS[sport]?.positions || [];
-  const selector = document.getElementById("favoritePosition");
+function completeActivity(activity) {
+  if (isDone(activity.id)) return;
 
-  selector.innerHTML = positions.map(position =>
-    `<option value="${escapeHTML(position)}">${escapeHTML(position)}</option>`
-  ).join("");
-
-  if (positions.includes(selectedPosition)) {
-    selector.value = selectedPosition;
+  const now=new Date();
+  const date=now.toISOString().slice(0,10);
+  const previous=appData.lastTrainingDate;
+  if(previous!==date) {
+    const yesterday=new Date(now);
+    yesterday.setDate(yesterday.getDate()-1);
+    const yesterdayKey=yesterday.toISOString().slice(0,10);
+    appData.streak=previous===yesterdayKey?appData.streak+1:1;
+    appData.lastTrainingDate=date;
   }
+
+  appData.history.unshift({
+    recordId:"record-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+    activityId:activity.id,
+    name:activity.name,
+    sport:activity.sport,
+    xp:activity.xp,
+    date,
+    completedAt:now.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})
+  });
+  appData.xp+=activity.xp;
+  saveData();
+  renderAll();
 }
 
-document.getElementById("favoriteSport").addEventListener("change", () => {
-  updatePositionOptions("");
+function undoActivity(recordId) {
+  const item=appData.history.find(h=>h.recordId===recordId);
+  if(!item) return;
+  if(!confirm(`Undo "${item.name}"? This removes ${item.xp} XP and its completion record.`)) return;
+
+  appData.history=appData.history.filter(h=>h.recordId!==recordId);
+  appData.xp=Math.max(0,appData.xp-item.xp);
+
+  const today=new Date().toISOString().slice(0,10);
+  if(!appData.history.some(h=>h.date===today)) {
+    appData.streak=0;
+    appData.lastTrainingDate="";
+  }
+
+  saveData();
+  renderAll();
+}
+
+function activityCard(item,isWorkout=false) {
+  const done=isDone(item.id);
+  const sportText=item.sport==="All"?"All sports":item.sport;
+  return `<article class="card">
+    <span class="badge">${escapeHTML(isWorkout?item.type:item.category)}</span>
+    <h3 style="margin-top:10px">${escapeHTML(item.name)}</h3>
+    <p class="muted">${escapeHTML(sportText)}${item.position?" · "+escapeHTML(item.position):""}</p>
+    <p>${escapeHTML(item.description)}</p>
+    ${item.instructions?`<p class="meta"><strong>How:</strong> ${escapeHTML(item.instructions)}</p>`:""}
+    ${isWorkout?`<p class="meta">${escapeHTML(item.duration)} · ${item.steps.length} steps</p>`:`<p class="meta">${escapeHTML(item.duration)}</p>`}
+    <div class="actions">
+      <button class="${done?"":"primary"}" ${done?"disabled":""} data-complete="${escapeHTML(item.id)}">
+        ${done?"✓ Completed":"Complete · +"+item.xp+" XP"}
+      </button>
+      ${isWorkout?`<button data-steps="${escapeHTML(item.id)}">View plan</button>`:""}
+    </div>
+  </article>`;
+}
+
+function renderDrills() {
+  const filterSport=document.getElementById("drillSportFilter").value||selectedSport;
+  const category=document.getElementById("categoryFilter").value;
+  const search=document.getElementById("drillSearch").value.trim().toLowerCase();
+  const position=document.getElementById("positionSelect").value;
+  let list=drills.filter(d=>
+    (filterSport==="All"||d.sport===filterSport) &&
+    (category==="All"||d.category===category) &&
+    (!search||(d.name+" "+d.description+" "+d.position+" "+d.sport).toLowerCase().includes(search)) &&
+    (filterSport==="All"||d.position===position)
+  );
+
+  document.getElementById("drillCount").textContent=list.length+" drills";
+  document.getElementById("drillsGrid").innerHTML=list.length?
+    list.map(d=>activityCard(d)).join(""):'<div class="empty">No drills match these filters. Try another category or search.</div>';
+  bindActivityButtons();
+}
+
+function renderWorkouts() {
+  const filterSport=document.getElementById("workoutSport").value||selectedSport;
+  const type=document.getElementById("workoutType").value;
+  const search=document.getElementById("workoutSearch").value.trim().toLowerCase();
+  const list=workouts.filter(w=>
+    (filterSport==="All"||w.sport==="All"||w.sport===filterSport) &&
+    (type==="All"||w.type===type) &&
+    (!search||(w.name+" "+w.description+" "+w.sport).toLowerCase().includes(search))
+  );
+
+  document.getElementById("workoutsGrid").innerHTML=list.length?
+    list.map(w=>activityCard(w,true)).join(""):'<div class="empty">No workouts match these filters.</div>';
+  bindActivityButtons();
+}
+
+function bindActivityButtons() {
+  document.querySelectorAll("[data-complete]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const id=btn.dataset.complete;
+      const item=drills.find(d=>d.id===id)||workouts.find(w=>w.id===id);
+      if(item) completeActivity(item);
+    });
+  });
+  document.querySelectorAll("[data-steps]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const w=workouts.find(x=>x.id===btn.dataset.steps);
+      if(w) alert(w.name+"\\n\\n"+w.steps.map((s,i)=>(i+1)+". "+s).join("\\n"));
+    });
+  });
+}
+
+function renderStats() {
+  document.getElementById("xpStat").textContent=appData.xp;
+  document.getElementById("doneStat").textContent=appData.history.length;
+  document.getElementById("levelStat").textContent=Math.floor(appData.xp/100)+1;
+  document.getElementById("streakStat").textContent=appData.streak;
+  const within=appData.xp%100;
+  document.getElementById("levelProgressText").textContent=within+" / 100 XP";
+  document.getElementById("levelProgress").style.width=within+"%";
+  document.getElementById("progressCaption").textContent=
+    (100-within)+" XP until level "+(Math.floor(appData.xp/100)+2)+".";
+}
+
+function renderProgress() {
+  const container=document.getElementById("historyList");
+  if(!appData.history.length) {
+    container.innerHTML='<div class="empty">No activities completed yet. Finish a drill or workout to start your progress history.</div>';
+    return;
+  }
+  container.innerHTML=appData.history.map(item=>`
+    <div class="history-row">
+      <div>
+        <strong>${escapeHTML(item.name)}</strong>
+        <small>${escapeHTML(item.sport)} · ${escapeHTML(item.date)} · ${escapeHTML(item.completedAt||"")}</small>
+        <span class="badge">+${item.xp} XP</span>
+      </div>
+      <button class="danger" data-undo="${escapeHTML(item.recordId)}">Undo</button>
+    </div>`).join("");
+
+  container.querySelectorAll("[data-undo]").forEach(btn=>{
+    btn.addEventListener("click",()=>undoActivity(btn.dataset.undo));
+  });
+}
+
+function renderAll() {
+  renderStats();
+  renderDrills();
+  renderWorkouts();
+  renderProgress();
+}
+
+document.getElementById("saveProfile").addEventListener("click",()=>{
+  appData.settings.name=document.getElementById("athleteName").value.trim();
+  appData.settings.sport=selectedSport;
+  appData.settings.position=document.getElementById("positionSelect").value;
+  appData.settings.level=document.getElementById("levelSelect").value;
+  saveData();
+  renderDrills();
+  alert("Athlete profile saved!");
 });
 
-document.getElementById("drillSportFilter").addEventListener("change", () => {
-  updateDrillPositionOptions();
+document.getElementById("positionSelect").addEventListener("change",()=>{
+  appData.settings.position=document.getElementById("positionSelect").value;
+  saveData();
   renderDrills();
 });
 
-function updateDrillPositionOptions() {
-  const sport = document.getElementById("drillSportFilter").value;
-  const selector = document.getElementById("drillPositionFilter");
+document.getElementById("levelSelect").addEventListener("change",()=>{
+  appData.settings.level=document.getElementById("levelSelect").value;
+  saveData();
+});
 
-  let positions = [];
-  if (sport === "All") {
-    positions = [...new Set(drills.map(drill => drill.position))].sort();
-  } else {
-    positions = [...new Set(
-      drills.filter(drill => drill.sport === sport).map(drill => drill.position)
-    )].sort();
+document.getElementById("drillSportFilter").addEventListener("change",e=>{
+  const value=e.target.value;
+  if(value!=="All") {
+    selectedSport=value;
+    appData.settings.sport=value;
+    updatePositionOptions();
+    appData.settings.position=document.getElementById("positionSelect").value;
+    renderSports();
   }
+  renderDrills();
+});
 
-  selector.innerHTML =
-    '<option value="All">All positions and focuses</option>' +
-    positions.map(position =>
-      `<option value="${escapeHTML(position)}">${escapeHTML(position)}</option>`
-    ).join("");
-}
+document.getElementById("categoryFilter").addEventListener("change",renderDrills);
+document.getElementById("drillSearch").addEventListener("input",renderDrills);
+document.getElementById("workoutSport").addEventListener("change",renderWorkouts);
+document.getElementById("workoutType").addEventListener("change",renderWorkouts);
+document.getElementById("workoutSearch").addEventListener("input",renderWorkouts);
 
-// ===== SETTINGS =====
-function loadSettingsIntoForm() {
-  document.getElementById("athleteName").value = appData.settings.name || "";
-  document.getElementById("favoriteSport").value =
-    SPORTS[appData.settings.sport] ? appData.settings.sport : "Baseball";
+document.getElementById("clearHistory").addEventListener("click",()=>{
+  if(!confirm("Clear all activity history and XP? This cannot be undone.")) return;
+  appData.history=[];
+  appData.xp=0;
+  appData.streak=0;
+  appData.lastTrainingDate="";
+  saveData();
+  renderAll();
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  if(!confirm("Reset your entire SkillForge profile and progress? This cannot be undone.")) return;
+  appData=freshDefault();
+  selectedSport="Baseball";
+  saveData();
+  initializeApp();
+});
+
+function initializeApp() {
+  selectedSport=appData.settings.sport||"Baseball";
+  document.getElementById("athleteName").value=appData.settings.name||"";
+  document.getElementById("levelSelect").value=appData.settings.level||"Beginner";
+
+  fillSportSelect(document.getElementById("drillSportFilter"));
+  fillSportSelect(document.getElementById("workoutSport"));
+  document.getElementById("drillSportFilter").value=selectedSport;
+  document.getElementById("workoutSport").value=selectedSport;
 
   updatePositionOptions(appData.settings.position);
-
-  document.getElementById("athleteLevel").value =
-    ["Beginner", "Intermediate", "Advanced"].includes(appData.settings.level)
-      ? appData.settings.level
-      : "Beginner";
-}
-
-function saveSettings() {
-  appData.settings.name =
-    document.getElementById("athleteName").value.trim().slice(0, 35);
-
-  appData.settings.sport = document.getElementById("favoriteSport").value;
-  appData.settings.position = document.getElementById("favoritePosition").value;
-  appData.settings.level = document.getElementById("athleteLevel").value;
-
-  saveData();
-  renderDashboard();
-  renderWorkouts();
-  showToast("Settings saved!");
-}
-
-// ===== LEVELS AND XP =====
-function getLevelInfo(xp) {
-  const level = Math.floor(Math.max(0, xp) / 100) + 1;
-  const progress = Math.max(0, xp) % 100;
-
-  let title = "Rookie";
-  if (level >= 3) title = "Rising Athlete";
-  if (level >= 5) title = "Competitor";
-  if (level >= 10) title = "All-Star";
-  if (level >= 20) title = "Elite";
-  if (level >= 30) title = "Legend";
-
-  return { level, progress, title };
-}
-
-function calculateStreak() {
-  const dates = [...new Set(
-    appData.history.map(item => item.date).filter(Boolean)
-  )].sort().reverse();
-
-  if (!dates.length) return 0;
-
-  const today = getLocalDateString();
-  const yesterdayDate = new Date();
-  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-  const yesterday = formatDateObject(yesterdayDate);
-
-  if (dates[0] !== today && dates[0] !== yesterday) return 0;
-
-  let streak = 0;
-  let expected = new Date(`${dates[0]}T12:00:00`);
-
-  for (const date of dates) {
-    const current = new Date(`${date}T12:00:00`);
-    const difference = Math.round((expected - current) / 86400000);
-
-    if (difference === 0) {
-      streak++;
-      expected.setDate(expected.getDate() - 1);
-    } else if (difference > 0) {
-      break;
-    }
-  }
-
-  return streak;
-}
-
-function getLocalDateString() {
-  return formatDateObject(new Date());
-}
-
-function formatDateObject(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function renderDashboard() {
-  const xp = appData.xp;
-  const info = getLevelInfo(xp);
-  const totalMinutes = appData.history.reduce(
-    (sum, item) => sum + (Number(item.duration) || 0), 0
-  );
-
-  appData.streak = calculateStreak();
-
-  document.getElementById("homeXP").textContent = xp;
-  document.getElementById("homeLevel").textContent = info.level;
-  document.getElementById("homeLevelText").textContent = info.title;
-  document.getElementById("homeWorkouts").textContent = appData.history.length;
-  document.getElementById("homeStreak").textContent = `${appData.streak} 🔥`;
-
-  document.getElementById("levelProgressText").textContent =
-    `${info.progress} / 100 XP`;
-  document.getElementById("levelProgress").style.width = `${info.progress}%`;
-  document.getElementById("levelBadge").textContent = `LEVEL ${info.level}`;
-
-  const greetingName = appData.settings.name
-    ? `, ${escapeHTML(appData.settings.name)}`
-    : "";
-
-  document.querySelector("#home .hero-main h1").innerHTML =
-    `Train harder${greetingName}.<br>Play <span class="accent">smarter.</span>`;
-
-  document.getElementById("recommendationText").textContent =
-    `Your focus: ${appData.settings.sport} — ${appData.settings.position}. ` +
-    `Try a ${appData.settings.level.toLowerCase()} workout to keep improving.`;
-
-  const sportContainer = document.getElementById("homeSports");
-  sportContainer.innerHTML = Object.entries(SPORTS).map(([sport, info]) => `
-    <button class="sport-card" style="text-align:left;color:var(--text)"
-      onclick="chooseSport('${escapeHTML(sport)}')">
-      <div class="sport-icon">${info.icon}</div>
-      <h3>${escapeHTML(sport)}</h3>
-      <div class="muted small">${escapeHTML(info.focus)}</div>
-    </button>
-  `).join("");
-
-  saveData();
-}
-
-function chooseSport(sport) {
-  if (!SPORTS[sport]) return;
-
-  appData.settings.sport = sport;
-  if (!SPORTS[sport].positions.includes(appData.settings.position)) {
-    appData.settings.position = SPORTS[sport].positions[0];
-  }
-
-  saveData();
-  loadSettingsIntoForm();
-  renderDashboard();
-
-  document.getElementById("workoutSportFilter").value = sport;
-  renderWorkouts();
-  showPage("workouts");
-}
-
-// ===== WORKOUT LIBRARY =====
-function renderWorkouts() {
-  const sport = document.getElementById("workoutSportFilter").value;
-  const level = document.getElementById("workoutLevelFilter").value;
-  const duration = document.getElementById("workoutDurationFilter").value;
-  const search = document.getElementById("workoutSearch").value.trim().toLowerCase();
-
-  const filtered = workouts.filter(workout => {
-    const sportMatch = sport === "All" || workout.sport === sport;
-    const levelMatch = level === "All" || workout.level === level;
-    const durationMatch = duration === "All" || workout.duration <= Number(duration);
-    const searchMatch =
-      `${workout.title} ${workout.sport} ${workout.focus} ${workout.description}`
-        .toLowerCase().includes(search);
-
-    return sportMatch && levelMatch && durationMatch && searchMatch;
-  });
-
-  const grid = document.getElementById("workoutGrid");
-
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="empty-state">No workouts match those filters. Try changing your search.</div>';
-    return;
-  }
-
-  grid.innerHTML = filtered.map(workout => `
-    <article class="workout-card">
-      <div class="card-top">
-        <span class="tag">${escapeHTML(workout.sport)}</span>
-        <span class="tag green">+${workout.xp} XP</span>
-      </div>
-      <h3 style="margin-top:16px">${escapeHTML(workout.title)}</h3>
-      <p class="muted">${escapeHTML(workout.description)}</p>
-      <div class="muted small">⏱ ${workout.duration} min · ${escapeHTML(workout.level)}</div>
-      <div style="margin-top:16px">
-        <button class="primary-btn" onclick="startWorkout('${escapeHTML(workout.id)}')">Start workout</button>
-      </div>
-    </article>
-  `).join("");
-}
-
-["workoutSportFilter", "workoutLevelFilter", "workoutDurationFilter"]
-  .forEach(id => document.getElementById(id).addEventListener("change", renderWorkouts));
-
-document.getElementById("workoutSearch").addEventListener("input", renderWorkouts);
-
-// ===== WORKOUT SESSION =====
-function startWorkout(workoutId) {
-  const workout = workouts.find(item => item.id === workoutId);
-  if (!workout) {
-    showToast("Workout not found.");
-    return;
-  }
-
-  activeWorkout = workout;
-  activeStepIndex = 0;
-  activeWorkoutFinished = false;
-  activeTimerSeconds = workout.duration * 60;
-
-  clearInterval(activeTimerInterval);
-
-  const overlay = document.createElement("div");
-  overlay.id = "workoutOverlay";
-  overlay.style.cssText = `
-    position:fixed;inset:0;z-index:80;background:rgba(5,9,20,.97);
-    overflow:auto;padding:22px;display:flex;align-items:flex-start;justify-content:center;
-  `;
-
-  overlay.innerHTML = `
-    <div style="width:100%;max-width:700px;margin:auto">
-      <div class="card-top">
-        <div>
-          <div class="eyebrow">Training session</div>
-          <h2 style="margin-top:10px">${escapeHTML(workout.title)}</h2>
-          <p class="muted">${escapeHTML(workout.sport)} · ${workout.duration} minutes · +${workout.xp} XP</p>
-        </div>
-        <button class="secondary-btn" onclick="closeWorkout()">Close</button>
-      </div>
-      <div class="panel" style="margin-top:20px">
-        <div class="muted small">SESSION TIMER</div>
-        <div class="timer-display" id="sessionTimerDisplay">${formatTime(activeTimerSeconds)}</div>
-        <div class="timer-controls">
-          <button class="primary-btn" id="sessionTimerButton" onclick="toggleSessionTimer()">Start timer</button>
-          <button class="secondary-btn" onclick="resetSessionTimer()">Reset</button>
-        </div>
-      </div>
-      <div class="panel" style="margin-top:16px">
-        <div class="card-top">
-          <h3>Workout checklist</h3>
-          <span class="tag" id="stepCount">Step 1 of ${workout.steps.length}</span>
-        </div>
-        <div class="progress-track"><div class="progress-fill" id="stepProgress" style="width:${100 / workout.steps.length}%"></div></div>
-        <div class="list" id="workoutSteps"></div>
-      </div>
-      <div class="notice" style="margin-top:16px">
-        Train in a safe area, use proper equipment, and take breaks when needed. Stop if you feel pain or dizziness.
-      </div>
-      <div class="button-row">
-        <button class="primary-btn" id="finishWorkoutButton" onclick="completeWorkout()">Complete workout (+${workout.xp} XP)</button>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-  renderWorkoutSteps();
-}
-
-function renderWorkoutSteps() {
-  if (!activeWorkout) return;
-
-  const container = document.getElementById("workoutSteps");
-  if (!container) return;
-
-  container.innerHTML = activeWorkout.steps.map((step, index) => `
-    <label class="list-item" style="cursor:pointer;justify-content:flex-start">
-      <input type="checkbox" ${index < activeStepIndex ? "checked" : ""}
-        onchange="updateWorkoutStep(${index},this.checked)">
-      <span>
-        <strong>Step ${index + 1}</strong><br>
-        <span class="muted small">${escapeHTML(step)}</span>
-      </span>
-    </label>
-  `).join("");
-
-  document.getElementById("stepCount").textContent =
-    `Step ${Math.min(activeStepIndex + 1, activeWorkout.steps.length)} of ${activeWorkout.steps.length}`;
-
-  document.getElementById("stepProgress").style.width =
-    `${activeStepIndex / activeWorkout.steps.length * 100}%`;
-}
-
-function updateWorkoutStep(index, checked) {
-  if (!activeWorkout) return;
-
-  if (checked) {
-    activeStepIndex = Math.max(activeStepIndex, index + 1);
-  } else {
-    activeStepIndex = Math.min(activeStepIndex, index);
-  }
-
-  renderWorkoutSteps();
-}
-
-function closeWorkout() {
-  clearInterval(activeTimerInterval);
-  activeTimerInterval = null;
-
-  const overlay = document.getElementById("workoutOverlay");
-  if (overlay) overlay.remove();
-
-  activeWorkout = null;
-  activeWorkoutFinished = false;
-}
-
-function toggleSessionTimer() {
-  if (activeTimerInterval) {
-    clearInterval(activeTimerInterval);
-    activeTimerInterval = null;
-    document.getElementById("sessionTimerButton").textContent = "Resume timer";
-    return;
-  }
-
-  if (activeTimerSeconds <= 0) {
-    showToast("Timer finished! Reset it to start again.");
-    return;
-  }
-
-  document.getElementById("sessionTimerButton").textContent = "Pause timer";
-
-  activeTimerInterval = setInterval(() => {
-    activeTimerSeconds = Math.max(0, activeTimerSeconds - 1);
-
-    const display = document.getElementById("sessionTimerDisplay");
-    if (display) display.textContent = formatTime(activeTimerSeconds);
-
-    if (activeTimerSeconds <= 0) {
-      clearInterval(activeTimerInterval);
-      activeTimerInterval = null;
-
-      const button = document.getElementById("sessionTimerButton");
-      if (button) button.textContent = "Timer finished";
-
-      showToast("Workout timer finished!");
-    }
-  }, 1000);
-}
-
-function resetSessionTimer() {
-  clearInterval(activeTimerInterval);
-  activeTimerInterval = null;
-  activeTimerSeconds = (activeWorkout?.duration || 0) * 60;
-
-  const display = document.getElementById("sessionTimerDisplay");
-  const button = document.getElementById("sessionTimerButton");
-
-  if (display) display.textContent = formatTime(activeTimerSeconds);
-  if (button) button.textContent = "Start timer";
-}
-
-function completeWorkout() {
-  if (!activeWorkout || activeWorkoutFinished) return;
-
-  activeWorkoutFinished = true;
-  clearInterval(activeTimerInterval);
-  activeTimerInterval = null;
-
-  const now = new Date();
-
-  const entry = {
-    id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    workoutId: activeWorkout.id,
-    title: activeWorkout.title,
-    sport: activeWorkout.sport,
-    duration: activeWorkout.duration,
-    xp: activeWorkout.xp,
-    date: getLocalDateString(),
-    completedAt: now.toISOString()
-  };
-
-  appData.history.unshift(entry);
-  appData.xp += activeWorkout.xp;
-  appData.streak = calculateStreak();
-
-  saveData();
-  renderDashboard();
-  renderProgress();
-
-  showToast(`Workout complete! +${activeWorkout.xp} XP`);
-  closeWorkout();
-}
-
-function formatTime(seconds) {
-  const minutes = Math.floor(Math.max(0, seconds) / 60);
-  const remainingSeconds = Math.max(0, seconds) % 60;
-
-  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-// ===== QUICK TIMER =====
-function renderQuickTimer() {
-  document.getElementById("quickTimerDisplay").textContent =
-    formatTime(quickTimerSeconds);
-}
-
-function adjustQuickTimer(amount) {
-  quickTimerSeconds = Math.max(0, Math.min(5999, quickTimerSeconds + amount));
-  renderQuickTimer();
-}
-
-function toggleQuickTimer() {
-  const button = document.getElementById("quickTimerButton");
-
-  if (quickTimerInterval) {
-    clearInterval(quickTimerInterval);
-    quickTimerInterval = null;
-    button.textContent = "Resume";
-    return;
-  }
-
-  if (quickTimerSeconds <= 0) {
-    showToast("Timer is at zero. Add time to restart.");
-    return;
-  }
-
-  button.textContent = "Pause";
-
-  quickTimerInterval = setInterval(() => {
-    quickTimerSeconds = Math.max(0, quickTimerSeconds - 1);
-    renderQuickTimer();
-
-    if (quickTimerSeconds <= 0) {
-      clearInterval(quickTimerInterval);
-      quickTimerInterval = null;
-      button.textContent = "Start";
-      showToast("Timer finished!");
-    }
-  }, 1000);
-}
-
-// ===== DRILL LIBRARY =====
-function renderDrills() {
-  const sport = document.getElementById("drillSportFilter").value;
-  const position = document.getElementById("drillPositionFilter").value;
-  const search = document.getElementById("drillSearch").value.trim().toLowerCase();
-
-  const filtered = drills.filter(drill => {
-    const sportMatch = sport === "All" || drill.sport === sport;
-    const positionMatch = position === "All" || drill.position === position;
-    const searchMatch =
-      `${drill.title} ${drill.sport} ${drill.position} ${drill.description}`
-        .toLowerCase().includes(search);
-
-    return sportMatch && positionMatch && searchMatch;
-  });
-
-  const grid = document.getElementById("drillGrid");
-
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="empty-state">No drills found. Try another sport or search.</div>';
-    return;
-  }
-
-  grid.innerHTML = filtered.map((drill, index) => `
-    <article class="drill-card">
-      <div class="card-top">
-        <span class="tag">${escapeHTML(drill.sport)}</span>
-        <span class="tag green">${escapeHTML(drill.level)}</span>
-      </div>
-      <h3 style="margin-top:15px">${escapeHTML(drill.title)}</h3>
-      <p class="muted">${escapeHTML(drill.description)}</p>
-      <div class="muted small">${escapeHTML(drill.position)} · ${escapeHTML(drill.duration)}</div>
-      <hr>
-      <details>
-        <summary style="cursor:pointer;font-weight:700">How to do it</summary>
-        <p class="muted">${escapeHTML(drill.steps)}</p>
-      </details>
-      <div class="button-row">
-        <button class="secondary-btn" onclick="completeDrill(${index})">Mark practiced</button>
-      </div>
-    </article>
-  `).join("");
-}
-
-document.getElementById("drillPositionFilter").addEventListener("change", renderDrills);
-document.getElementById("drillSearch").addEventListener("input", renderDrills);
-
-function completeDrill(index) {
-  const drill = drills[index];
-  if (!drill) return;
-
-  const entry = {
-    id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    workoutId: null,
-    title: `${drill.title} (drill)`,
-    sport: drill.sport,
-    duration: 5,
-    xp: 5,
-    date: getLocalDateString(),
-    completedAt: new Date().toISOString()
-  };
-
-  appData.history.unshift(entry);
-  appData.xp += 5;
-  appData.streak = calculateStreak();
-
-  saveData();
-  renderDashboard();
-  renderProgress();
-  showToast("Drill practiced! +5 XP");
-}
-
-// ===== PROGRESS AND HISTORY =====
-function renderProgress() {
-  appData.streak = calculateStreak();
-
-  document.getElementById("progressXP").textContent = appData.xp;
-  document.getElementById("progressCompleted").textContent = appData.history.length;
-
-  document.getElementById("progressMinutes").textContent =
-    appData.history.reduce((sum, item) => sum + (Number(item.duration) || 0), 0);
-
-  document.getElementById("progressStreak").textContent = appData.streak;
-
-  const historyList = document.getElementById("historyList");
-
-  if (!appData.history.length) {
-    historyList.innerHTML =
-      '<div class="empty-state">No completed workouts yet. Choose a workout and get started!</div>';
-    return;
-  }
-
-  historyList.innerHTML = appData.history.map(entry => `
-    <div class="list-item">
-      <div>
-        <strong>${escapeHTML(entry.title)}</strong><br>
-        <small>${escapeHTML(entry.sport)} · ${escapeHTML(entry.date || "")} · ${Number(entry.duration) || 0} min</small>
-      </div>
-      <span class="tag green">+${Number(entry.xp) || 0} XP</span>
-    </div>
-  `).join("");
-}
-
-function undoLastWorkout() {
-  if (!appData.history.length) {
-    showToast("There is no activity to undo.");
-    return;
-  }
-
-  const last = appData.history[0];
-
-  const confirmed = confirm(
-    `Undo "${last.title}" and remove its ${last.xp} XP?`
-  );
-
-  if (!confirmed) return;
-
-  appData.history = appData.history.filter(entry => entry.id !== last.id);
-  appData.xp = Math.max(
-    0,
-    appData.xp - (Number(last.xp) || 0)
-  );
-
-  appData.streak = calculateStreak();
-
-  saveData();
-  renderDashboard();
-  renderProgress();
-
-  showToast("Last activity removed.");
-}
-
-// ===== LIVE SCORES =====
-const ESPN_ENDPOINTS = {
-  baseball: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
-  basketball: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
-  football: "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
-  hockey: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard"
-};
-
-async function loadScores() {
-  const sport = document.getElementById("scoreSport").value;
-  const list = document.getElementById("scoreList");
-
-  list.innerHTML = '<div class="empty-state">Loading scores...</div>';
-
-  try {
-    const response = await fetch(ESPN_ENDPOINTS[sport]);
-
-    if (!response.ok) {
-      throw new Error("Score source unavailable");
-    }
-
-    const data = await response.json();
-    const events = data.events || [];
-
-    if (!events.length) {
-      list.innerHTML =
-        '<div class="empty-state">No games are listed right now. Try refreshing later.</div>';
-      return;
-    }
-
-    list.innerHTML = events.slice(0, 20).map(event => {
-      const competition = event.competitions?.[0];
-      const competitors = competition?.competitors || [];
-
-      const home = competitors.find(team => team.homeAway === "home") || competitors[0];
-      const away = competitors.find(team => team.homeAway === "away") || competitors[1];
-
-      const status = event.status?.type?.shortDetail ||
-        event.status?.type?.description ||
-        "Scheduled";
-
-      const homeName = home?.team?.displayName || "Home";
-      const awayName = away?.team?.displayName || "Away";
-      const homeScore = home?.score ?? "—";
-      const awayScore = away?.score ?? "—";
-
-      return `
-        <article class="panel">
-          <div class="muted small" style="margin-bottom:10px">
-            ${escapeHTML(event.date ? new Date(event.date).toLocaleString() : "")}
-          </div>
-          <div class="score-row">
-            <div class="score-team">
-              <strong>${escapeHTML(awayName)}</strong>
-              <div class="score-number">${escapeHTML(awayScore)}</div>
-            </div>
-            <div class="score-status">${escapeHTML(status)}</div>
-            <div class="score-team">
-              <strong>${escapeHTML(homeName)}</strong>
-              <div class="score-number">${escapeHTML(homeScore)}</div>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join("");
-  } catch (error) {
-    list.innerHTML = `
-      <div class="empty-state">
-        Scores could not load. Check your internet connection or try again later.
-        <br><br>
-        This feature depends on the ESPN scoreboard service being reachable from your browser.
-      </div>
-    `;
-  }
-}
-
-document.getElementById("scoreSport").addEventListener("change", loadScores);
-
-// ===== EXPORT AND RESET =====
-function exportData() {
-  const exportObject = {
-    app: "SkillForge",
-    exportedAt: new Date().toISOString(),
-    data: appData
-  };
-
-  const blob = new Blob(
-    [JSON.stringify(exportObject, null, 2)],
-    { type: "application/json" }
-  );
-
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-
-  link.href = url;
-  link.download = "skillforge-data.json";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  URL.revokeObjectURL(url);
-  showToast("Data export started.");
-}
-
-function resetProgress() {
-  const confirmed = confirm(
-    "Are you sure you want to erase your workout history, XP, and streak? This cannot be undone."
-  );
-
-  if (!confirmed) return;
-
-  appData.xp = 0;
-  appData.history = [];
-  appData.streak = 0;
-  appData.lastTrainingDate = "";
-
-  saveData();
-  renderDashboard();
-  renderProgress();
-
-  showToast("Progress reset.");
-}
-
-// ===== INITIALIZE APP =====
-function initializeApp() {
-  populateSportSelectors();
-  loadSettingsIntoForm();
-
-  document.getElementById("drillSportFilter").value = "All";
-  updateDrillPositionOptions();
-
-  renderDashboard();
-  renderWorkouts();
-  renderDrills();
-  renderProgress();
-  renderQuickTimer();
+  renderSports();
+  renderAll();
 }
 
 initializeApp();
