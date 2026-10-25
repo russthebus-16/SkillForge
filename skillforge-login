@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillForge | Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 20px; font-family: Arial, sans-serif;
+      background: #0b1220; color: #f8fafc;
+    }
+    .card {
+      width: 100%; max-width: 410px; padding: 30px;
+      background: #151f32; border: 1px solid #29364d;
+      border-radius: 18px;
+    }
+    .logo { color: #65e6a5; font-size: 13px; font-weight: bold; letter-spacing: 3px; }
+    h1 { margin-bottom: 8px; }
+    .sub { color: #aab7ca; line-height: 1.5; }
+    label { display: block; margin: 18px 0 7px; font-size: 14px; }
+    input {
+      width: 100%; padding: 13px; border-radius: 9px;
+      border: 1px solid #3b4a62; background: #0b1220;
+      color: white; font-size: 16px;
+    }
+    button {
+      width: 100%; margin-top: 14px; padding: 13px;
+      border: 0; border-radius: 9px; font-size: 15px;
+      font-weight: bold; cursor: pointer;
+    }
+    .primary { background: #65e6a5; color: #0b1220; }
+    .secondary { background: #26344a; color: white; }
+    #message { margin-top: 18px; line-height: 1.5; overflow-wrap: anywhere; }
+    .small { color: #aab7ca; font-size: 12px; margin-top: 20px; line-height: 1.5; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo">SKILLFORGE</div>
+    <h1 id="heading">Welcome back</h1>
+    <p class="sub" id="description">Log in to access your personal training progress.</p>
+
+    <form id="authForm">
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password"
+             minlength="8" required>
+
+      <button class="primary" id="submitButton" type="submit">Log in</button>
+    </form>
+
+    <button class="secondary" id="switchButton" type="button">
+      Create a new account
+    </button>
+    <button class="secondary" id="resetButton" type="button">
+      Forgot password?
+    </button>
+    <button class="secondary" id="logoutButton" type="button" hidden>
+      Log out
+    </button>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    <p class="small">
+      Your account is managed securely by Supabase. Never share your password.
+    </p>
+  </main>
+
+  <script>
+    // STEP 1: Replace these two placeholders with your Supabase details.
+    const SUPABASE_URL = "https://oxadzfbcenccxpuzfhvt.supabase.co/rest/v1/";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Ued7R7o0xnNzBom_sFKDHw_M441arc2";
+
+    const message = document.getElementById("message");
+    const heading = document.getElementById("heading");
+    const description = document.getElementById("description");
+    const form = document.getElementById("authForm");
+    const submitButton = document.getElementById("submitButton");
+    const switchButton = document.getElementById("switchButton");
+    const resetButton = document.getElementById("resetButton");
+    const logoutButton = document.getElementById("logoutButton");
+
+    let mode = "login";
+    let supabaseClient = null;
+
+    if (
+      SUPABASE_URL.startsWith("https://") &&
+      !SUPABASE_URL.includes("PASTE_") &&
+      SUPABASE_PUBLISHABLE_KEY &&
+      !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_") &&
+      window.supabase
+    ) {
+      supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+    } else {
+      message.textContent =
+        "Setup needed: add your Supabase Project URL and Publishable key in the code.";
+    }
+
+    function showMessage(text, isError = false) {
+      message.textContent = text;
+      message.style.color = isError ? "#ff9c9c" : "#65e6a5";
+    }
+
+    function setMode(newMode) {
+      mode = newMode;
+      const creating = mode === "signup";
+      heading.textContent = creating ? "Create your account" : "Welcome back";
+      description.textContent = creating
+        ? "Create an account to get started with SkillForge."
+        : "Log in to access your personal training progress.";
+      submitButton.textContent = creating ? "Create account" : "Log in";
+      switchButton.textContent = creating
+        ? "Already have an account? Log in"
+        : "Create a new account";
+      resetButton.hidden = creating;
+      document.getElementById("password").autocomplete =
+        creating ? "new-password" : "current-password";
+      showMessage("");
+    }
+
+    switchButton.addEventListener("click", () => {
+      setMode(mode === "login" ? "signup" : "login");
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!supabaseClient) {
+        showMessage("Add your Project URL and Publishable key first.", true);
+        return;
+      }
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      submitButton.disabled = true;
+      showMessage("Please wait...");
+
+      try {
+        let result;
+
+        if (mode === "signup") {
+          result = await supabaseClient.auth.signUp({ email, password });
+        } else {
+          result = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+        }
+
+        if (result.error) throw result.error;
+
+        if (mode === "signup") {
+          showMessage(
+            result.data.session
+              ? "Account created! You're signed in."
+              : "Account created. Check your email to confirm your account."
+          );
+        } else {
+          showMessage("Login successful! You're signed in.");
+        }
+
+        await updateSession();
+      } catch (error) {
+        showMessage(error.message || "Something went wrong.", true);
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+
+    resetButton.addEventListener("click", async () => {
+      if (!supabaseClient) {
+        showMessage("Add your Supabase Project URL and Publishable key first.", true);
+        return;
+      }
+
+      const email = document.getElementById("email").value.trim();
+
+      if (!email) {
+        showMessage("Enter your email address above first.", true);
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(
+          email,
+          { redirectTo: window.location.origin }
+        );
+        if (error) throw error;
+        showMessage("If password reset is available, check your email for instructions.");
+      } catch (error) {
+        showMessage(error.message || "Unable to request a reset.", true);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      if (!supabaseClient) return;
+      const { error } = await supabaseClient.auth.signOut();
+      if (error) {
+        showMessage(error.message, true);
+        return;
+      }
+      showMessage("You've been logged out.");
+      await updateSession();
+    });
+
+    async function updateSession() {
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) {
+        showMessage(error.message, true);
+        return;
+      }
+
+      const signedIn = Boolean(data.session);
+      logoutButton.hidden = !signedIn;
+      form.hidden = signedIn;
+      switchButton.hidden = signedIn;
+      resetButton.hidden = signedIn;
+
+      if (signedIn) {
+        heading.textContent = "You're signed in";
+        description.textContent =
+          "Your account is connected. Private progress still needs to be connected and tested.";
+        showMessage("Signed in as " + data.session.user.email);
+      } else {
+        setMode(mode);
+      }
+    }
+
+    if (supabaseClient) {
+      supabaseClient.auth.onAuthStateChange(() => {
+        updateSession();
+      });
+      updateSession();
+    }
+  </script>
+</body>
+</html>
