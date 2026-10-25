@@ -74,7 +74,7 @@
 
   <script>
     // STEP 1: Replace these two placeholders with your Supabase details.
-    const SUPABASE_URL = "https://oxadzfbcenccxpuzfhvt.supabase.co/rest/v1/";
+    const SUPABASE_URL = "https://oxadzfbcenccxpuzfhvt.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Ued7R7o0xnNzBom_sFKDHw_M441arc2";
 
     const message = document.getElementById("message");
